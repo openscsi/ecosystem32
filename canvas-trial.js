@@ -1,9 +1,12 @@
 var GL;
-var squareVerticesBuffer;
 var mvMatrix;
 var shaderProgram;
 var vertexPositionAttribute;
 var perspectiveMatrix;
+
+var GL_MAP = {
+	squareVerticesBuffer: null
+};
 
 function start(){
 	var canvas = document.getElementById('game-canvas');
@@ -93,24 +96,36 @@ function getShader(gl, id){
 
 var horizAspect = 400.0 / 400.0;
 
+var squareVerticesBuffer;
+
 function initBuffers(){
-	squareVerticesBuffer = GL.createBuffer();
-	GL.bindBuffer(GL.ARRAY_BUFFER, squareVerticesBuffer);
 	var vertices = [
 		1.0, 1.0, 0.0,
 		-1.0, 1.0, 0.0,
 		1.0, -1.0, 0.0,
 		-1.0, -1.0, 0.0
 	];
+	squareVerticesBuffer = GL.createBuffer();
+	GL.bindBuffer(GL.ARRAY_BUFFER, squareVerticesBuffer);
 	GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(vertices), GL.STATIC_DRAW);
+	squareColorsBuffer = GL.createBuffer();
+	GL.bindBuffer(GL.ARRAY_BUFFER, squareColorsBuffer);
+	var colors = [
+		1.0, 1.0, 1.0, 1.0,
+		1.0, 0.0, 0.0, 1.0,
+		0.0, 1.0, 0.0, 1.0,
+		0.0, 0.0, 1.0, 1.0
+	];
+	GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(colors), GL.STATIC_DRAW);
 }
 
 function drawScene(){
 	GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 	perspectiveMatrix = makePerspective(45, horizAspect, 0.1, 100.0);
 	loadIdentity();
+	//DRAWING STARTS HERE
 	mvTranslate([-0.0, 0.0, -6.0]);
-	GL.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
+	//GL.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
 	GL.vertexAttribPointer(vertexPositionAttribute, 3, GL.FLOAT, false, 0, 0);
 	setMatrixUniforms();
 	GL.drawArrays(GL.TRIANGLE_STRIP, 0, 4);
