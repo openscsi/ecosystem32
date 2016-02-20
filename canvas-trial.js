@@ -17,7 +17,8 @@ function start(){
 		GL.clear(GL.COLOR_BUFFER_BIT, GL.DEPTH_BUFFER_BIT);
 		initShaders();
 		initBuffers();
-		setInterval(drawScene, 15);
+		drawScene();
+		//setInterval(drawScene, 15);
 	}
 
 }
@@ -67,7 +68,7 @@ function getShader(gl, id){
 	while(currentChild){
 		if(currentChild.nodeType == currentChild.TEXT_NODE){
 			source += currentChild.textContent;
-			console.log(source);
+			//console.log(source);
 		}
 		currentChild = currentChild.nextSibling;
 	}
@@ -113,17 +114,6 @@ function drawScene(){
 	GL.vertexAttribPointer(vertexPositionAttribute, 3, GL.FLOAT, false, 0, 0);
 	setMatrixUniforms();
 	GL.drawArrays(GL.TRIANGLE_STRIP, 0, 4);
-}
-
-function makePerspective(fieldOfViewInRadians, aspectRatio, near, far){
-	var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
-	var rangeInv = 1.0 / (near - far);
-	return [
-		f/aspectRatio, 0, 0, 0,
-		0, f, 0, 0,
-		0, 0, (near + far) * rangeInv, -1,
-		0, 0, near * far * rangeInv * 2, 0
-	];
 }
 
 function loadIdentity(){
