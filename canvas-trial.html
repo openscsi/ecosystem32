@@ -21,7 +21,33 @@
 		<h1>EcoSystem32</h1>
 		<p>Hunger Games for Web. But don't tell Warner Bros. that.</p>
 
+		<canvas id="game-canvas" width="400px" height="400px"></canvas>
 
+		<script src="sylvester.js"></script>
+		<script src="glUtils.js"></script>
+
+		<script id="shader-fs" type="x-shader/x-fragment">
+
+			void main(void){
+				gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+			}
+
+		</script>
+
+		<script id="shader-vs" type="x-shader/x-vertex">
+
+			attribute vec3 aVertexPosition;
+
+			uniform mat4 uMVMatrix;
+			uniform mat4 uPMatrix;
+
+			void main(void){
+				gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+			}
+
+		</script>
+
+		<script src="canvas-trial.js"></script>
 
 		<script type="text/javascript">
 
