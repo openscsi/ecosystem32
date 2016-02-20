@@ -1,0 +1,26 @@
+{
+  "name": "ecosystem32",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "transform": [["babelify", { "blacklist": ["regenerator"] }]],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify index.js -t babelify --outfile bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openscsi/ecosystem32.git"
+  },
+  "author": "Vinesh Kannan and Brendan Batliner",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/openscsi/ecosystem32/issues"
+  },
+  "homepage": "https://github.com/openscsi/ecosystem32#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0"
+  }
+}
