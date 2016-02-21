@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add Animals</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="style/reset.css">
+		<link rel="stylesheet" type="text/css" href="style/main.css">
+		<link rel="icon" type="img/png" href="style/favicon.png" style="width:30px;">
+		<!-- IMPORTED SCRIPTS -->
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<!-- NEED FIREBASE LATER -->
+		<style>
+
+			html{
+				background-color: #1a1a1a;
+				background-image: url('style/img/charcoal-trans-hex.png');
+				background-size: 200px;
+				background-repeat: repeat;
+			}
+
+
+
+		</style>
+	</head>
+
+	<body id="new-room">
+
+		<section>
+			<div class="hex-row">
+				<h1><i class="fa fa-home"></i> Create a Room</h1>
+			</div>
+			<p>Create a game room by choosing a simple word code. You can invite your friends to join the game with that code.</p>
+			<h2>Room ID</h2>
+			<input id="room" class="form-watch" type="text">
+		</section>
+		<section>
+			<p id="response"></p>
+			<button id="create-room" class="page-button">Create</button>
+		</section>
+
+		<script src="bundle.js"></script>
+		<script src="seedrandom.js"></script>
+		<script src="node_modules/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+
+			$('a').click(function(){
+				$('html, body').animate({
+					scrollTop: $( $.attr(this, 'href') ).offset().top
+				}, 500);
+				return false;
+			});
+
+			$('#create-room').click(function(){
+				var output = document.getElementById('response');
+				var roomID = document.getElementById('room').value;
+				var success = createRoom(roomID);
+				if(success){
+					output.innerHTML = 'Your room was created!';
+				}
+				else{
+					output.innerHTML = 'Sorry, that code is taken. Please choose another one.';
+				}
+			});
+
+		</script>
+		
+	</body>
+</html>

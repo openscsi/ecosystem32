@@ -334,6 +334,47 @@ body#index{
 
 }
 
+section{
+
+	input[type="text"], input[type="color"]{
+		width: 100%;
+		font-size: 0.9 * @textSize;
+		height: 1.75 * @textSize;
+		line-height: 1.75 * @textSize;
+		margin-bottom: 2.5%;
+		.BodyFont();
+	}
+
+	input[type="text"]{
+		padding: 1%;
+		width: 98%;
+	}
+
+	button.page-button{
+
+		.BodyFont();
+		width: 50%;
+		background: @charcoal;
+		color: white;
+		font-size: 1.5 * @textSize;
+		height: 2.5 * @textSize;
+		line-height: 2.0 * @textSize;
+		text-align: center;
+		display: block;
+		margin: 5% auto;
+		padding: 0.25 * @textSize;
+		border-radius: @vh;
+
+		&:hover{
+			background: @csGreen;
+		}
+
+		.AnimateAll();
+
+	}
+
+}
+
 body#form{
 
 	section:nth-child(1){
@@ -389,20 +430,6 @@ body#form{
 
 	}
 
-	input[type="text"], input[type="color"]{
-		width: 100%;
-		font-size: 0.9 * @textSize;
-		height: 1.75 * @textSize;
-		line-height: 1.75 * @textSize;
-		margin-bottom: 2.5%;
-		.BodyFont();
-	}
-
-	input[type="text"]{
-		padding: 1%;
-		width: 98%;
-	}
-
 	input[type="radio"]{
 		display: none;
 		&:checked + h3{
@@ -443,27 +470,31 @@ body#form{
 		height: 10 * 1.75 * @textSize;
 	}
 
-	button{
+}
 
-		.BodyFont();
-		width: 50%;
-		background: @charcoal;
-		color: white;
-		font-size: 1.5 * @textSize;
-		height: 2.5 * @textSize;
-		line-height: 2.0 * @textSize;
-		text-align: center;
-		display: block;
-		margin: 5% auto;
-		padding: 0.25 * @textSize;
-		border-radius: @vh;
+body#new-room{
 
-		&:hover{
-			background: @csGreen;
+	section:nth-child(1){
+		background-color: @softwareBlue;
+	}
+
+	section:nth-child(2){
+		background: transparent;
+
+		width: 100%;
+		margin-top: 5%;
+		padding: 0;
+		p{
+			text-align: center;
+			color: @charcoal;
 		}
+		button{
+			background-color: @softwareBlue;
+		}
+	}
 
-		.AnimateAll();
-
+	p#response{
+		color: white;
 	}
 
 }
