@@ -2,7 +2,7 @@ var Move = function(direction) {
     Turn.call(this);
     this.dire = direction;
 };
-Move.prototype = Object.create(Animal.prototype);
+Move.prototype = Object.create(Turn.prototype);
 Move.prototype.constructor = Move;
 
 Move.prototype.doTurn = function(animal) {
