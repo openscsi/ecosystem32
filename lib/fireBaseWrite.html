@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
+  </head>
+  <body>
+    
+    <script>
+      var dataRef = new Firebase('https://ecosystem32.firebaseio.com/EcoSystems');
+      var createRoom = function (roomName, roomID){
+        var roomRef = dataRef.child(roomName);
+        roomRef.child("config").set({
+          "Room Name": roomName,
+          "Room ID": roomID
+        });
+        return function () {return roomRef;}
+      }
+      function createPlayer (playerName, playerID, carnivoreName, carnivoreColor, carnivoreMove, carnivoreGenesObject, herbivoreName, herbivoreColor, herbivoreMove, herbivoreGenesObject){
+        roomRef = createRoom();
+        playerRef = roomRef.child(playerName);
+        playerRef.set({
+          "Player Name" : playerName,
+          "Player ID" : playerID,
+          "Carnivore" {
+            "Name" : carnivoreName,
+            "Color" : carnivoreColor,
+            "UserDefinedChooseMove" : carnivoreMove,
+            "Genes: Object" : carnivoreGenesObject
+          }
+          "Herbivore" {
+            "Name" : herbivoreName,
+            "Color" : herbivoreColor,
+            "UserDefinedChooseMove" : herbivoreMove,
+            "Genes: Object" : herbivoreGenesObject
+          }
+        });
+
+        function getMoveCode(){
+          
+        }
+
+
+      }
+    </script>
+  </body>
+</html>

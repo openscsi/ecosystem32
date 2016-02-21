@@ -148,31 +148,7 @@
 
 		<script type="text/javascript">
 
-			$('a').click(function(){
-				$('html, body').animate({
-					scrollTop: $( $.attr(this, 'href') ).offset().top
-				}, 500);
-				return false;
-			});
-
-			$('#submit-animal').click(function(){
-				var json = previewAnimal();
-				document.getElementById('preview-json').value = JSON.stringify(json);
-			});
-
-			$('.form-watch').change(function(){
-				var json = previewAnimal();
-				document.getElementById('preview-json').value = JSON.stringify(json);
-			});
-
-			var editor = ace.edit('editor');
-			editor.setTheme('ace/theme/monokai');
-			editor.getSession().setMode('ace/mode/javascript');
-
-			editor.on('change', function(e){
-				var json = previewAnimal();
-				document.getElementById('preview-json').value = JSON.stringify(json);
-			});
+			formMain();
 
 		</script>
 		

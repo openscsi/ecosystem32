@@ -1,6 +1,83 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _module = require('./module');
+
+var _module2 = _interopRequireDefault(_module);
+
+var _viewer = require('./lib/viewer');
+
+var _viewer2 = _interopRequireDefault(_viewer);
+
+var _form = require('./lib/form');
+
+var _form2 = _interopRequireDefault(_form);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log('I am a', _module2.default);
+
+window.viewerMain = function () {
+	_viewer2.default.main();
+};
+
+window.previewAnimal = function () {
+	return _form2.default.previewAnimal();
+};
+
+window.formMain = function () {
+	$('a').click(function () {
+		$('html, body').animate({
+			scrollTop: $($.attr(this, 'href')).offset().top
+		}, 500);
+		return false;
+	});
+
+	$('#submit-animal').click(function () {
+		var json = previewAnimal();
+		document.getElementById('preview-json').value = JSON.stringify(json);
+	});
+
+	$('.form-watch').change(function () {
+		var json = previewAnimal();
+		document.getElementById('preview-json').value = JSON.stringify(json);
+	});
+
+	var editor = ace.edit('editor');
+	editor.setTheme('ace/theme/monokai');
+	editor.getSession().setMode('ace/mode/javascript');
+
+	editor.on('change', function (e) {
+		var json = previewAnimal();
+		document.getElementById('preview-json').value = JSON.stringify(json);
+	});
+};
+
+window.roomMain = function () {
+	$('a').click(function () {
+		$('html, body').animate({
+			scrollTop: $($.attr(this, 'href')).offset().top
+		}, 500);
+		return false;
+	});
+
+	$('#create-room').click(function () {
+		var output = document.getElementById('response');
+		var roomID = document.getElementById('room').value;
+		var promise = createRoom(roomID);
+		promise.then(function (success) {
+			if (success) {
+				output.innerHTML = 'Your room was created!';
+			} else {
+				output.innerHTML = 'Sorry, that code is taken. Please choose another one.';
+			}
+		});
+	});
+};
+
+},{"./lib/form":2,"./lib/viewer":3,"./module":4}],2:[function(require,module,exports){
+'use strict';
+
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
@@ -33,42 +110,7 @@ exports.default = {
 	}
 };
 
-},{}],2:[function(require,module,exports){
-'use strict';
-
-var _module = require('./module');
-
-var _module2 = _interopRequireDefault(_module);
-
-var _viewer = require('./viewer');
-
-var _viewer2 = _interopRequireDefault(_viewer);
-
-var _form = require('./form');
-
-var _form2 = _interopRequireDefault(_form);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-console.log('I am a', _module2.default);
-
-window.viewerMain = function () {
-	_viewer2.default.main();
-};
-
-window.previewAnimal = function () {
-	return _form2.default.previewAnimal();
-};
-
-},{"./form":1,"./module":3,"./viewer":4}],3:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = 'meme';
-
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -182,4 +224,12 @@ exports.default = {
 	}
 };
 
-},{}]},{},[2]);
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = 'meme';
+
+},{}]},{},[1]);
