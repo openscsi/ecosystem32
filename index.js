@@ -1,5 +1,5 @@
 import Module from './module';
-import Viewer from './lib/viewer';
+import Viewer from './viewer';
 import AnimalForm from './lib/form';
 
 console.log('I am a', Module);

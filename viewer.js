@@ -24,14 +24,6 @@ console.log('Cell: ' + cellSize);
 
 var arena = new Arena(mapSize, mapSize, cellSize);
 
-if(canvas){
-
-	var mapSize = 20;
-	var ctx = canvas.getContext('2d');
-	var canvasSize = canvas.width;
-	var cellSize = canvasSize / mapSize;
-	console.log('Cell: ' + cellSize)
-
 console.log("We made the arena okay; now it's time to fill it with cells");
 for (var ix = 0; ix < arena.getXDim(); ++ix) {
 	for (var iy = 0; iy < arena.getYDim(); ++iy) {
