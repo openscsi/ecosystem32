@@ -1,28 +1,28 @@
-import GeneSet from './GeneSet';
-
-function GeneSet(mamaGenes, papaGenes) {
+function Genotype(mamaGenes, papaGenes) {
     this.motherGenes = mamaGenes;
     this.fatherGenes = papaGenes;
 };
 
-GeneSet.prototype.getFatherGenes = function getFatherGenes(){
+Genotype.prototype.getFatherGenes = function getFatherGenes() {
     return this.fatherGenes;
 };
 
-GeneSet.prototype.getMotherGenes = function getMotherGenes(){
+Genotype.prototype.getMotherGenes = function getMotherGenes() {
     return this.motherGenes;
 };
 
-GeneSet.prototype.getGeneTypes = function getGeneTypes(){
-	return fatherGenes.allGenesInOrder();
+Genotype.prototype.getGeneTypes = function getGeneTypes() {
+    return fatherGenes.allGenesInOrder();
     // If something about the genes is breaking, it's probably this
 };
 
-GeneSet.prototype.getGene = function getGene(trait) {
-	for (var i = 0; i < fatherGenes.allGenesInOrder().length; ++i) {
-		if (fatherGenes.allGenesInOrder()[i].getType() == trait) {
-			return (fatherGenes.allGenesInOrder()[i].getValue() + motherGenes.allGenesInOrder()[i].getValue()) / 2;
-		}
-	}
-	throw new Error('No such Gene Kim!');
+Genotype.prototype.getGene = function getGene(trait) {
+    for (let i = 0; i < fatherGenes.allGenesInOrder().length; ++i) {
+        if (fatherGenes.allGenesInOrder()[i].getType() === trait) {
+            return (fatherGenes.allGenesInOrder()[i].getValue() + motherGenes.allGenesInOrder()[i].getValue()) / 2;
+        }
+    }
+    throw new Error('No such Gene Kim!');
 };
+
+export default Genotype;
