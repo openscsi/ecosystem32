@@ -1,5 +1,8 @@
 import Arena from './theHungerGames/Arena';
 import FoodCell from './theHungerGames/FoodCell';
+import Herbivore1 from './theHungerGames/Herbivore1';
+import Animal from './theHungerGames/Animal';
+
 function nameOffset(name, fontSize){
 	return Math.round((name.length * (fontSize / 2)) / 2);
 }
@@ -36,6 +39,14 @@ for (var ix = 0; ix < arena.getXDim(); ++ix) {
 	}
 }
 console.log("We filled the arena with cells and nothing has broken yet!");
+
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+
+console.log("We added some animals to the arena and the world didn't end in flames!");
 
 export default {
 	main: function(){

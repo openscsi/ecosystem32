@@ -8,8 +8,8 @@ function Herbivore() {
     Animal.apply(this, arguments);
 }
 
-Animal.prototype = Object.create(Animal.prototype);
-Animal.prototype.constructor = Herbivore;
+Herbivore.prototype = Object.create(Animal.prototype);
+Herbivore.prototype.constructor = Herbivore;
 
 Herbivore.prototype.energyToEat = function energyToEat() {
     return this.getGenotype().getGene(GeneType.SIZE1) + this.getGenotype().getGene(GeneType.SIZE2);

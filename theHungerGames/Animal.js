@@ -19,8 +19,9 @@ function Animal() {
     this.genotype = null;
 }
 
-Animal.prototype.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
-    const newAnimal = new AnimalConstructor();
+Animal.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
+    let newAnimal = new AnimalConstructor();
+    console.log(newAnimal);
     newAnimal.addGenotype(newAnimal.randomGenotype());
     newAnimal.energyReserve = newAnimal.initialEnergy();
     newAnimal.randomAge();
@@ -28,7 +29,7 @@ Animal.prototype.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor)
 };
 
 Animal.prototype.makeAnimal = function makeAnimal(AnimalConstructor, genotype) {
-    const newAnimal = new AnimalConstructor();
+    let newAnimal = new AnimalConstructor();
     newAnimal.addGenotype(genotype);
     newAnimal.energyReserve = newAnimal.initialEnergy();
     newAnimal.randomAge();

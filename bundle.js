@@ -17,7 +17,7 @@ window.viewerMain = function () {
 	_viewer2.default.main();
 };
 
-},{"./module":2,"./viewer":242}],2:[function(require,module,exports){
+},{"./module":2,"./viewer":247}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21490,8 +21490,9 @@ function Animal() {
     this.genotype = null;
 }
 
-Animal.prototype.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
+Animal.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
     var newAnimal = new AnimalConstructor();
+    console.log(newAnimal);
     newAnimal.addGenotype(newAnimal.randomGenotype());
     newAnimal.energyReserve = newAnimal.initialEnergy();
     newAnimal.randomAge();
@@ -21918,7 +21919,7 @@ Animal.prototype.getRandom = function getRandom() {
 
 exports.default = Animal;
 
-},{"./Arena":231,"./Cell":232,"./Direction":234,"./GeneSet":236,"./GeneType":237,"./Genotype":238}],231:[function(require,module,exports){
+},{"./Arena":231,"./Cell":232,"./Direction":234,"./GeneSet":237,"./GeneType":238,"./Genotype":239}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22241,7 +22242,7 @@ Arena.prototype.getAnimalCount = function getAnimalCount() {
 
 exports.default = Arena;
 
-},{"./Cell":232,"./Coord":233,"./Herbivore":239,"./Random":240,"./SortDistance":241}],232:[function(require,module,exports){
+},{"./Cell":232,"./Coord":233,"./Herbivore":240,"./Random":244,"./SortDistance":245}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22493,6 +22494,35 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _Turn = require('./Turn');
+
+var _Turn2 = _interopRequireDefault(_Turn);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Eat() {
+    if (this.constructor === Eat) {
+        throw new Error('Cannot instantiate abstract class.');
+    }
+    _Turn2.default.apply(this, arguments);
+}
+
+Eat.prototype = Object.create(_Turn2.default.prototype);
+Eat.prototype.constructor = Eat;
+
+Eat.prototype.energyConsumption = function energyConsumption(animal) {
+    return animal.energyToEat();
+};
+
+exports.default = Eat;
+
+},{"./Turn":246}],236:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _Cell = require('./Cell');
 
 var _Cell2 = _interopRequireDefault(_Cell);
@@ -22559,7 +22589,7 @@ FoodCell.prototype.getColor = function getColor() {
 
 exports.default = FoodCell;
 
-},{"./Arena":231,"./Cell":232}],236:[function(require,module,exports){
+},{"./Arena":231,"./Cell":232}],237:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22577,7 +22607,7 @@ GeneSet.prototype.constructor = GeneSet;
 
 exports.default = GeneSet;
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22596,7 +22626,7 @@ var GeneType = {
 
 exports.default = GeneType;
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22631,7 +22661,7 @@ Genotype.prototype.getGene = function getGene(trait) {
 
 exports.default = Genotype;
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22655,8 +22685,8 @@ function Herbivore() {
     _Animal2.default.apply(this, arguments);
 }
 
-_Animal2.default.prototype = Object.create(_Animal2.default.prototype);
-_Animal2.default.prototype.constructor = Herbivore;
+Herbivore.prototype = Object.create(_Animal2.default.prototype);
+Herbivore.prototype.constructor = Herbivore;
 
 Herbivore.prototype.energyToEat = function energyToEat() {
     return this.getGenotype().getGene(_GeneType2.default.SIZE1) + this.getGenotype().getGene(_GeneType2.default.SIZE2);
@@ -22668,7 +22698,184 @@ Herbivore.prototype.doEating = function doEating() {
 
 exports.default = Herbivore;
 
-},{"./Animal":230,"./GeneType":237}],240:[function(require,module,exports){
+},{"./Animal":230,"./GeneType":238}],241:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _GeneType = require('./GeneType');
+
+var _GeneType2 = _interopRequireDefault(_GeneType);
+
+var _Arena = require('./Arena');
+
+var _Arena2 = _interopRequireDefault(_Arena);
+
+var _HerbivoreEat = require('./HerbivoreEat');
+
+var _HerbivoreEat2 = _interopRequireDefault(_HerbivoreEat);
+
+var _Move = require('./Move');
+
+var _Move2 = _interopRequireDefault(_Move);
+
+var _Direction = require('./Direction');
+
+var _Direction2 = _interopRequireDefault(_Direction);
+
+var _Herbivore = require('./Herbivore');
+
+var _Herbivore2 = _interopRequireDefault(_Herbivore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Herbivore1() {
+	_Herbivore2.default.apply(this, arguments);
+}
+
+_Herbivore2.default.prototype = Object.create(_Herbivore2.default.prototype);
+Herbivore1.prototype.constructor = Herbivore1;
+
+Herbivore1.prototype.getColor = function getColor() {
+	return "Magenta";
+};
+
+Herbivore1.prototype.getName = function getName() {
+	return "Javatar";
+};
+
+Herbivore1.prototype.userDefinedChooseMove = function userDefinedChooseMove() {
+	if (this.getCell().howMuchFood() > 5) {
+		return new _HerbivoreEat2.default();
+	} else {
+		return new _Move2.default(_Direction2.default.randomDirection());
+	}
+};
+
+Herbivore1.prototype.getInitialGene = function getInitialGene(type) {
+
+	var ranNum = _Arena2.default.getRandom().nextGaussian() * 0.1 + 0.5;
+
+	switch (type) {
+		case _GeneType2.default.SIZE1:
+			return ranNum;
+
+		case _GeneType2.default.SIZE2:
+			return ranNum;
+
+		case _GeneType2.default.SPEED1:
+			return ranNum;
+
+		case _GeneType2.default.SPEED2:
+			return ranNum;
+
+		case _GeneType2.default.MARKINGS1:
+			return ranNum;
+
+		case _GeneType2.default.MARKINGS2:
+			return ranNum;
+
+		case _GeneType2.default.FERTILITY:
+			return ranNum;
+
+		default:
+			throw new Error("Never reach here");
+
+	}
+
+	Herbivore1.prototype.getInitialSD = function getInitialSD(type) {
+		switch (type) {
+			case _GeneType2.default.SIZE1:
+				return 0.1;
+
+			case _GeneType2.default.SIZE2:
+				return 0.1;
+
+			case _GeneType2.default.SPEED1:
+				return 0.1;
+
+			case _GeneType2.default.SPEED2:
+				return 0.1;
+
+			case _GeneType2.default.MARKINGS1:
+				return 0.1;
+
+			case _GeneType2.default.MARKINGS2:
+				return 0.1;
+
+			case _GeneType2.default.FERTILITY:
+				return 0.1;
+
+			default:
+				throw new Error("Never reach here");
+
+		}
+	};
+};
+
+exports.default = Herbivore1;
+
+},{"./Arena":231,"./Direction":234,"./GeneType":238,"./Herbivore":240,"./HerbivoreEat":242,"./Move":243}],242:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Eat = require('./Eat');
+
+var _Eat2 = _interopRequireDefault(_Eat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function HerbivoreEat() {
+    _Eat2.default.apply(this, arguments);
+}
+
+HerbivoreEat.prototype = Object.create(_Eat2.default.prototype);
+HerbivoreEat.prototype.constructor = HerbivoreEat;
+
+HerbivoreEat.prototype.doTurn = function doTurn(animal) {
+    animal.eat();
+    return true;
+};
+
+exports.default = HerbivoreEat;
+
+},{"./Eat":235}],243:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Turn = require('./Turn');
+
+var _Turn2 = _interopRequireDefault(_Turn);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Move(direction) {
+    _Turn2.default.apply(this, arguments);
+    this.dire = direction;
+}
+
+Move.prototype = Object.create(_Turn2.default.prototype);
+Move.prototype.constructor = Move;
+
+Move.prototype.doTurn = function doTurn(animal) {
+    return animal.makeMove(this.dire);
+};
+
+Move.prototype.energyConsumption = function energyConsumption(animal) {
+    return animal.energyToMove();
+};
+
+exports.default = Move;
+
+},{"./Turn":246}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22721,7 +22928,7 @@ exports.default = {
     }
 };
 
-},{"seedrandom":222}],241:[function(require,module,exports){
+},{"seedrandom":222}],245:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22753,7 +22960,43 @@ SortDistance.prototype.distance2 = function distance2(ani) {
 
 exports.default = SortDistance;
 
-},{}],242:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function Turn() {
+    if (this.constructor === Turn) {
+        throw new Error('Cannot instantiate abstract class.');
+    }
+}
+
+Turn.prototype.energyConsumption = function energyConsumption(animal) {
+    throw new Error('Cannot call abstract method.');
+};
+
+Turn.prototype.doTurn = function doTurn(animal) {
+    throw new Error('Cannot call abstract method.');
+};
+
+Turn.prototype.turn = function turn(animal) {
+    var energy = this.energyConsumption(animal);
+    if (animal.getEnergyReserve() < energy) {
+        return false;
+    }
+
+    var result = doTurn(animal);
+
+    if (result) {
+        animal.removeEnergy(energy);
+    }
+    return result;
+};
+
+exports.default = Turn;
+
+},{}],247:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22767,6 +23010,14 @@ var _Arena2 = _interopRequireDefault(_Arena);
 var _FoodCell = require('./theHungerGames/FoodCell');
 
 var _FoodCell2 = _interopRequireDefault(_FoodCell);
+
+var _Herbivore = require('./theHungerGames/Herbivore1');
+
+var _Herbivore2 = _interopRequireDefault(_Herbivore);
+
+var _Animal = require('./theHungerGames/Animal');
+
+var _Animal2 = _interopRequireDefault(_Animal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22807,6 +23058,14 @@ for (var ix = 0; ix < arena.getXDim(); ++ix) {
 }
 console.log("We filled the arena with cells and nothing has broken yet!");
 
+arena.addRandomAnimal(_Animal2.default.makeRandomAnimal(_Herbivore2.default));
+arena.addRandomAnimal(_Animal2.default.makeRandomAnimal(_Herbivore2.default));
+arena.addRandomAnimal(_Animal2.default.makeRandomAnimal(_Herbivore2.default));
+arena.addRandomAnimal(_Animal2.default.makeRandomAnimal(_Herbivore2.default));
+arena.addRandomAnimal(_Animal2.default.makeRandomAnimal(_Herbivore2.default));
+
+console.log("We added some animals to the arena and the world didn't end in flames!");
+
 exports.default = {
 	main: function main() {
 
@@ -22825,4 +23084,4 @@ exports.default = {
 	}
 };
 
-},{"./theHungerGames/Arena":231,"./theHungerGames/FoodCell":235}]},{},[1]);
+},{"./theHungerGames/Animal":230,"./theHungerGames/Arena":231,"./theHungerGames/FoodCell":236,"./theHungerGames/Herbivore1":241}]},{},[1]);
