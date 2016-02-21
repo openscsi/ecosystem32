@@ -1,7 +1,7 @@
 import Cell from './Cell';
 
 function WallCell(map, x, y) {
-    Cell.call(this,map,x,y);
+    Cell.call(this, map, x, y);
 }
 
 WallCell.prototype = Object.create(Cell.prototype);
@@ -12,7 +12,7 @@ WallCell.prototype.isMoveable = function isMoveable() {
 };
 
 WallCell.prototype.getColor = function getColor(){
-    return "LightSlateGrey";
+    return 'LightSlateGrey';
 };
 
 export default WallCell;
