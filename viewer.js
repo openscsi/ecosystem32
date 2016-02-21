@@ -1,80 +1,69 @@
+import Arena from './theHungerGames/Arena';
+import FoodCell from './theHungerGames/FoodCell';
+import Herbivore1 from './theHungerGames/Herbivore1';
+import Animal from './theHungerGames/Animal';
+
 function nameOffset(name, fontSize){
 	return Math.round((name.length * (fontSize / 2)) / 2);
 }
 
-function Coord(x, y){
-	return {
-		x: x,
-		y: y
-	}
-}
+// function Coord(x, y){
+// 	return {
+// 		x: x,
+// 		y: y
+// 	}
+// }
 
-function Cell(color = 'ForestGreen'){
-	return {
-		color: color,
-		list: [], //LinkedList of animals on the cell
-		draw: function(ctx, coord){
-			//Draw cell
-			ctx.fillStyle = this.color;
-			ctx.beginPath();
-			ctx.rect(coord.x, coord.y, cellSize, cellSize);
-			ctx.fill();
-			ctx.closePath();
-			//Draw number of animals
-			var text = this.list.length + '';
-			var fontSize = 0.75 * cellSize;
-			var xOff = nameOffset(text, fontSize)
-			var yOff = 1.0 * fontSize;
-			var font = fontSize + 'px Consolas';
-			ctx.font = font;
-			ctx.lineWidth = 1;
-			ctx.fillStyle = 'black';
-			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
-		}
-	}
-}
-
-
+var mapSize = 64;
 
 var canvas = document.getElementById('game-canvas');
+var ctx = canvas.getContext('2d');
+var canvasSize = canvas.width;
+var cellSize = canvasSize / mapSize;
+console.log('Cell: ' + cellSize);
+
+var arena = new Arena(mapSize, mapSize, cellSize);
 
 if(canvas){
-	
+
 	var mapSize = 20;
 	var ctx = canvas.getContext('2d');
 	var canvasSize = canvas.width;
 	var cellSize = canvasSize / mapSize;
 	console.log('Cell: ' + cellSize)
 
-	var map = new Map();
-
-	for(var y = 0; y < canvasSize; y += cellSize){
-		for(var x = 0; x < canvasSize; x += cellSize){
-			var color = 'ForestGreen'
-			if(x == 20){
-				color = 'GoldenRod';
-			}
-			map.set(Coord(x, y), Cell(color));
-		}
+console.log("We made the arena okay; now it's time to fill it with cells");
+for (var ix = 0; ix < arena.getXDim(); ++ix) {
+	for (var iy = 0; iy < arena.getYDim(); ++iy) {
+			// try {
+				arena.changeCell(ix, iy, new FoodCell(arena, ix, iy));
+			// } catch (err) {
+			// 	console.log(err);
+			// }
 	}
+}
+console.log("We filled the arena with cells and nothing has broken yet!");
 
-	map.set(getNthCell(0, 0), Cell('GreenYellow'));
-	map.set(getNthCell(3, 4), Cell('GreenYellow'));
-
+for(var i = 0; i < 250; i++){
+arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
 }
 
-function getNthCell(nX, nY){
-	return Coord(nX * cellSize, nY * cellSize);
-}
+console.log("We added some animals to the arena and the world didn't end in flames!");
 
 export default {
 	main: function(){
 
-		ctx.fillStyle = 'ForestGreen';
+		arena.draw(ctx, 0, 0);
 
-		for(var [coord, cell] of map){
-			cell.draw(ctx, coord);
-		}
+		console.log("We drew the arena without everything falling apart!");
+
+		var loop = setInterval(function () {
+			if (arena.doTurn()) {
+				arena.draw(ctx, 0, 0);
+			} else {
+				clearInterval(loop);
+			}
+		}, 25);
 
 		console.log("Done!")
 
