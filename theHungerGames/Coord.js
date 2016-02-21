@@ -1,38 +1,34 @@
 function Coord(xCoord, yCoord) {
-    var x = xCoord;
-    var y = yCoord;
-
+    this.x = xCoord;
+    this.y = yCoord;
 }
 
 Coord.prototype.constructor = Coord;
 
-Coord.prototype.equals = function equals(arg0){
-    if (arg0 == this)
+Coord.prototype.equals = function equals(arg0) {
+    if (arg0 === this) {
         return true;
+    }
 
-    if (arg0 == null || !(arg0 instanceof Coord)) {
+    if (arg0 === null || arg0 === undefined || !(arg0 instanceof Coord)) {
         return false;
     }
-    Coord icoor = arg0;
-    return (x == icoor.x && y == icoor.y);
+
+    return (this.x === icoor.x && this.y === icoor.y);
 };
 
-Coord.prototype.compareTo = function compareTo(icoord){
-    if (x == icoord.x) {
-        if (y == icoord.y) {
+Coord.prototype.compareTo = function compareTo(icoord) {
+    if (this.x === icoord.x) {
+        if (this.y === icoord.y) {
             return 0;
-        }
-        else if (y < icoord.y) {
+        } else if (this.y < icoord.y) {
             return -1;
-        }
-        else {
+        } else {
             return 1;
         }
-    }
-    else if (x < icoord.x) {
+    } else if (this.x < icoord.x) {
         return -1;
-    }
-    else {
+    } else {
         return 1;
     }
 };
