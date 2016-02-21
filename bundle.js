@@ -43,7 +43,14 @@ function Cell() {
 	var color = arguments.length <= 0 || arguments[0] === undefined ? 'white' : arguments[0];
 
 	return {
-		color: color
+		color: color,
+		draw: function draw(ctx, coord) {
+			ctx.fillStyle = this.color;
+			ctx.beginPath();
+			ctx.rect(coord.x, coord.y, cellSize, cellSize);
+			ctx.fill();
+			ctx.closePath();
+		}
 	};
 }
 
@@ -51,23 +58,30 @@ var mapSize = 50;
 
 var canvas = document.getElementById('game-canvas');
 var ctx = canvas.getContext('2d');
-var cellSize = canvas.width / mapSize;
+var canvasSize = canvas.width;
+var cellSize = canvasSize / mapSize;
+console.log('Cell: ' + cellSize);
+
+function getNthCell(nX, nY) {
+	return Coord(nX * cellSize, nY * cellSize);
+}
 
 var map = new Map();
 
-for (var y = 0; y < mapSize; y++) {
-	for (var x = 0; x < mapSize; x++) {
-		map.set(Coord(x, y), Cell());
+for (var y = 0; y < canvasSize; y += cellSize) {
+	for (var x = 0; x < canvasSize; x += cellSize) {
+		var color = 'white';
+		if (x === 10) {
+			color = 'red';
+		}
+		map.set(Coord(x, y), Cell(color));
 	}
 }
 
-map.set(Coord(0, 0), Cell('blue'));
-map.set(Coord(9, 9), Cell('blue'));
+map.set(getNthCell(0, 0), Cell('blue'));
+map.set(getNthCell(3, 4), Cell('blue'));
 
 exports.default = {
-	scaleCoord: function scaleCoord(coord, scale) {
-		return Coord(coord.x * scale, coord.y * scale);
-	},
 	main: function main() {
 
 		ctx.fillStyle = 'white';
@@ -83,12 +97,7 @@ exports.default = {
 				var coord = _step$value[0];
 				var cell = _step$value[1];
 
-				ctx.fillStyle = cell.color;
-				ctx.beginPath();
-				var scaledCoord = this.scaleCoord(coord, cellSize);
-				ctx.rect(scaledCoord.x, scaledCoord.y, cellSize, cellSize);
-				ctx.fill();
-				ctx.closePath();
+				cell.draw(ctx, coord);
 			}
 		} catch (err) {
 			_didIteratorError = true;
