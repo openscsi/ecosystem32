@@ -43,13 +43,15 @@ Arena.prototype.setFile = function setFile(file) {
 
 Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
     var coordIter = this.map.keys();
-    console.log(coordIter);
+    //console.log(coordIter);
     var icoord = {};
     icoord.done = false;
     while (!icoord.done) {
         icoord = coordIter.next();
+        if(!icoord.done){ // This is diiiiiirrrrrrty
 		this.map.get(icoord.value).draw(graphicObject, xCoord + icoord.value.x * this.map.get(icoord.value).getXSize(),
 				yCoord + icoord.value.y * this.map.get(icoord.value).getYSize());
+        }
 	}
 };
 
@@ -174,17 +176,21 @@ Arena.prototype.doTurn = function doTurn(){
     var icell = {}; icell.done = false;
     while (!icell.done) {
         icell = values.next();
-        icell.value.beginningOfTurn();
+        if(!icell.done){
+            icell.value.beginningOfTurn();
+        }
     }
     values = this.map.values();
-    icell.done = false;
+    icell = {}; icell.done = false;
     while (!icell.done) {
         icell = values.next();
-        icell.value.doTurn();
+        if(!icell.done){
+            icell.value.doTurn();
+        }
     }
 
-    updateMap();
-    updateFinal();
+    this.updateMap();
+    this.updateFinal();
 
     this.ndays++;
 
@@ -196,9 +202,9 @@ Arena.prototype.doTurn = function doTurn(){
             if(entry.value instanceof WallCell){
                 //Yeah, this line was nasty so we deleted it. Probably fine.
                 try {
-                    changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
+                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                 } catch (err) {
-                    changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
+                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                     console.log(err);
                 }
             }
@@ -211,10 +217,9 @@ Arena.prototype.doTurn = function doTurn(){
         console.log(countAnimals());
     }
 
-    if (checkStillGoing()) {
+    if (this.checkStillGoing()) {
         return true;
     } else {
-        outputFinal();
         return false;
     }
 };

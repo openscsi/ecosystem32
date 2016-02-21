@@ -17,7 +17,7 @@ window.viewerMain = function () {
 	_viewer2.default.main();
 };
 
-},{"./module":2,"./viewer":241}],2:[function(require,module,exports){
+},{"./module":2,"./viewer":242}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21918,7 +21918,7 @@ Animal.prototype.getRandom = function getRandom() {
 
 exports.default = Animal;
 
-},{"./Arena":231,"./Cell":232,"./Direction":234,"./GeneSet":235,"./GeneType":236,"./Genotype":237}],231:[function(require,module,exports){
+},{"./Arena":231,"./Cell":232,"./Direction":234,"./GeneSet":236,"./GeneType":237,"./Genotype":238}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21986,12 +21986,15 @@ Arena.prototype.setFile = function setFile(file) {
 
 Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
     var coordIter = this.map.keys();
-    console.log(coordIter);
+    //console.log(coordIter);
     var icoord = {};
     icoord.done = false;
     while (!icoord.done) {
         icoord = coordIter.next();
-        this.map.get(icoord.value).draw(graphicObject, xCoord + icoord.value.x * this.map.get(icoord.value).getXSize(), yCoord + icoord.value.y * this.map.get(icoord.value).getYSize());
+        if (!icoord.done) {
+            // This is diiiiiirrrrrrty
+            this.map.get(icoord.value).draw(graphicObject, xCoord + icoord.value.x * this.map.get(icoord.value).getXSize(), yCoord + icoord.value.y * this.map.get(icoord.value).getYSize());
+        }
     }
 };
 
@@ -22116,17 +22119,21 @@ Arena.prototype.doTurn = function doTurn() {
     var icell = {};icell.done = false;
     while (!icell.done) {
         icell = values.next();
-        icell.value.beginningOfTurn();
+        if (!icell.done) {
+            icell.value.beginningOfTurn();
+        }
     }
     values = this.map.values();
-    icell.done = false;
+    icell = {};icell.done = false;
     while (!icell.done) {
         icell = values.next();
-        icell.value.doTurn();
+        if (!icell.done) {
+            icell.value.doTurn();
+        }
     }
 
-    updateMap();
-    updateFinal();
+    this.updateMap();
+    this.updateFinal();
 
     this.ndays++;
 
@@ -22138,9 +22145,9 @@ Arena.prototype.doTurn = function doTurn() {
             if (entry.value instanceof WallCell) {
                 //Yeah, this line was nasty so we deleted it. Probably fine.
                 try {
-                    changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
+                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                 } catch (err) {
-                    changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
+                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                     console.log(err);
                 }
             }
@@ -22151,10 +22158,9 @@ Arena.prototype.doTurn = function doTurn() {
         console.log(countAnimals());
     }
 
-    if (checkStillGoing()) {
+    if (this.checkStillGoing()) {
         return true;
     } else {
-        outputFinal();
         return false;
     }
 };
@@ -22235,7 +22241,7 @@ Arena.prototype.getAnimalCount = function getAnimalCount() {
 
 exports.default = Arena;
 
-},{"./Cell":232,"./Coord":233,"./Herbivore":238,"./Random":239,"./SortDistance":240}],232:[function(require,module,exports){
+},{"./Cell":232,"./Coord":233,"./Herbivore":239,"./Random":240,"./SortDistance":241}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22358,6 +22364,7 @@ Cell.prototype.doTurn = function doTurn() {
                 break;
             }
         }
+        allAnimalsDone = true;
     }
 };
 
@@ -22480,6 +22487,79 @@ var Direction = {
 exports.default = Direction;
 
 },{"./Arena":231}],235:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Cell = require('./Cell');
+
+var _Cell2 = _interopRequireDefault(_Cell);
+
+var _Arena = require('./Arena');
+
+var _Arena2 = _interopRequireDefault(_Arena);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function FoodCell(map, x, y) {
+    _Cell2.default.call(this, map, x, y);
+
+    this.foodMax = _Arena2.default.getRandom().nextGaussian() * FoodCell.FOOD_MAX_SD + FoodCell.FOOD_MAX_BASE;
+    if (this.foodMax < 0) {
+        this.foodMax = 0;
+    }
+    this.foodAmount = this.foodMax / 2;
+}
+
+FoodCell.prototype = Object.create(_Cell2.default.prototype);
+FoodCell.prototype.constructor = FoodCell;
+
+Object.defineProperty(FoodCell, 'GROWTH_PER_TURN', {
+    value: 5,
+    writeable: false
+});
+Object.defineProperty(FoodCell, 'FOOD_MAX_BASE', {
+    value: 50,
+    writeable: false
+});
+Object.defineProperty(FoodCell, 'FOOD_MAX_SD', {
+    value: 3,
+    writeable: false
+});
+Object.defineProperty(FoodCell, 'GROWTH_SD', {
+    value: 1,
+    writeable: false
+});
+
+FoodCell.prototype.howMuchFood = function howMuchFood() {
+    return this.foodAmount;
+};
+
+FoodCell.prototype.getMarking = function getMarking() {
+    return 2 * _Cell2.default.prototype.getMarking.call(this) * (this.foodMax - this.foodAmount) / this.foodMax;
+};
+
+FoodCell.prototype.beginningOfTurn = function beginningOfTurn() {
+    var growth = Math.max(_Arena2.default.getRandom().nextGaussian() * FoodCell.GROWTH_SD + FoodCell.GROWTH_PER_TURN, 0);
+
+    this.foodAmount += growth;
+    if (this.foodAmount > this.foodMax) {
+        this.foodAmount = this.foodMax;
+    }
+    _Cell2.default.prototype.beginningOfTurn.call(this);
+};
+
+FoodCell.prototype.getColor = function getColor() {
+    var brightness = 1 - this.foodAmount / FoodCell.FOOD_MAX_BASE * 165 / 240;
+    console.log('The cells don\'t need to change color or anything');
+    return ['MediumSeaGreen', 'ForestGreen', 'LimeGreen'][_Arena2.default.getRandom().nextInt(2)];
+};
+
+exports.default = FoodCell;
+
+},{"./Arena":231,"./Cell":232}],236:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22497,7 +22577,7 @@ GeneSet.prototype.constructor = GeneSet;
 
 exports.default = GeneSet;
 
-},{}],236:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22516,7 +22596,7 @@ var GeneType = {
 
 exports.default = GeneType;
 
-},{}],237:[function(require,module,exports){
+},{}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22551,7 +22631,7 @@ Genotype.prototype.getGene = function getGene(trait) {
 
 exports.default = Genotype;
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22588,7 +22668,7 @@ Herbivore.prototype.doEating = function doEating() {
 
 exports.default = Herbivore;
 
-},{"./Animal":230,"./GeneType":236}],239:[function(require,module,exports){
+},{"./Animal":230,"./GeneType":237}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22641,7 +22721,7 @@ exports.default = {
     }
 };
 
-},{"seedrandom":222}],240:[function(require,module,exports){
+},{"seedrandom":222}],241:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22673,7 +22753,7 @@ SortDistance.prototype.distance2 = function distance2(ani) {
 
 exports.default = SortDistance;
 
-},{}],241:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22683,6 +22763,10 @@ Object.defineProperty(exports, "__esModule", {
 var _Arena = require('./theHungerGames/Arena');
 
 var _Arena2 = _interopRequireDefault(_Arena);
+
+var _FoodCell = require('./theHungerGames/FoodCell');
+
+var _FoodCell2 = _interopRequireDefault(_FoodCell);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22697,33 +22781,7 @@ function nameOffset(name, fontSize) {
 // 	}
 // }
 
-// function Cell(color = 'ForestGreen'){
-// 	return {
-// 		color: color,
-// 		list: [], //LinkedList of animals on the cell
-// 		draw: function(ctx, coord){
-// 			//draw cell
-// 			ctx.fillStyle = this.color;
-// 			ctx.beginPath();
-// 			ctx.rect(coord.x, coord.y, cellSize, cellSize);
-// 			ctx.fill();
-// 			ctx.closePath();
-// 			console.log('kekekekekekekekek');
-// 			//draw number of animals
-// 			var text = this.list.length + '';
-// 			var fontSize = 0.75 * cellSize;
-// 			var xOff = nameOffset(text, fontSize)
-// 			var yOff = 1.0 * fontSize;
-// 			var font = fontSize + 'px Consolas';
-// 			ctx.font = font;
-// 			ctx.lineWidth = 1;
-// 			ctx.fillStyle = 'black';
-// 			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
-// 		}
-// 	}
-// }
-
-var mapSize = 20;
+var mapSize = 32;
 
 var canvas = document.getElementById('game-canvas');
 var ctx = canvas.getContext('2d');
@@ -22731,40 +22789,40 @@ var canvasSize = canvas.width;
 var cellSize = canvasSize / mapSize;
 console.log('Cell: ' + cellSize);
 
-var arena = new _Arena2.default(32, 32, cellSize);
+var arena = new _Arena2.default(mapSize, mapSize, cellSize);
 
 function getNthCell(nX, nY) {
 	return Coord(nX * cellSize, nY * cellSize);
 }
 
-// var map = new Map();
-
-// for(var y = 0; y < canvasSize; y += cellSize){
-// 	for(var x = 0; x < canvasSize; x += cellSize){
-// 		var color = 'ForestGreen'
-// 		if(x == 20){
-// 			color = 'GoldenRod';
-// 		}
-// 		map.set(Coord(x, y), Cell(color));
-// 	}
-// }
-
-// map.set(getNthCell(0, 0), Cell('GreenYellow'));
-// map.set(getNthCell(3, 4), Cell('GreenYellow'));
+console.log("We made the arena okay; now it's time to fill it with cells");
+for (var ix = 0; ix < arena.getXDim(); ++ix) {
+	for (var iy = 0; iy < arena.getYDim(); ++iy) {
+		// try {
+		arena.changeCell(ix, iy, new _FoodCell2.default(arena, ix, iy));
+		// } catch (err) {
+		// 	console.log(err);
+		// }
+	}
+}
+console.log("We filled the arena with cells and nothing has broken yet!");
 
 exports.default = {
 	main: function main() {
 
-		// ctx.fillStyle = 'ForestGreen';
-
-		// for(var [coord, cell] of map){
-		// 	cell.draw(ctx, coord);
-		// }
-
 		arena.draw(ctx, 0, 0);
+
+		console.log("We drew the arena without everything falling apart!");
+
+		for (var i = 0; i < 5; i++) {
+			if (arena.doTurn()) {
+				arena.draw(ctx, 0, 0);
+			}
+			console.log("We finished a step without horribly dying!");
+		}
 
 		console.log("Done!");
 	}
 };
 
-},{"./theHungerGames/Arena":231}]},{},[1]);
+},{"./theHungerGames/Arena":231,"./theHungerGames/FoodCell":235}]},{},[1]);

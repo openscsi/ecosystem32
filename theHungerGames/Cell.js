@@ -111,6 +111,7 @@ Cell.prototype.doTurn = function doTurn() {
                 break;
             }
         }
+        allAnimalsDone = true;
     }
 };
 

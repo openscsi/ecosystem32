@@ -40,10 +40,8 @@ FoodCell.prototype.getMarking = function getMarking() {
 };
 
 FoodCell.prototype.beginningOfTurn = function beginningOfTurn() {
-    const growth = Arena.getRandom().nextGaussian() * FoodCell.GROWTH_SD + FoodCell.GROWTH_PER_TURN;
-    if (growth < 0) {
-        growth = 0;
-    }
+    const growth = Math.max(Arena.getRandom().nextGaussian() * FoodCell.GROWTH_SD + FoodCell.GROWTH_PER_TURN,0);
+
     this.foodAmount += growth;
     if (this.foodAmount > this.foodMax) {
         this.foodAmount = this.foodMax;
@@ -54,7 +52,7 @@ FoodCell.prototype.beginningOfTurn = function beginningOfTurn() {
 FoodCell.prototype.getColor = function getColor() {
     const brightness = 1 - (this.foodAmount / FoodCell.FOOD_MAX_BASE * 165 / 240);
     console.log('The cells don\'t need to change color or anything');
-    return 'MediumSeaGreen';
+    return ['MediumSeaGreen','ForestGreen','LimeGreen'][Arena.getRandom().nextInt(2)];
 };
 
 export default FoodCell;
