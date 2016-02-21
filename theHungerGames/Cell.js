@@ -69,11 +69,11 @@ Cell.prototype.getYSize = function getYSize(){
 };
 
 Cell.prototype.getX = function getX(){
-    return this.y;
+    return this.x;
 };
 
 Cell.prototype.getY = function getY(){
-    return this.x;
+    return this.y;
 };
 
 Cell.prototype.getMap = function getMap(){

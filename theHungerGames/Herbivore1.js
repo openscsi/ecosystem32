@@ -21,11 +21,11 @@ Herbivore1.prototype.getName = function getName(){
 }
 
 Herbivore1.prototype.userDefinedChooseMove = function userDefinedChooseMove(){
-	if (this.getCell().howMuchFood() > 5) {
-		return new HerbivoreEat();
-	} else {
+	// if (this.getCell().howMuchFood() > 5) {
+	// 	return new HerbivoreEat();
+	// } else {
 		return new Move(Direction.randomDirection());
-	}
+	// }
 }
 
 Herbivore1.prototype.getInitialGene = function getInitialGene(type) {

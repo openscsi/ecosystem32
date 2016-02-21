@@ -52,7 +52,8 @@ FoodCell.prototype.beginningOfTurn = function beginningOfTurn() {
 FoodCell.prototype.getColor = function getColor() {
     const brightness = 1 - (this.foodAmount / FoodCell.FOOD_MAX_BASE * 165 / 240);
     console.log('The cells don\'t need to change color or anything');
-    return ['MediumSeaGreen','ForestGreen','LimeGreen'][Arena.getRandom().nextInt(2)];
+    // return ['MediumSeaGreen','ForestGreen','LimeGreen'][Arena.getRandom().nextInt(2)];
+    return 'MediumSeaGreen';
 };
 
 export default FoodCell;
