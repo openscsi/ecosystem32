@@ -2,6 +2,9 @@ import Animal from './Animal';
 import GeneType from './GeneType';
 
 function Herbivore() {
+    if (this.constructor === Herbivore) {
+        throw new Error('Cannot instantiate abstract class.');
+    }
     Animal.apply(this, arguments);
 }
 
