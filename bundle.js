@@ -17,7 +17,7 @@ window.viewerMain = function () {
 	_viewer2.default.main();
 };
 
-},{"./module":2,"./viewer":248}],2:[function(require,module,exports){
+},{"./module":2,"./viewer":249}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21487,7 +21487,7 @@ function Animal() {
 
     this.currentCell = null;
     this.dead = false;
-    this.performedAction = false;
+    this.performedActionkek = false;
     this.age = 0;
     this.gestationElapsed = 0;
     this.fetuses = [];
@@ -21652,22 +21652,22 @@ Animal.prototype.getColor = function getColor() {
 };
 
 Animal.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
-    if (isDead()) {
+    if (this.isDead()) {
         graphicObject.fillStyle = "FireBrick";
     } else {
-        graphicObject.fillStyle = getColor();
+        graphicObject.fillStyle = this.getColor();
     }
 
-    var offset = getXSize() * this.sizeScale;
+    var offset = this.getXSize() * this.sizeScale;
 
-    if (isDead()) {
+    if (this.isDead()) {
         graphicObject.beginPath();
-        graphicObject.ellipse(xCoord + offset, yCoord + offset, getXSize() - (2 * offset - 1), getYSize() - (2 * offset - 1), 0, 0, 2 * Math.PI);
+        graphicObject.ellipse(xCoord + offset, yCoord + offset, this.getXSize() - (2 * offset - 1), this.getYSize() - (2 * offset - 1), 0, 0, 2 * Math.PI);
         graphicObject.fill();
         graphicObject.closePath();
     } else {
         graphicObject.beginPath();
-        graphicObject.rect(xCoord + offset, yCoord + offset, getXSize() - (2 * offset - 1), getYSize() - (2 * offset - 1));
+        graphicObject.rect(xCoord + offset, yCoord + offset, this.getXSize() - (2 * offset - 1), this.getYSize() - (2 * offset - 1));
         graphicObject.fill();
         graphicObject.closePath();
     }
@@ -21707,11 +21707,11 @@ Animal.prototype.doTurn = function doTurn() {
         this.chooseMove();
     }
     this.endOfTurn();
-    this.performedAction = true;
+    this.performedActionkek = true;
 };
 
 Animal.prototype.setPerformedAction = function setPerformedAction(performed) {
-    this.performedAction = performed;
+    this.performedActionkek = performed;
 };
 
 Animal.prototype.beginningOfTurn = function beginningOfTurn() {
@@ -21870,7 +21870,7 @@ Animal.prototype.getInitialSD = function getInitialSD(type) {
 };
 
 Animal.prototype.reset = function reset() {
-    this.performedAction = false;
+    this.performedActionkek = false;
 };
 
 Animal.prototype.die = function die() {
@@ -21914,11 +21914,19 @@ Animal.prototype.makeMove = function makeMove(dire) {
 };
 
 Animal.prototype.performedAction = function performedAction() {
-    return this.performedAction;
+    return this.performedActionkek;
 };
 
 Animal.getRandom = function getRandom() {
     return _Arena2.default.getRandom();
+};
+
+Animal.prototype.getXSize = function getXSize() {
+    return this.currentCell.getXSize();
+};
+
+Animal.prototype.getYSize = function getYSize() {
+    return this.currentCell.getYSize();
 };
 
 exports.default = Animal;
@@ -21950,6 +21958,10 @@ var _SortDistance = require('./SortDistance');
 
 var _SortDistance2 = _interopRequireDefault(_SortDistance);
 
+var _WallCell = require('./WallCell');
+
+var _WallCell2 = _interopRequireDefault(_WallCell);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Arena(xsizeIn, ysizeIn, cellSize) {
@@ -21960,6 +21972,7 @@ function Arena(xsizeIn, ysizeIn, cellSize) {
     this.ndays = 0;
     this.map = new Map();
     this.aniMap = new Map();
+    this.colorMap = new Map();
     this.allAnimals = [];
     this.finalMap = new Map();
     this.herbivoreNames = [];
@@ -22022,7 +22035,7 @@ Arena.prototype.getYDim = function getYDim() {
 Arena.prototype.initialize = function initialize() {
     for (var ix = 0; ix < this.xsize; ++ix) {
         for (var iy = 0; iy < this.ysize; ++iy) {
-            this.map.set(new _Coord2.default(ix, iy), new _Cell2.default(this, ix, iy));
+            this.map.set(JSON.stringify(new _Coord2.default(ix, iy)), new _Cell2.default(this, ix, iy));
         }
     }
 };
@@ -22033,89 +22046,89 @@ Arena.prototype.getNDays = function getNDays() {
 
 Arena.prototype.changeCell = function changeCell(xCoord, yCoord, newCell) {
     var coord = new _Coord2.default(xCoord, yCoord);
-    this.map.set(coord, newCell);
+    this.map.set(JSON.stringify(coord), newCell);
 };
 
 Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an) {
-    getCell(xCoord, yCoord).addAnimal(an);
+    this.getCell(xCoord, yCoord).addAnimal(an);
 
     if (!this.colorMap.has(an)) {
-        this.colorMap.put(an.getName(), an.getColor());
+        this.colorMap.set(an.getName(), an.getColor());
         if (an instanceof _Herbivore2.default) {
             this.herbivoreNames.push(an.getName());
         }
-        updateMap();
+        this.updateMap();
     }
 };
 
 Arena.prototype.addRandomAnimal = function addRandomAnimal(an) {
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
-    while (getCell(x, y) instanceof WallCell) {
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    var x = Arena.getRandom().nextInt(this.getXDim());
+    var y = Arena.getRandom().nextInt(this.getYDim());
+    while (this.getCell(x, y) instanceof _WallCell2.default) {
+        x = Arena.getRandom().nextInt(getXDim());
+        y = Arena.getRandom().nextInt(getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
 Arena.prototype.addRandomTeamAnimal = function addRandomTeamAnimal(an, team) {
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
+    var x = Arena.getRandom().nextInt(this.getXDim());
+    var y = Arena.getRandom().nextInt(this.getYDim());
     switch (team) {
         case 1:
             while (!(x < 31 && y < 31)) {
-                x = getRandom().nextInt(getXDim());
-                y = getRandom().nextInt(getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 2:
             while (!(x > 31 && y < 31)) {
-                x = getRandom().nextInt(getXDim());
-                y = getRandom().nextInt(getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 3:
             while (!(x < 31 && y > 31)) {
-                x = getRandom().nextInt(getXDim());
-                y = getRandom().nextInt(getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 4:
             while (!(x > 31 && y > 31)) {
-                x = getRandom().nextInt(getXDim());
-                y = getRandom().nextInt(getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
     }
-    while (getCell(x, y) instanceof WallCell) {
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    while (this.getCell(x, y) instanceof _WallCell2.default) {
+        x = Arena.getRandom().nextInt(this.getXDim());
+        y = Arena.getRandom().nextInt(this.getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
 Arena.prototype.addRandomForeignAnimal = function addRandomForeignAnimal(an, foreign) {
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
+    var x = Arena.getRandom().nextInt(this.getXDim());
+    var y = Arena.getRandom().nextInt(this.getYDim());
     if (foreign) {
         while (!(x > 31)) {
-            x = getRandom().nextInt(getXDim());
+            x = Arena.getRandom().nextInt(this.getXDim());
         }
     }
     if (!foreign) {
         while (!(x < 31)) {
-            x = getRandom().nextInt(getXDim());
+            x = Arena.getRandom().nextInt(this.getXDim());
         }
     }
-    while (getCell(x, y) instanceof WallCell) {
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    while (getCell(x, y) instanceof _WallCell2.default) {
+        x = Arena.getRandom().nextInt(this.getXDim());
+        y = Arena.getRandom().nextInt(this.getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
 Arena.prototype.getCell = function getCell(xCoord, yCoord) {
-    return this.map.get(new _Coord2.default(x, y));
+    return this.map.get(JSON.stringify(new _Coord2.default(xCoord, yCoord)));
 };
 
 // I'd be lying if I said I wanted to write this function
@@ -22138,29 +22151,29 @@ Arena.prototype.doTurn = function doTurn() {
     }
 
     this.updateMap();
-    this.updateFinal();
+    // this.updateFinal();
 
     this.ndays++;
 
     if (this.ndays === 100) {
         var entriesIter = map.entrySet();
         while (entriesIter.hasNext()) {
-            entry = entriesIter.next();
+            var entry = entriesIter.next();
 
-            if (entry.value instanceof WallCell) {
+            if (entry.value instanceof _WallCell2.default) {
                 //Yeah, this line was nasty so we deleted it. Probably fine.
                 try {
                     this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                 } catch (err) {
                     this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
-                    console.log(err);
+                    console.error(err);
                 }
             }
         }
     }
 
     if (this.printout) {
-        console.log(countAnimals());
+        console.log(this.countAnimals());
     }
 
     if (this.checkStillGoing()) {
@@ -22184,43 +22197,45 @@ Arena.prototype.checkStillGoing = function checkStillGoing() {
     return true;
 };
 
-Arena.prototype.updateFinal = function updateFinal() {
-    var _this = this;
+// Arena.prototype.updateFinal = function updateFinal() {
+//     this.aniMap.forEach((value, key) => {
+//         if (this.finalMap.has(key)) {
+//             this.finalMap.set(key, this.finalMap.get(key) + value);
+//         } else {
+//             this.finalMap.set(key, value);
+//         }
+//     });
+// };
 
-    this.aniMap.forEach(function (value, key) {
-        if (_this.finalMap.has(key)) {
-            _this.finalMap.set(key, _this.finalMap.get(key) + value);
-        } else {
-            _this.finalMap.set(key, value);
-        }
-    });
+Arena.prototype.outputFinal = function outputFinal() {
+    throw new Error('Nope!');
 };
 
 Arena.prototype.countAnimals = function countAnimals() {
-    var _this2 = this;
+    var _this = this;
 
     var response = '';
     var myset = Array.from(this.aniMap.keys());
     myset.sort();
 
     myset.forEach(function (name) {
-        response = response.concat(name + ' ' + _this2.aniMap.get(name) + '   ');
+        response = response.concat(name + ' ' + _this.aniMap.get(name) + '   ');
     });
 
     return response;
 };
 
 Arena.prototype.updateMap = function updateMap() {
-    var _this3 = this;
+    var _this2 = this;
 
     this.aniMap.forEach(function (value, key, map) {
         map.set(key, 0);
     });
     this.allAnimals = [];
     this.map.forEach(function (icell, key, map) {
-        icell.countAnimals(_this3.aniMap);
+        icell.countAnimals(_this2.aniMap);
         icell.getOtherAnimals(null).forEach(function (ani) {
-            _this3.allAnimals.push(ani);
+            _this2.allAnimals.push(ani);
         });
     });
 };
@@ -22246,7 +22261,7 @@ Arena.prototype.getAnimalCount = function getAnimalCount() {
 
 exports.default = Arena;
 
-},{"./Cell":232,"./Coord":233,"./Herbivore":241,"./Random":245,"./SortDistance":246}],232:[function(require,module,exports){
+},{"./Cell":232,"./Coord":233,"./Herbivore":241,"./Random":245,"./SortDistance":246,"./WallCell":248}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -23051,7 +23066,7 @@ Turn.prototype.turn = function turn(animal) {
         return false;
     }
 
-    var result = doTurn(animal);
+    var result = this.doTurn(animal);
 
     if (result) {
         animal.removeEnergy(energy);
@@ -23062,6 +23077,36 @@ Turn.prototype.turn = function turn(animal) {
 exports.default = Turn;
 
 },{}],248:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Cell = require('./Cell');
+
+var _Cell2 = _interopRequireDefault(_Cell);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function WallCell(map, x, y) {
+    _Cell2.default.call(this, map, x, y);
+}
+
+WallCell.prototype = Object.create(_Cell2.default.prototype);
+WallCell.prototype.constructor = WallCell;
+
+WallCell.prototype.isMoveable = function isMoveable() {
+    return false;
+};
+
+WallCell.prototype.getColor = function getColor() {
+    return 'LightSlateGrey';
+};
+
+exports.default = WallCell;
+
+},{"./Cell":232}],249:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

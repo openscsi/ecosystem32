@@ -3,6 +3,7 @@ import Cell from './Cell';
 import Coord from './Coord';
 import Herbivore from './Herbivore';
 import SortDistance from './SortDistance';
+import WallCell from './WallCell';
 
 function Arena(xsizeIn, ysizeIn, cellSize){
     this.xsize = xsizeIn;
@@ -75,7 +76,7 @@ Arena.prototype.getYDim = function getYDim() {
 Arena.prototype.initialize = function initialize() {
     for (let ix = 0; ix < this.xsize; ++ix) {
         for (let iy = 0; iy < this.ysize; ++iy) {
-            this.map.set(new Coord(ix, iy), new Cell(this, ix, iy));
+            this.map.set(JSON.stringify(new Coord(ix, iy)), new Cell(this, ix, iy));
         }
     }
 };
@@ -86,89 +87,89 @@ Arena.prototype.getNDays = function getNDays() {
 
 Arena.prototype.changeCell = function changeCell(xCoord, yCoord, newCell){
     var coord = new Coord(xCoord, yCoord);
-    this.map.set(coord, newCell);
+    this.map.set(JSON.stringify(coord), newCell);
 }
 
 Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an){
     this.getCell(xCoord, yCoord).addAnimal(an);
 
     if (!this.colorMap.has(an)) {
-        this.colorMap.put(an.getName(), an.getColor());
+        this.colorMap.set(an.getName(), an.getColor());
         if (an instanceof Herbivore) {
             this.herbivoreNames.push(an.getName());
         }
-        updateMap();
+        this.updateMap();
     }
 };
 
 Arena.prototype.addRandomAnimal = function addRandomAnimal(an){
-    let x = this.getRandom().nextInt(this.getXDim());
-    let y = this.getRandom().nextInt(this.getYDim());
+    let x = Arena.getRandom().nextInt(this.getXDim());
+    let y = Arena.getRandom().nextInt(this.getYDim());
     while (this.getCell(x, y) instanceof WallCell) {
-        x = this.getRandom().nextInt(getXDim());
-        y = this.getRandom().nextInt(getYDim());
+        x = Arena.getRandom().nextInt(getXDim());
+        y = Arena.getRandom().nextInt(getYDim());
     }
     this.addAnimal(x, y, an);
 };
 
 Arena.prototype.addRandomTeamAnimal = function addRandomTeamAnimal(an, team) {
-    let x = this.getRandom().nextInt(this.getXDim());
-    let y = this.getRandom().nextInt(this.getYDim());
+    let x = Arena.getRandom().nextInt(this.getXDim());
+    let y = Arena.getRandom().nextInt(this.getYDim());
     switch (team) {
         case 1:
             while (!(x < 31 && y < 31)) {
-                x = this.getRandom().nextInt(this.getXDim());
-                y = this.getRandom().nextInt(this.getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 2:
             while (!(x > 31 && y < 31)) {
-                x = this.getRandom().nextInt(this.getXDim());
-                y = this.getRandom().nextInt(this.getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 3:
             while (!(x < 31 && y > 31)) {
-                x = this.getRandom().nextInt(this.getXDim());
-                y = this.getRandom().nextInt(this.getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
         case 4:
             while (!(x > 31 && y > 31)) {
-                x = this.getRandom().nextInt(this.getXDim());
-                y = this.getRandom().nextInt(this.getYDim());
+                x = Arena.getRandom().nextInt(this.getXDim());
+                y = Arena.getRandom().nextInt(this.getYDim());
             }
             break;
     }
     while(this.getCell(x, y) instanceof WallCell){
-        x = this.getRandom().nextInt(this.getXDim());
-        y = this.getRandom().nextInt(this.getYDim());
+        x = Arena.getRandom().nextInt(this.getXDim());
+        y = Arena.getRandom().nextInt(this.getYDim());
     }
     this.addAnimal(x, y, an);
 };
 
 Arena.prototype.addRandomForeignAnimal = function addRandomForeignAnimal(an, foreign) {
-    let x = this.getRandom().nextInt(this.getXDim());
-    let y = this.getRandom().nextInt(this.getYDim());
+    let x = Arena.getRandom().nextInt(this.getXDim());
+    let y = Arena.getRandom().nextInt(this.getYDim());
     if (foreign) {
         while (!(x > 31)) {
-            x = this.getRandom().nextInt(this.getXDim());
+            x = Arena.getRandom().nextInt(this.getXDim());
         }
     }
     if (!foreign) {
         while (!(x < 31)) {
-            x = this.getRandom().nextInt(this.getXDim());
+            x = Arena.getRandom().nextInt(this.getXDim());
         }
     }
     while (getCell(x, y) instanceof WallCell) {
-        x = this.getRandom().nextInt(this.getXDim());
-        y = this.getRandom().nextInt(this.getYDim());
+        x = Arena.getRandom().nextInt(this.getXDim());
+        y = Arena.getRandom().nextInt(this.getYDim());
     }
     this.addAnimal(x, y, an);
 };
 
 Arena.prototype.getCell = function getCell(xCoord, yCoord){
-    return this.map.get(new Coord(x, y));
+    return this.map.get(JSON.stringify(new Coord(xCoord, yCoord)));
 };
 
 // I'd be lying if I said I wanted to write this function
@@ -191,7 +192,7 @@ Arena.prototype.doTurn = function doTurn(){
     }
 
     this.updateMap();
-    this.updateFinal();
+    // this.updateFinal();
 
     this.ndays++;
 
@@ -237,15 +238,15 @@ Arena.prototype.checkStillGoing = function checkStillGoing() {
     return true;
 };
 
-Arena.prototype.updateFinal = function updateFinal() {
-    this.aniMap.forEach((value, key) => {
-        if (this.finalMap.has(key)) {
-            this.finalMap.set(key, this.finalMap.get(key) + value);
-        } else {
-            this.finalMap.set(key, value);
-        }
-    });
-};
+// Arena.prototype.updateFinal = function updateFinal() {
+//     this.aniMap.forEach((value, key) => {
+//         if (this.finalMap.has(key)) {
+//             this.finalMap.set(key, this.finalMap.get(key) + value);
+//         } else {
+//             this.finalMap.set(key, value);
+//         }
+//     });
+// };
 
 Arena.prototype.outputFinal = function outputFinal() {
     throw new Error('Nope!');

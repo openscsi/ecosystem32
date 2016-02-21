@@ -18,7 +18,7 @@ Turn.prototype.turn = function turn(animal) {
         return false;
     }
 
-    const result = doTurn(animal);
+    const result = this.doTurn(animal);
 
     if (result) {
         animal.removeEnergy(energy);

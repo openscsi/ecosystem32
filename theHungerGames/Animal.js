@@ -13,7 +13,7 @@ function Animal() {
 
     this.currentCell = null;
     this.dead = false;
-    this.performedAction = false;
+    this.performedActionkek = false;
     this.age = 0;
     this.gestationElapsed = 0;
     this.fetuses = [];
@@ -188,22 +188,22 @@ Animal.prototype.getColor = function getColor() {
 };
 
 Animal.prototype.draw = function draw(graphicObject, xCoord, yCoord){
-    if (isDead()) {
+    if (this.isDead()) {
     graphicObject.fillStyle = "FireBrick";
 } else {
-    graphicObject.fillStyle = getColor();
+    graphicObject.fillStyle = this.getColor();
 }
 
-var offset = getXSize() * this.sizeScale;
+var offset = this.getXSize() * this.sizeScale;
 
-if (isDead()) {
+if (this.isDead()) {
     graphicObject.beginPath();
-    graphicObject.ellipse(xCoord + offset, yCoord + offset, getXSize() - (2 *offset - 1), getYSize() - (2 * offset - 1), 0, 0, 2*Math.PI);
+    graphicObject.ellipse(xCoord + offset, yCoord + offset, this.getXSize() - (2 *offset - 1), this.getYSize() - (2 * offset - 1), 0, 0, 2*Math.PI);
     graphicObject.fill();
     graphicObject.closePath();
 } else {
     graphicObject.beginPath();
-    graphicObject.rect(xCoord + offset, yCoord + offset, getXSize() - (2 *offset - 1), getYSize() - (2 * offset - 1));
+    graphicObject.rect(xCoord + offset, yCoord + offset, this.getXSize() - (2 *offset - 1), this.getYSize() - (2 * offset - 1));
     graphicObject.fill();
     graphicObject.closePath();
 }
@@ -244,11 +244,11 @@ Animal.prototype.doTurn = function doTurn() {
         this.chooseMove();
     }
     this.endOfTurn();
-    this.performedAction = true;
+    this.performedActionkek = true;
 };
 
 Animal.prototype.setPerformedAction = function setPerformedAction(performed) {
-    this.performedAction = performed;
+    this.performedActionkek = performed;
 };
 
 Animal.prototype.beginningOfTurn = function beginningOfTurn() {
@@ -409,7 +409,7 @@ Animal.prototype.getInitialSD = function getInitialSD(type) {
 };
 
 Animal.prototype.reset = function reset() {
-    this.performedAction = false;
+    this.performedActionkek = false;
 };
 
 Animal.prototype.die = function die() {
@@ -453,11 +453,19 @@ Animal.prototype.makeMove = function makeMove(dire) {
 };
 
 Animal.prototype.performedAction = function performedAction() {
-    return this.performedAction;
+    return this.performedActionkek;
 };
 
 Animal.getRandom = function getRandom() {
     return Arena.getRandom();
 };
+
+Animal.prototype.getXSize = function getXSize(){
+    return this.currentCell.getXSize();
+}
+
+Animal.prototype.getYSize = function getYSize(){
+    return this.currentCell.getYSize();
+}
 
 export default Animal;
