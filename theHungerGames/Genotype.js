@@ -16,13 +16,13 @@ GeneSet.prototype.getMotherGenes = function getMotherGenes(){
 GeneSet.prototype.getGeneTypes = function getGeneTypes(){
 	return fatherGenes.allGenesInOrder();
     // If something about the genes is breaking, it's probably this
-}
+};
 
 GeneSet.prototype.getGene = function getGene(trait) {
-		for (var i = 0; i < fatherGenes.allGenesInOrder().length; ++i) {
-			if (fatherGenes.allGenesInOrder()[i].getType() == trait) {
-				return (fatherGenes.allGenesInOrder()[i].getValue() + motherGenes.allGenesInOrder()[i].getValue()) / 2;
-			}
+	for (var i = 0; i < fatherGenes.allGenesInOrder().length; ++i) {
+		if (fatherGenes.allGenesInOrder()[i].getType() == trait) {
+			return (fatherGenes.allGenesInOrder()[i].getValue() + motherGenes.allGenesInOrder()[i].getValue()) / 2;
 		}
-		throw new Error('No such Gene Kim!');
 	}
+	throw new Error('No such Gene Kim!');
+};
