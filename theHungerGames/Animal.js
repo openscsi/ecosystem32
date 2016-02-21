@@ -117,7 +117,7 @@ Animal.prototype.ageOfSexualMaturity = function ageOfSexualMaturity() {
     const sizeFactor1 = 0.2;
     const sizeFactor2 = 0.5;
     const fertilityFactor = 0.3;
-    return Math.floor((this.getGenotype().getGene(GeneType.SIZE1) * sizeFactor1 + this.getGenotype().getGene(GeneType.SIZE2) * sizeFactor2 
+    return Math.floor((this.getGenotype().getGene(GeneType.SIZE1) * sizeFactor1 + this.getGenotype().getGene(GeneType.SIZE2) * sizeFactor2
         + this.getGenotype().getGene(GeneType.FERTILITY) * fertilityFactor) * Animal.SEX_MATURITY_SCALE + Animal.SEX_MATURITY_BASE);
 };
 
@@ -184,6 +184,29 @@ Animal.prototype.getNTurns = function getNTurns() {
 Animal.prototype.getColor = function getColor() {
     throw new Error('Cannot call abstract method.');
 };
+
+Animal.prototype.Draw = function Draw(graphicObject, xCoord, yCoord){
+    if (isDead()) {
+    graphicObject.fillStyle = "FireBrick";
+} else {
+    graphicObject.fillStyle = getColor();
+}
+
+var offset = getXSize() * this.sizeScale;
+
+if (isDead()) {
+    graphicObject.beginPath();
+    graphicObject.ellipse(xCoord + offset, yCoord + offset, getXSize() - (2 *offset - 1), getYSize() - (2 * offset - 1), 0, 0, 2*Math.PI);
+    graphicObject.fill();
+    graphicObject.closePath();
+} else {
+    graphicObject.beginPath();
+    graphicObject.rect(xCoord + offset, yCoord + offset, getXSize() - (2 *offset - 1), getYSize() - (2 * offset - 1));
+    graphicObject.fill();
+    graphicObject.closePath();
+}
+
+}
 
 Animal.prototype.getName = function getName() {
     throw new Error('Cannot call abstract method.');

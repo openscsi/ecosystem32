@@ -37,7 +37,23 @@ Cell.prototype.getMarking = function getMarking() {
 };
 
 Cell.prototype.draw = function draw(graphicObject, xCoord, yCoord){
-    throw new Error('Cell Drawing isn\'t implemented yet!');
+    graphicObject.fillStyle = getColor();
+    graphicObject.beginPath();
+    graphicObject.rect(xCoord, yCoord, getXSize(), getYSize());
+    graphicObject.fill();
+    graphicObject.closePath();
+
+	for (var i = 0; i < list.length; i++) {
+        var ian = list[i];
+		ian.Draw(graphicObject, xCoord, yCoord);
+	}
+
+    graphicObject.fillStyle = "Gainsboro";
+    graphicObject.beginPath();
+    graphicObject.rect(xCoord, yCoord, getXSize(), getYSize());
+    //graphicObject.fill();
+    graphicObject.closePath();
+
 };
 
 Cell.prototype.getColor = function getColor(){

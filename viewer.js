@@ -20,6 +20,7 @@ function Cell(color = 'white'){
 			ctx.rect(coord.x, coord.y, cellSize, cellSize);
 			ctx.fill();
 			ctx.closePath();
+			console.log('kekekekekekekekek');
 			//Draw number of animals
 			var text = this.list.length + '';
 			var fontSize = 0.75 * cellSize;

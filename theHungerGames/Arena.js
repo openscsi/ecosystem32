@@ -43,6 +43,12 @@ Arena.prototype.setFile = function setFile(file) {
 
 Arena.prototype.Draw = function Draw(graphicObject, xCoord, yCoord) {
     throw new Error('We don\'t know how to draw things yet so good luck with that.');
+    var coordIter = this.map.keys();
+    while (coordIter.hasNext()) {
+        var icoord = coordIter.next();
+		this.map.get(icoord).Draw(graph, xCoord + icoord.x * this.map.get(icoord).getXSize(),
+				yCoord + icoord.y * this.map.get(icoord).getYSize());
+	}
 };
 
 Arena.prototype.getXSize = function getXSize() {
