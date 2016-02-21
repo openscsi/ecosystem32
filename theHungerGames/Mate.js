@@ -1,14 +1,18 @@
-var Move = function(animal) {
+import Turn from './Turn';
+
+function Mate(animal) {
     Turn.call(this);
     this.mate = animal;
 };
-Move.prototype = Object.create(Turn.prototype);
-Move.prototype.constructor = Move;
+Mate.prototype = Object.create(Turn.prototype);
+Mate.prototype.constructor = Mate;
 
-Move.prototype.doTurn = function(animal) {
+Mate.prototype.doTurn = function doTurn(animal) {
     return animal.mate(mate);
-}
+};
 
-Move.prototype.energyConsumption = function(animal) {
+Mate.prototype.energyConsumption = function energyConsumption(animal) {
     return animal.energyToMate();
-}
+};
+
+export default Mate;
