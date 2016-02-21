@@ -14,7 +14,7 @@ function nameOffset(name, fontSize){
 // 	}
 // }
 
-var mapSize = 32;
+var mapSize = 64;
 
 var canvas = document.getElementById('game-canvas');
 var ctx = canvas.getContext('2d');
@@ -40,11 +40,9 @@ for (var ix = 0; ix < arena.getXDim(); ++ix) {
 }
 console.log("We filled the arena with cells and nothing has broken yet!");
 
+for(var i = 0; i < 250; i++){
 arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
-arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
-arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
-arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
-arena.addRandomAnimal(Animal.makeRandomAnimal(Herbivore1));
+}
 
 console.log("We added some animals to the arena and the world didn't end in flames!");
 

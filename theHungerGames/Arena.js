@@ -44,7 +44,6 @@ Arena.prototype.setFile = function setFile(file) {
 };
 
 Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
-    console.log("Breakpoint me!");
     var coordIter = this.map.keys();
     //console.log(coordIter);
     var icoord = {};
@@ -198,20 +197,15 @@ Arena.prototype.doTurn = function doTurn(){
     this.ndays++;
 
     if (this.ndays === 100) {
-        const entriesIter = this.map.entrySet();
-        while (entriesIter.hasNext()) {
-            const entry = entriesIter.next();
-
-            if(entry.value instanceof WallCell){
+        const entriesIter = this.map.entries();
+        const entries = Array.from(entriesIter);
+        entries.forEach(entry => {
+            if(entry[1] instanceof WallCell){
                 //Yeah, this line was nasty so we deleted it. Probably fine.
-                try {
-                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
-                } catch (err) {
-                    this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
-                    console.error(err);
-                }
+                    this.changeCell(entry[1].getX(), entry[1].getY(), new FoodCell(this, entry[1].getX(), entry[1].getY()));
             }
-        }
+        });
+
     }
 
     if (this.printout) {

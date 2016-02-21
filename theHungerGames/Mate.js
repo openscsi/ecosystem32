@@ -9,7 +9,7 @@ Mate.prototype = Object.create(Turn.prototype);
 Mate.prototype.constructor = Mate;
 
 Mate.prototype.doTurn = function doTurn(animal) {
-    return animal.mate(mate);
+    return animal.mate(this.mate);
 };
 
 Mate.prototype.energyConsumption = function energyConsumption(animal) {

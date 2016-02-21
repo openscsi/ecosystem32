@@ -22,7 +22,6 @@ function Animal() {
 
 Animal.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
     let newAnimal = new AnimalConstructor();
-    console.log(newAnimal);
     newAnimal.addGenotype(newAnimal.randomGenotype());
     newAnimal.energyReserve = newAnimal.initialEnergy();
     newAnimal.randomAge();
@@ -354,7 +353,7 @@ Animal.prototype.checkMateability = function checkMateability(other) {
 };
 
 Animal.prototype.checkType = function checkType(other) {
-    return this instanceof other && this.prototype.constructor === other.prototype.constructor;
+    return this.getName() === other.getName();
 };
 
 Animal.prototype.createOffspring = function createOffspring(other) {
