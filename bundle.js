@@ -32,6 +32,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function nameOffset(name, fontSize) {
+	return Math.round(name.length * (fontSize / 2) / 2);
+}
+
 function Coord(x, y) {
 	return {
 		x: x,
@@ -44,17 +48,32 @@ function Cell() {
 
 	return {
 		color: color,
+		list: [], //LinkedList of animals on the cell
 		draw: function draw(ctx, coord) {
+			//Draw cell
 			ctx.fillStyle = this.color;
 			ctx.beginPath();
 			ctx.rect(coord.x, coord.y, cellSize, cellSize);
 			ctx.fill();
 			ctx.closePath();
+			//Draw number of animals
+			var text = this.list.length;
+			var fontSize = 0.75 * cellSize;
+			var xOff = nameOffset(text, fontSize);
+			var yOff = Math.round(0.5 * fontSize);
+
+			var font = fontSize + 'px Arial';
+			ctx.font = font;
+			ctx.lineWidth = 3;
+			ctx.strokeStyle = 'black';
+			//ctx.textAlign = 'center';
+			ctx.strokeText(text + "a", coord.x - xOff, coord.y + yOff);
+			console.log(text);
 		}
 	};
 }
 
-var mapSize = 50;
+var mapSize = 20;
 
 var canvas = document.getElementById('game-canvas');
 var ctx = canvas.getContext('2d');
