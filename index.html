@@ -1,7 +1,62 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <script src="bundle.js"></script>
-        <script src="seedrandom.js"></script>
-    </body>
+	<head>
+		<title>Open SCSI</title>
+		<link rel="stylesheet" type="text/css" href="style/reset.css">
+		<link rel="stylesheet" type="text/css" href="style/main.css">
+		<!--<link rel="icon" type="img/png" href="style/favicon.png" style="width:30px;">-->
+		<!-- IMPORTED SCRIPTS -->
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<!-- NEED FIREBASE LATER -->
+		<style>
+
+			html{
+				background: url('style/img/charcoal-hex.png');
+				background-size: 200px;
+				background-repeat: repeat;
+			}
+
+
+
+		</style>
+	</head>
+
+	<body id="index">
+
+		<section id="cover">
+			<img src="style/img/scsi-logo.png">
+			<div class="ghost-center">
+				<div id="entry-message">
+					<h1>Hello, World.<span class="console-char"> |</span></h1>
+					<p>Technology changes rapidly. The content we teach our students matters less than the experiences we build around computing. Open SCSI is here to turn students' dreams about the CS learning experience into reality.</p>
+				</div>
+			</div>
+			<div class="video-wrapper">
+				<video autoplay loop>
+					<source src="style/vid/observatory.mp4">SCSI Video</source>
+				</video>
+			</div>
+		</section>
+		<section>
+			<h1>Student Computer Science Initiative</h1>
+			<p>Computing is everywhere.</p>
+			<p>Video background from <a href="http://www.eso.org/public/" target="_blank">Eso Observatory</a>.</p>
+		</section>
+
+		<script src="bundle.js"></script>
+		<script src="seedrandom.js"></script>
+
+		<script type="text/javascript">
+
+			$('a').click(function(){
+				$('html, body').animate({
+					scrollTop: $( $.attr(this, 'href') ).offset().top
+				}, 500);
+				return false;
+			});
+
+		</script>
+		
+	</body>
 </html>

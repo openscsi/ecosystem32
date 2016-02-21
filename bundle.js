@@ -5,9 +5,9 @@ var _module = require('./module');
 
 var _module2 = _interopRequireDefault(_module);
 
-var _Wait = require('./theHungerGames/Wait');
+var _viewer = require('./viewer');
 
-var _Wait2 = _interopRequireDefault(_Wait);
+var _viewer2 = _interopRequireDefault(_viewer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15,7 +15,9 @@ window.Wait = _Wait2.default;
 
 console.log('I am a', _module2.default);
 
-},{"./module":2,"./theHungerGames/Wait":4}],2:[function(require,module,exports){
+//Viewer.main();
+
+},{"./module":2,"./viewer":3}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27,66 +29,111 @@ exports.default = 'meme';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function Turn() {
-    if (this.constructor === Turn) {
-        throw new Error('Cannot instantiate abstract class.');
-    }
-}
-
-Turn.prototype.energyConsumption = function energyConsumption(animal) {
-    throw new Error('Cannot call abstract method.');
-};
-
-Turn.prototype.doTurn = function doTurn(animal) {
-    throw new Error('Cannot call abstract method.');
-};
-
-Turn.prototype.turn = function turn(animal) {
-    var energy = this.energyConsumption(animal);
-    if (animal.getEnergyReserve() < energy) {
-        return false;
-    }
-
-    var result = doTurn(animal);
-
-    if (result) {
-        animal.removeEnergy(energy);
-    }
-    return result;
-};
-
-exports.default = Turn;
-
-},{}],4:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
-var _Turn = require('./Turn');
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _Turn2 = _interopRequireDefault(_Turn);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Wait() {
-    _Turn2.default.apply(this, arguments);
+function nameOffset(name, fontSize) {
+	return Math.round(name.length * (fontSize / 2) / 2);
 }
 
-Wait.prototype = Object.create(_Turn2.default.prototype);
-Wait.prototype.constructor = Wait;
+function Coord(x, y) {
+	return {
+		x: x,
+		y: y
+	};
+}
 
-Wait.prototype.energyConsumption = function energyConsumption() {
-    return 0;
+function Cell() {
+	var color = arguments.length <= 0 || arguments[0] === undefined ? 'white' : arguments[0];
+
+	return {
+		color: color,
+		list: [], //LinkedList of animals on the cell
+		draw: function draw(ctx, coord) {
+			//Draw cell
+			ctx.fillStyle = this.color;
+			ctx.beginPath();
+			ctx.rect(coord.x, coord.y, cellSize, cellSize);
+			ctx.fill();
+			ctx.closePath();
+			//Draw number of animals
+			var text = this.list.length + '';
+			var fontSize = 0.75 * cellSize;
+			var xOff = nameOffset(text, fontSize);
+			var yOff = 1.0 * fontSize;
+			var font = fontSize + 'px Consolas';
+			ctx.font = font;
+			ctx.lineWidth = 1;
+			ctx.fillStyle = 'black';
+			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
+		}
+	};
+}
+
+var mapSize = 20;
+
+var canvas = document.getElementById('game-canvas');
+var ctx = canvas.getContext('2d');
+var canvasSize = canvas.width;
+var cellSize = canvasSize / mapSize;
+console.log('Cell: ' + cellSize);
+
+function getNthCell(nX, nY) {
+	return Coord(nX * cellSize, nY * cellSize);
+}
+
+var map = new Map();
+
+for (var y = 0; y < canvasSize; y += cellSize) {
+	for (var x = 0; x < canvasSize; x += cellSize) {
+		var color = 'white';
+		if (x == 20) {
+			color = 'red';
+		}
+		map.set(Coord(x, y), Cell(color));
+	}
+}
+
+map.set(getNthCell(0, 0), Cell('blue'));
+map.set(getNthCell(3, 4), Cell('blue'));
+
+exports.default = {
+	main: function main() {
+
+		ctx.fillStyle = 'white';
+
+		var _iteratorNormalCompletion = true;
+		var _didIteratorError = false;
+		var _iteratorError = undefined;
+
+		try {
+			for (var _iterator = map[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+				var _step$value = _slicedToArray(_step.value, 2);
+
+				var coord = _step$value[0];
+				var cell = _step$value[1];
+
+				cell.draw(ctx, coord);
+			}
+		} catch (err) {
+			_didIteratorError = true;
+			_iteratorError = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion && _iterator.return) {
+					_iterator.return();
+				}
+			} finally {
+				if (_didIteratorError) {
+					throw _iteratorError;
+				}
+			}
+		}
+
+		console.log("Done!");
+	}
 };
 
-Wait.prototype.doTurn = function doTurn() {
-    return true;
-};
-
-exports.default = Wait;
-
-},{"./Turn":3}]},{},[1]);
+},{}]},{},[1]);
