@@ -8,6 +8,7 @@ exports.default = {
 	previewAnimal: function previewAnimal() {
 
 		var name = document.getElementById('name').value;
+		var room = document.getElementById('room').value;
 		var color = document.getElementById('color').value;
 		var typeForm = document.querySelector('input[name="type"]:checked');
 		var type = typeForm ? typeForm.value : null;
@@ -23,6 +24,7 @@ exports.default = {
 
 		return {
 			name: name,
+			room: room,
 			color: color,
 			type: type,
 			move: move,

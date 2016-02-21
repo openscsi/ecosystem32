@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Add Animals</title>
+		<title>Create a Room</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="style/reset.css">
 		<link rel="stylesheet" type="text/css" href="style/main.css">
 		<link rel="icon" type="img/png" href="style/favicon.png" style="width:30px;">
 		<!-- IMPORTED SCRIPTS -->
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -42,6 +43,7 @@
 
 		<script src="bundle.js"></script>
 		<script src="seedrandom.js"></script>
+		<script src="createRoom.js"></script>
 		<script src="node_modules/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
@@ -56,13 +58,15 @@
 			$('#create-room').click(function(){
 				var output = document.getElementById('response');
 				var roomID = document.getElementById('room').value;
-				var success = createRoom(roomID);
-				if(success){
-					output.innerHTML = 'Your room was created!';
-				}
-				else{
-					output.innerHTML = 'Sorry, that code is taken. Please choose another one.';
-				}
+				var promise = createRoom(roomID);
+				promise.then(function(success){
+					if(success){
+						output.innerHTML = 'Your room was created!';
+					}
+					else{
+						output.innerHTML = 'Sorry, that code is taken. Please choose another one.';
+					}
+				});
 			});
 
 		</script>
