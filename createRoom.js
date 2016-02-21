@@ -8,7 +8,9 @@ window.createRoom = function (roomID){
                 if (key === roomID)
                     resolve(false);
             }
-            dataRef.push({
+            //If we get here, then the key is unique
+            var newRef = new Firebase('https://ecosystem32.firebaseio.com/EcoSystems/' + roomID);
+            newRef.set({
                 roomID: {
                     config: {
                         "key" : roomID
