@@ -431,7 +431,7 @@ Animal.prototype.performedAction = function performedAction() {
     return this.performedAction;
 };
 
-Animal.prototype.getRandom() = function getRandom() {
+Animal.getRandom() = function getRandom() {
     return Arena.getRandom();
 };
 
