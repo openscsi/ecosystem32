@@ -1,39 +1,40 @@
+import Arena from './theHungerGames/Arena';
 function nameOffset(name, fontSize){
 	return Math.round((name.length * (fontSize / 2)) / 2);
 }
 
-function Coord(x, y){
-	return {
-		x: x,
-		y: y
-	}
-}
+// function Coord(x, y){
+// 	return {
+// 		x: x,
+// 		y: y
+// 	}
+// }
 
-function Cell(color = 'ForestGreen'){
-	return {
-		color: color,
-		list: [], //LinkedList of animals on the cell
-		draw: function(ctx, coord){
-			//Draw cell
-			ctx.fillStyle = this.color;
-			ctx.beginPath();
-			ctx.rect(coord.x, coord.y, cellSize, cellSize);
-			ctx.fill();
-			ctx.closePath();
-			console.log('kekekekekekekekek');
-			//Draw number of animals
-			var text = this.list.length + '';
-			var fontSize = 0.75 * cellSize;
-			var xOff = nameOffset(text, fontSize)
-			var yOff = 1.0 * fontSize;
-			var font = fontSize + 'px Consolas';
-			ctx.font = font;
-			ctx.lineWidth = 1;
-			ctx.fillStyle = 'black';
-			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
-		}
-	}
-}
+// function Cell(color = 'ForestGreen'){
+// 	return {
+// 		color: color,
+// 		list: [], //LinkedList of animals on the cell
+// 		draw: function(ctx, coord){
+// 			//draw cell
+// 			ctx.fillStyle = this.color;
+// 			ctx.beginPath();
+// 			ctx.rect(coord.x, coord.y, cellSize, cellSize);
+// 			ctx.fill();
+// 			ctx.closePath();
+// 			console.log('kekekekekekekekek');
+// 			//draw number of animals
+// 			var text = this.list.length + '';
+// 			var fontSize = 0.75 * cellSize;
+// 			var xOff = nameOffset(text, fontSize)
+// 			var yOff = 1.0 * fontSize;
+// 			var font = fontSize + 'px Consolas';
+// 			ctx.font = font;
+// 			ctx.lineWidth = 1;
+// 			ctx.fillStyle = 'black';
+// 			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
+// 		}
+// 	}
+// }
 
 var mapSize = 20;
 
@@ -43,34 +44,38 @@ var canvasSize = canvas.width;
 var cellSize = canvasSize / mapSize;
 console.log('Cell: ' + cellSize)
 
+var arena = new Arena(32, 32, cellSize);
+
 function getNthCell(nX, nY){
 	return Coord(nX * cellSize, nY * cellSize);
 }
 
-var map = new Map();
+// var map = new Map();
 
-for(var y = 0; y < canvasSize; y += cellSize){
-	for(var x = 0; x < canvasSize; x += cellSize){
-		var color = 'ForestGreen'
-		if(x == 20){
-			color = 'GoldenRod';
-		}
-		map.set(Coord(x, y), Cell(color));
-	}
-}
+// for(var y = 0; y < canvasSize; y += cellSize){
+// 	for(var x = 0; x < canvasSize; x += cellSize){
+// 		var color = 'ForestGreen'
+// 		if(x == 20){
+// 			color = 'GoldenRod';
+// 		}
+// 		map.set(Coord(x, y), Cell(color));
+// 	}
+// }
 
-map.set(getNthCell(0, 0), Cell('GreenYellow'));
-map.set(getNthCell(3, 4), Cell('GreenYellow'));
+// map.set(getNthCell(0, 0), Cell('GreenYellow'));
+// map.set(getNthCell(3, 4), Cell('GreenYellow'));
 
 
 export default {
 	main: function(){
 
-		ctx.fillStyle = 'ForestGreen';
+		// ctx.fillStyle = 'ForestGreen';
 
-		for(var [coord, cell] of map){
-			cell.draw(ctx, coord);
-		}
+		// for(var [coord, cell] of map){
+		// 	cell.draw(ctx, coord);
+		// }
+
+		arena.draw(ctx, 0, 0);
 
 		console.log("Done!")
 

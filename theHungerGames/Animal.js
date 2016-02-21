@@ -19,7 +19,7 @@ function Animal() {
     this.genotype = null;
 }
 
-Animal.makeRandomAnimal(AnimalConstructor) {
+Animal.prototype.makeRandomAnimal = function makeRandomAnimal(AnimalConstructor) {
     const newAnimal = new AnimalConstructor();
     newAnimal.addGenotype(newAnimal.randomGenotype());
     newAnimal.energyReserve = newAnimal.initialEnergy();
@@ -27,7 +27,7 @@ Animal.makeRandomAnimal(AnimalConstructor) {
     return newAnimal;
 };
 
-Animal.makeAnimal(AnimalConstructor, genotype) {
+Animal.prototype.makeAnimal = function makeAnimal(AnimalConstructor, genotype) {
     const newAnimal = new AnimalConstructor();
     newAnimal.addGenotype(genotype);
     newAnimal.energyReserve = newAnimal.initialEnergy();
@@ -185,7 +185,7 @@ Animal.prototype.getColor = function getColor() {
     throw new Error('Cannot call abstract method.');
 };
 
-Animal.prototype.Draw = function Draw(graphicObject, xCoord, yCoord){
+Animal.prototype.draw = function draw(graphicObject, xCoord, yCoord){
     if (isDead()) {
     graphicObject.fillStyle = "FireBrick";
 } else {
@@ -454,7 +454,7 @@ Animal.prototype.performedAction = function performedAction() {
     return this.performedAction;
 };
 
-Animal.getRandom() = function getRandom() {
+Animal.prototype.getRandom = function getRandom() {
     return Arena.getRandom();
 };
 

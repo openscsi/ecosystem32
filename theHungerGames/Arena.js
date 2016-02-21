@@ -25,7 +25,7 @@ Arena.prototype.isHerbivore = function isHerbivore(name) {
     return this.herbivoreNames.indexOf(name) > -1;
 };
 
-Arena.prototype.getRandom = function getRandom() {
+Arena.getRandom = function getRandom() {
     return Random;
 };
 
@@ -41,13 +41,15 @@ Arena.prototype.setFile = function setFile(file) {
     throw new Error('Yeah... you can\'t output to a file because reasons.');
 };
 
-Arena.prototype.Draw = function Draw(graphicObject, xCoord, yCoord) {
-    throw new Error('We don\'t know how to draw things yet so good luck with that.');
+Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
     var coordIter = this.map.keys();
-    while (coordIter.hasNext()) {
-        var icoord = coordIter.next();
-		this.map.get(icoord).Draw(graph, xCoord + icoord.x * this.map.get(icoord).getXSize(),
-				yCoord + icoord.y * this.map.get(icoord).getYSize());
+    console.log(coordIter);
+    var icoord = {};
+    icoord.done = false;
+    while (!icoord.done) {
+        icoord = coordIter.next();
+		this.map.get(icoord.value).draw(graphicObject, xCoord + icoord.value.x * this.map.get(icoord.value).getXSize(),
+				yCoord + icoord.value.y * this.map.get(icoord.value).getYSize());
 	}
 };
 
@@ -70,7 +72,7 @@ Arena.prototype.getYDim = function getYDim() {
 Arena.prototype.initialize = function initialize() {
     for (let ix = 0; ix < this.xsize; ++ix) {
         for (let iy = 0; iy < this.ysize; ++iy) {
-            this.map.put(new Coord(ix, iy), new Cell(this, ix, iy));
+            this.map.set(new Coord(ix, iy), new Cell(this, ix, iy));
         }
     }
 };
@@ -81,7 +83,7 @@ Arena.prototype.getNDays = function getNDays(){
 
 Arena.prototype.changeCell = function changeCell(xCoord, yCoord, newCell){
     var coord = new Coord(xCoord, yCoord);
-    this.map.put(coord, newCell);
+    this.map.set(coord, newCell);
 }
 
 Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an){
@@ -169,14 +171,16 @@ Arena.prototype.getCell = function getCell(xCoord, yCoord){
 // I'd be lying if I said I wanted to write this function
 Arena.prototype.doTurn = function doTurn(){
     var values = this.map.values();
-    while (values.hasNext()) {
-        var icell = values.next();
-        icell.beginningOfTurn();
+    var icell = {}; icell.done = false;
+    while (!icell.done) {
+        icell = values.next();
+        icell.value.beginningOfTurn();
     }
     values = this.map.values();
-    while (values.hasNext()) {
+    icell.done = false;
+    while (!icell.done) {
         icell = values.next();
-        icell.doTurn();
+        icell.value.doTurn();
     }
 
     updateMap();

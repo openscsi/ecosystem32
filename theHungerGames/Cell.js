@@ -37,20 +37,20 @@ Cell.prototype.getMarking = function getMarking() {
 };
 
 Cell.prototype.draw = function draw(graphicObject, xCoord, yCoord){
-    graphicObject.fillStyle = getColor();
+    graphicObject.fillStyle = this.getColor();
     graphicObject.beginPath();
-    graphicObject.rect(xCoord, yCoord, getXSize(), getYSize());
+    graphicObject.rect(xCoord, yCoord, this.getXSize(), this.getYSize());
     graphicObject.fill();
     graphicObject.closePath();
 
-	for (var i = 0; i < list.length; i++) {
-        var ian = list[i];
-		ian.Draw(graphicObject, xCoord, yCoord);
+	for (var i = 0; i < this.list.length; i++) {
+        var ian = this.list[i];
+		ian.draw(graphicObject, xCoord, yCoord);
 	}
 
     graphicObject.fillStyle = "Gainsboro";
     graphicObject.beginPath();
-    graphicObject.rect(xCoord, yCoord, getXSize(), getYSize());
+    graphicObject.rect(xCoord, yCoord, this.getXSize(), this.getYSize());
     //graphicObject.fill();
     graphicObject.closePath();
 
