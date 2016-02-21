@@ -1,20 +1,22 @@
 import Cell from './Cell';
 import Genotype from './Genotype';
 import GeneType from './GeneType';
-
+import GeneSet from './GeneSet';
+import Direction from './Direction';
+import Arena from './Arena';
 
 function Animal() {
     if (this.constructor === Animal) {
         throw new Error('Cannot instantiate abstract class.');
     }
 
-    this.currentCell
-    this.dead
-    this.performedAction
+    this.currentCell = null;
+    this.dead = false;
+    this.performedAction = false;
     this.age = 0;
     this.gestationElapsed = 0;
     this.fetuses = [];
-    this.genotype
+    this.genotype = null;
 }
 
 Animal.makeRandomAnimal(AnimalConstructor) {
@@ -123,7 +125,7 @@ Animal.prototype.gestationTime = function gestationTime() {
     const sizeFactor1 = 0.7;
     const sizeFactor2 = 0.3;
     return Math.floor((this.getGenotype().getGene(GeneType.SIZE1) * sizeFactor1 + this.getGenotype().getGene(GeneType.SIZE2) * sizeFactor2)
-            * Animal.GESTATION_SCALE + Animal.GESTATION_BASE);
+        * Animal.GESTATION_SCALE + Animal.GESTATION_BASE);
 };
 
 Animal.prototype.litterSize = function litterSize() {
@@ -138,7 +140,7 @@ Animal.prototype.energyAsFood = function energyAsFood() {
     const sizeFactor1 = 0.5;
     const sizeFactor2 = 0.5;
     return (this.getGenotype().getGene(GeneType.SIZE1) * sizeFactor1 + this.getGenotype().getGene(GeneType.SIZE2) * sizeFactor2)
-            * Animal.ENERGY_AS_FOOD_SCALE + Animal.ENERGY_AS_FOOD_BASE + this.energyReserve;
+        * Animal.ENERGY_AS_FOOD_SCALE + Animal.ENERGY_AS_FOOD_BASE + this.energyReserve;
 };
 
 Animal.prototype.dailyEnergyMax = function dailyEnergyMax() {
@@ -352,7 +354,85 @@ Animal.prototype.randomGenotype = function randomGenotype() {
 Animal.prototype.randomGenes = function randomGenes(genes, isMother) {
     if (isMother) {
         genes.push(new Gene(GeneType.MALE, 0));
+    } else {
+        genes.push(new Gene(GeneType.MALE, Arena.getRandom().nextBoolean() ? 0 : 1));
+    }
+
+    this._randomGenes.call(this, genes);
+};
+
+Animal.prototype._randomGenes = function _randomGenes(genes) {
+    genes.add(this.newGene(GeneType.SIZE1));
+    genes.add(this.newGene(GeneType.SIZE2));
+    genes.add(this.newGene(GeneType.SPEED1));
+    genes.add(this.newGene(GeneType.SPEED2));
+    genes.add(this.newGene(GeneType.MARKINGS1));
+    genes.add(this.newGene(GeneType.MARKINGS2));
+    genes.add(this.newGene(GeneType.FERTILITY));
+};
+
+Animal.prototype.newGene = function newGene(type) {
+    return new Gene(type, this.getInitialGene(type), this.getInitialSD(type));
+};
+
+Animal.prototype.getInitialGene = function getInitialGene(type) {
+    throw new Error('Cannot call abstract method.');
+};
+
+Animal.prototype.getInitialSD = function getInitialSD(type) {
+    throw new Error('Cannot call abstract method.');
+};
+
+Animal.prototype.reset = function reset() {
+    this.performedAction = false;
+};
+
+Animal.prototype.die = function die() {
+    this.dead = true;
+};
+
+Animal.prototype.isDead = function isDead() {
+    return this.dead;
+};
+
+Animal.prototype.makeMove = function makeMove(dire) {
+    if (dire === null || dire === undefined) {
+        return false;
+    }
+    switch(dire) {
+        case Direction.LEFT:
+            if (this.currentCell.getX() > 0) {
+                return this.move(this.currentCell.getMap().getCell(this.currentCell.getX() - 1, this.currentCell.getY()));
+            }
+            return false;
+        case Direction.UP:
+            if (this.currentCell.getY() > 0) {
+                return this.move(this.currentCell.getMap().getCell(this.currentCell.getX(), this.currentCell.getY() - 1));
+            }
+            return false;
+        case Direction.RIGHT:
+            if (this.currentCell.getX() < this.currentCell.getMap().getXDim() - 1) {
+                return this.move(this.currentCell.getMap().getCell(this.currentCell.getX() + 1, this.currentCell.getY()));
+            }
+            return false;
+        case Direction.DOWN:
+            if (this.currentCell.getY() < this.currentCell.getMap().getYDim() - 1) {
+                return this.move(this.currentCell.getMap().getCell(this.currentCell.getX(), this.currentCell.getY() + 1));
+            }
+            return false;
+        case Direction.NO_MOTION:
+            return false;
+        default:
+            throw new Error('Reached unreachable code in makeMove()!');
     }
 };
 
+Animal.prototype.performedAction = function performedAction() {
+    return this.performedAction;
+};
 
+Animal.prototype.getRandom() = function getRandom() {
+    return Arena.getRandom();
+};
+
+export default Animal;
