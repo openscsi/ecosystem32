@@ -1,4 +1,5 @@
 import Cell from './Cell';
+import Gene from './Gene'
 import Genotype from './Genotype';
 import GeneType from './GeneType';
 import GeneSet from './GeneSet';
@@ -386,13 +387,13 @@ Animal.prototype.randomGenes = function randomGenes(genes, isMother) {
 };
 
 Animal.prototype._randomGenes = function _randomGenes(genes) {
-    genes.add(this.newGene(GeneType.SIZE1));
-    genes.add(this.newGene(GeneType.SIZE2));
-    genes.add(this.newGene(GeneType.SPEED1));
-    genes.add(this.newGene(GeneType.SPEED2));
-    genes.add(this.newGene(GeneType.MARKINGS1));
-    genes.add(this.newGene(GeneType.MARKINGS2));
-    genes.add(this.newGene(GeneType.FERTILITY));
+    genes.push(this.newGene(GeneType.SIZE1));
+    genes.push(this.newGene(GeneType.SIZE2));
+    genes.push(this.newGene(GeneType.SPEED1));
+    genes.push(this.newGene(GeneType.SPEED2));
+    genes.push(this.newGene(GeneType.MARKINGS1));
+    genes.push(this.newGene(GeneType.MARKINGS2));
+    genes.push(this.newGene(GeneType.FERTILITY));
 };
 
 Animal.prototype.newGene = function newGene(type) {
@@ -455,7 +456,7 @@ Animal.prototype.performedAction = function performedAction() {
     return this.performedAction;
 };
 
-Animal.prototype.getRandom = function getRandom() {
+Animal.getRandom = function getRandom() {
     return Arena.getRandom();
 };
 

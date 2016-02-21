@@ -17,7 +17,7 @@ window.viewerMain = function () {
 	_viewer2.default.main();
 };
 
-},{"./module":2,"./viewer":247}],2:[function(require,module,exports){
+},{"./module":2,"./viewer":248}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21454,6 +21454,10 @@ var _Cell = require('./Cell');
 
 var _Cell2 = _interopRequireDefault(_Cell);
 
+var _Gene = require('./Gene');
+
+var _Gene2 = _interopRequireDefault(_Gene);
+
 var _Genotype = require('./Genotype');
 
 var _Genotype2 = _interopRequireDefault(_Genotype);
@@ -21835,26 +21839,26 @@ Animal.prototype.randomGenotype = function randomGenotype() {
 
 Animal.prototype.randomGenes = function randomGenes(genes, isMother) {
     if (isMother) {
-        genes.push(new Gene(_GeneType2.default.MALE, 0));
+        genes.push(new _Gene2.default(_GeneType2.default.MALE, 0));
     } else {
-        genes.push(new Gene(_GeneType2.default.MALE, _Arena2.default.getRandom().nextBoolean() ? 0 : 1));
+        genes.push(new _Gene2.default(_GeneType2.default.MALE, _Arena2.default.getRandom().nextBoolean() ? 0 : 1));
     }
 
     this._randomGenes.call(this, genes);
 };
 
 Animal.prototype._randomGenes = function _randomGenes(genes) {
-    genes.add(this.newGene(_GeneType2.default.SIZE1));
-    genes.add(this.newGene(_GeneType2.default.SIZE2));
-    genes.add(this.newGene(_GeneType2.default.SPEED1));
-    genes.add(this.newGene(_GeneType2.default.SPEED2));
-    genes.add(this.newGene(_GeneType2.default.MARKINGS1));
-    genes.add(this.newGene(_GeneType2.default.MARKINGS2));
-    genes.add(this.newGene(_GeneType2.default.FERTILITY));
+    genes.push(this.newGene(_GeneType2.default.SIZE1));
+    genes.push(this.newGene(_GeneType2.default.SIZE2));
+    genes.push(this.newGene(_GeneType2.default.SPEED1));
+    genes.push(this.newGene(_GeneType2.default.SPEED2));
+    genes.push(this.newGene(_GeneType2.default.MARKINGS1));
+    genes.push(this.newGene(_GeneType2.default.MARKINGS2));
+    genes.push(this.newGene(_GeneType2.default.FERTILITY));
 };
 
 Animal.prototype.newGene = function newGene(type) {
-    return new Gene(type, this.getInitialGene(type), this.getInitialSD(type));
+    return new _Gene2.default(type, this.getInitialGene(type), this.getInitialSD(type));
 };
 
 Animal.prototype.getInitialGene = function getInitialGene(type) {
@@ -21913,13 +21917,13 @@ Animal.prototype.performedAction = function performedAction() {
     return this.performedAction;
 };
 
-Animal.prototype.getRandom = function getRandom() {
+Animal.getRandom = function getRandom() {
     return _Arena2.default.getRandom();
 };
 
 exports.default = Animal;
 
-},{"./Arena":231,"./Cell":232,"./Direction":234,"./GeneSet":237,"./GeneType":238,"./Genotype":239}],231:[function(require,module,exports){
+},{"./Arena":231,"./Cell":232,"./Direction":234,"./Gene":237,"./GeneSet":238,"./GeneType":239,"./Genotype":240}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22242,7 +22246,7 @@ Arena.prototype.getAnimalCount = function getAnimalCount() {
 
 exports.default = Arena;
 
-},{"./Cell":232,"./Coord":233,"./Herbivore":240,"./Random":244,"./SortDistance":245}],232:[function(require,module,exports){
+},{"./Cell":232,"./Coord":233,"./Herbivore":241,"./Random":245,"./SortDistance":246}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22516,7 +22520,7 @@ Eat.prototype.energyConsumption = function energyConsumption(animal) {
 
 exports.default = Eat;
 
-},{"./Turn":246}],236:[function(require,module,exports){
+},{"./Turn":247}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22590,6 +22594,67 @@ FoodCell.prototype.getColor = function getColor() {
 exports.default = FoodCell;
 
 },{"./Arena":231,"./Cell":232}],237:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Arena = require('./Arena');
+
+var _Arena2 = _interopRequireDefault(_Arena);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Gene(geneType, geneValue, geneSD) {
+    if (arguments.length === 3) {
+        this.type = geneType;
+        this.value = geneValue;
+        this.sd = geneSD;
+    } else if (arguments.length === 2) {
+        this.type = geneType;
+        this.value = geneValue;
+        this.sd = 0;
+    } else if (arguments.length === 1) {
+        var gene = geneType;
+        this.type = gene.type;
+        this.value = gene.value;
+        this.sd = gene.sd;
+    }
+
+    if (this.value < 0) {
+        this.value = 0;
+    } else if (this.value > 1) {
+        this.value = 1;
+    }
+    if (this.sd < 0) {
+        this.sd = 0;
+    }
+}
+
+Gene.prototype.constructor = Gene;
+
+Gene.prototype.mutatedVersion = function mutatedVersion() {
+    var newVal = this.value + _Arena2.default.getRandom().nextGaussian() * this.sd;
+    if (newVal < 0) {
+        newVal = 0;
+    } else if (newVal > 1) {
+        newVal = 1;
+    }
+    return new Gene(this.type, newVal, this.sd);
+};
+
+Gene.prototype.getType = function getType() {
+    return this.type;
+};
+
+Gene.prototype.getValue = function getValue() {
+    return this.value;
+};
+
+exports.default = Gene;
+
+},{"./Arena":231}],238:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22607,7 +22672,7 @@ GeneSet.prototype.constructor = GeneSet;
 
 exports.default = GeneSet;
 
-},{}],238:[function(require,module,exports){
+},{}],239:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22626,7 +22691,7 @@ var GeneType = {
 
 exports.default = GeneType;
 
-},{}],239:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22661,7 +22726,7 @@ Genotype.prototype.getGene = function getGene(trait) {
 
 exports.default = Genotype;
 
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22698,7 +22763,7 @@ Herbivore.prototype.doEating = function doEating() {
 
 exports.default = Herbivore;
 
-},{"./Animal":230,"./GeneType":238}],241:[function(require,module,exports){
+},{"./Animal":230,"./GeneType":239}],242:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22735,7 +22800,7 @@ function Herbivore1() {
 	_Herbivore2.default.apply(this, arguments);
 }
 
-_Herbivore2.default.prototype = Object.create(_Herbivore2.default.prototype);
+Herbivore1.prototype = Object.create(_Herbivore2.default.prototype);
 Herbivore1.prototype.constructor = Herbivore1;
 
 Herbivore1.prototype.getColor = function getColor() {
@@ -22784,40 +22849,40 @@ Herbivore1.prototype.getInitialGene = function getInitialGene(type) {
 			throw new Error("Never reach here");
 
 	}
+};
 
-	Herbivore1.prototype.getInitialSD = function getInitialSD(type) {
-		switch (type) {
-			case _GeneType2.default.SIZE1:
-				return 0.1;
+Herbivore1.prototype.getInitialSD = function getInitialSD(type) {
+	switch (type) {
+		case _GeneType2.default.SIZE1:
+			return 0.1;
 
-			case _GeneType2.default.SIZE2:
-				return 0.1;
+		case _GeneType2.default.SIZE2:
+			return 0.1;
 
-			case _GeneType2.default.SPEED1:
-				return 0.1;
+		case _GeneType2.default.SPEED1:
+			return 0.1;
 
-			case _GeneType2.default.SPEED2:
-				return 0.1;
+		case _GeneType2.default.SPEED2:
+			return 0.1;
 
-			case _GeneType2.default.MARKINGS1:
-				return 0.1;
+		case _GeneType2.default.MARKINGS1:
+			return 0.1;
 
-			case _GeneType2.default.MARKINGS2:
-				return 0.1;
+		case _GeneType2.default.MARKINGS2:
+			return 0.1;
 
-			case _GeneType2.default.FERTILITY:
-				return 0.1;
+		case _GeneType2.default.FERTILITY:
+			return 0.1;
 
-			default:
-				throw new Error("Never reach here");
+		default:
+			throw new Error("Never reach here");
 
-		}
-	};
+	}
 };
 
 exports.default = Herbivore1;
 
-},{"./Arena":231,"./Direction":234,"./GeneType":238,"./Herbivore":240,"./HerbivoreEat":242,"./Move":243}],242:[function(require,module,exports){
+},{"./Arena":231,"./Direction":234,"./GeneType":239,"./Herbivore":241,"./HerbivoreEat":243,"./Move":244}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22844,7 +22909,7 @@ HerbivoreEat.prototype.doTurn = function doTurn(animal) {
 
 exports.default = HerbivoreEat;
 
-},{"./Eat":235}],243:[function(require,module,exports){
+},{"./Eat":235}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22875,7 +22940,7 @@ Move.prototype.energyConsumption = function energyConsumption(animal) {
 
 exports.default = Move;
 
-},{"./Turn":246}],244:[function(require,module,exports){
+},{"./Turn":247}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22928,7 +22993,7 @@ exports.default = {
     }
 };
 
-},{"seedrandom":222}],245:[function(require,module,exports){
+},{"seedrandom":222}],246:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22960,7 +23025,7 @@ SortDistance.prototype.distance2 = function distance2(ani) {
 
 exports.default = SortDistance;
 
-},{}],246:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22996,7 +23061,7 @@ Turn.prototype.turn = function turn(animal) {
 
 exports.default = Turn;
 
-},{}],247:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -23084,4 +23149,4 @@ exports.default = {
 	}
 };
 
-},{"./theHungerGames/Animal":230,"./theHungerGames/Arena":231,"./theHungerGames/FoodCell":236,"./theHungerGames/Herbivore1":241}]},{},[1]);
+},{"./theHungerGames/Animal":230,"./theHungerGames/Arena":231,"./theHungerGames/FoodCell":236,"./theHungerGames/Herbivore1":242}]},{},[1]);
