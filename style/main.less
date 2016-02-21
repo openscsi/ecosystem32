@@ -207,10 +207,10 @@ body#index{
 
 				background: transparent;
 				position: absolute;
+				vertical-align: middle;
+				margin-right: 0;
 				width: 56%;
 				margin: 0 35%;
-				margin-right: 0;
-				vertical-align: middle;
 
 				h1, p{
 					.TextShadow();
@@ -254,15 +254,49 @@ body#index{
 
 		}
 
+	@media(max-width: 700px) {
+
+		img{
+			width: 30%;
+			margin: 2.5% 30%;
+
+		}
+		
+		div.ghost-center{
+
+			margin: -5%;
+			margin-top: 32.5%;
+			position: absolute;
+			width: 100%;
+
+			div#entry-message{
+				margin: 5%;
+				width: 90%;
+			}
+		}
+
+		div.video-wrapper{
+			width: 200vh;
+			height: 92.5vh;
+		}
+
+	}
+
 	}
 
 	div.hex-row{
+		
 		.HexBackground(false);
 		width: 100%;
 		padding: 2.5% 5%;
 		margin: -5%;
 		margin-top: -5.5%;
 		margin-bottom: 0%;
+		
+		h1{
+			line-height: 2.0 * @textSize;
+		}
+
 	}
 
 	section:nth-child(2){
