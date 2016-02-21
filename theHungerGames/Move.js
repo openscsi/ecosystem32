@@ -1,15 +1,15 @@
 import Turn from './Turn';
 
 function Move(direction) {
-    Turn.call(this);
+    Turn.apply(this, arguments);
     this.dire = direction;
-};
+}
 
 Move.prototype = Object.create(Turn.prototype);
 Move.prototype.constructor = Move;
 
 Move.prototype.doTurn = function doTurn(animal) {
-    return animal.makeMove(dire);
+    return animal.makeMove(this.dire);
 };
 
 Move.prototype.energyConsumption = function energyConsumption(animal) {
