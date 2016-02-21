@@ -64,6 +64,7 @@ defineStaticFinal('ENERGY_TO_MATE_BASE', 1);
 defineStaticFinal('ENERGY_TO_MOVE_SCALE', 6);
 defineStaticFinal('ENERGY_TO_MOVE_BASE', 0.5);
 defineStaticFinal('NTURNS_SCALE', 2);
+defineStaticFinal('sizeScale', 0.15);
 
 Animal.prototype.addGenotype = function addGenotype(genotype) {
     this.genotype = genotype;
@@ -194,7 +195,7 @@ Animal.prototype.draw = function draw(graphicObject, xCoord, yCoord){
     graphicObject.fillStyle = this.getColor();
 }
 
-var offset = this.getXSize() * this.sizeScale;
+var offset = this.getXSize() * Animal.sizeScale;
 
 if (this.isDead()) {
     graphicObject.beginPath();
