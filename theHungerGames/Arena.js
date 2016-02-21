@@ -44,6 +44,7 @@ Arena.prototype.setFile = function setFile(file) {
 };
 
 Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
+    console.log("Breakpoint me!");
     var coordIter = this.map.keys();
     //console.log(coordIter);
     var icoord = {};
@@ -51,8 +52,8 @@ Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
     while (!icoord.done) {
         icoord = coordIter.next();
         if(!icoord.done){ // This is diiiiiirrrrrrty
-		this.map.get(icoord.value).draw(graphicObject, xCoord + icoord.value.x * this.map.get(icoord.value).getXSize(),
-				yCoord + icoord.value.y * this.map.get(icoord.value).getYSize());
+		this.map.get(icoord.value).draw(graphicObject, xCoord + JSON.parse(icoord.value).x * this.map.get(icoord.value).getXSize(),
+				yCoord + JSON.parse(icoord.value).y * this.map.get(icoord.value).getYSize());
         }
 	}
 };
@@ -76,7 +77,7 @@ Arena.prototype.getYDim = function getYDim() {
 Arena.prototype.initialize = function initialize() {
     for (let ix = 0; ix < this.xsize; ++ix) {
         for (let iy = 0; iy < this.ysize; ++iy) {
-            this.map.set(JSON.stringify(new Coord(ix, iy)), new Cell(this, ix, iy));
+            this.map.set((new Coord(ix, iy).toJSON()), new Cell(this, ix, iy));
         }
     }
 };
@@ -87,7 +88,7 @@ Arena.prototype.getNDays = function getNDays() {
 
 Arena.prototype.changeCell = function changeCell(xCoord, yCoord, newCell){
     var coord = new Coord(xCoord, yCoord);
-    this.map.set(JSON.stringify(coord), newCell);
+    this.map.set((coord).toJSON(), newCell);
 }
 
 Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an){
@@ -169,7 +170,7 @@ Arena.prototype.addRandomForeignAnimal = function addRandomForeignAnimal(an, for
 };
 
 Arena.prototype.getCell = function getCell(xCoord, yCoord){
-    return this.map.get(JSON.stringify(new Coord(xCoord, yCoord)));
+    return this.map.get((new Coord(xCoord, yCoord)).toJSON());
 };
 
 // I'd be lying if I said I wanted to write this function
