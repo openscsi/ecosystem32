@@ -33,4 +33,11 @@ Coord.prototype.compareTo = function compareTo(icoord) {
     }
 };
 
+Coord.prototype.toJSON = function toJSON() {
+    return JSON.stringify({
+        x: this.x,
+        y: this.y
+    });
+};
+
 export default Coord;
