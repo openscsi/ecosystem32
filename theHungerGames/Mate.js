@@ -4,6 +4,7 @@ function Mate(animal) {
     Turn.call(this);
     this.mate = animal;
 };
+
 Mate.prototype = Object.create(Turn.prototype);
 Mate.prototype.constructor = Mate;
 
