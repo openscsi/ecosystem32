@@ -1,8 +1,8 @@
 function GeneSet(listIn) {
-    var list = listIn;
+    this.list = listIn;
 }
 
-GeneSet.prototype.allGenesInOrder = function allGenesInOrder(animal) {
+GeneSet.prototype.allGenesInOrder = function allGenesInOrder() {
     return this.list;
 };
 
