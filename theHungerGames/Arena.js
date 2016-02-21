@@ -12,6 +12,7 @@ function Arena(xsizeIn, ysizeIn, cellSize){
     this.ndays = 0;
     this.map = new Map();
     this.aniMap = new Map();
+    this.colorMap = new Map();
     this.allAnimals = [];
     this.finalMap = new Map();
     this.herbivoreNames = [];
@@ -79,7 +80,7 @@ Arena.prototype.initialize = function initialize() {
     }
 };
 
-Arena.prototype.getNDays = function getNDays(){
+Arena.prototype.getNDays = function getNDays() {
     return this.ndays;
 };
 
@@ -89,7 +90,7 @@ Arena.prototype.changeCell = function changeCell(xCoord, yCoord, newCell){
 }
 
 Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an){
-    getCell(xCoord, yCoord).addAnimal(an);
+    this.getCell(xCoord, yCoord).addAnimal(an);
 
     if (!this.colorMap.has(an)) {
         this.colorMap.put(an.getName(), an.getColor());
@@ -101,69 +102,69 @@ Arena.prototype.addAnimal = function addAnimal(xCoord, yCoord, an){
 };
 
 Arena.prototype.addRandomAnimal = function addRandomAnimal(an){
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
-    while(getCell(x, y) instanceof WallCell){
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    let x = this.getRandom().nextInt(this.getXDim());
+    let y = this.getRandom().nextInt(this.getYDim());
+    while (this.getCell(x, y) instanceof WallCell) {
+        x = this.getRandom().nextInt(getXDim());
+        y = this.getRandom().nextInt(getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
-Arena.prototype.addRandomTeamAnimal = function addRandomTeamAnimal(an, team){
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
-    switch(team){
-    case 1:
-        while(!(x < 31 && y < 31)){
-            x = getRandom().nextInt(getXDim());
-            y = getRandom().nextInt(getYDim());
-        }
-        break;
-    case 2:
-        while(!(x > 31 && y < 31)){
-            x = getRandom().nextInt(getXDim());
-            y = getRandom().nextInt(getYDim());
-        }
-        break;
-    case 3:
-        while(!(x < 31 && y > 31)){
-            x = getRandom().nextInt(getXDim());
-            y = getRandom().nextInt(getYDim());
-        }
-        break;
-    case 4:
-        while(!(x > 31 && y > 31)){
-            x = getRandom().nextInt(getXDim());
-            y = getRandom().nextInt(getYDim());
-        }
-        break;
+Arena.prototype.addRandomTeamAnimal = function addRandomTeamAnimal(an, team) {
+    let x = this.getRandom().nextInt(this.getXDim());
+    let y = this.getRandom().nextInt(this.getYDim());
+    switch (team) {
+        case 1:
+            while (!(x < 31 && y < 31)) {
+                x = this.getRandom().nextInt(this.getXDim());
+                y = this.getRandom().nextInt(this.getYDim());
+            }
+            break;
+        case 2:
+            while (!(x > 31 && y < 31)) {
+                x = this.getRandom().nextInt(this.getXDim());
+                y = this.getRandom().nextInt(this.getYDim());
+            }
+            break;
+        case 3:
+            while (!(x < 31 && y > 31)) {
+                x = this.getRandom().nextInt(this.getXDim());
+                y = this.getRandom().nextInt(this.getYDim());
+            }
+            break;
+        case 4:
+            while (!(x > 31 && y > 31)) {
+                x = this.getRandom().nextInt(this.getXDim());
+                y = this.getRandom().nextInt(this.getYDim());
+            }
+            break;
     }
-    while(getCell(x, y) instanceof WallCell){
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    while(this.getCell(x, y) instanceof WallCell){
+        x = this.getRandom().nextInt(this.getXDim());
+        y = this.getRandom().nextInt(this.getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
-Arena.prototype.addRandomForeignAnimal = function addRandomForeignAnimal(an, foreign){
-    var x = getRandom().nextInt(getXDim());
-    var y = getRandom().nextInt(getYDim());
-    if(foreign){
-        while(!(x > 31)){
-            x = getRandom().nextInt(getXDim());
+Arena.prototype.addRandomForeignAnimal = function addRandomForeignAnimal(an, foreign) {
+    let x = this.getRandom().nextInt(this.getXDim());
+    let y = this.getRandom().nextInt(this.getYDim());
+    if (foreign) {
+        while (!(x > 31)) {
+            x = this.getRandom().nextInt(this.getXDim());
         }
     }
-    if(!foreign){
-        while(!(x < 31)){
-            x = getRandom().nextInt(getXDim());
+    if (!foreign) {
+        while (!(x < 31)) {
+            x = this.getRandom().nextInt(this.getXDim());
         }
     }
-    while(getCell(x, y) instanceof WallCell){
-        x = getRandom().nextInt(getXDim());
-        y = getRandom().nextInt(getYDim());
+    while (getCell(x, y) instanceof WallCell) {
+        x = this.getRandom().nextInt(this.getXDim());
+        y = this.getRandom().nextInt(this.getYDim());
     }
-    addAnimal(x, y, an);
+    this.addAnimal(x, y, an);
 };
 
 Arena.prototype.getCell = function getCell(xCoord, yCoord){
@@ -194,10 +195,10 @@ Arena.prototype.doTurn = function doTurn(){
 
     this.ndays++;
 
-    if(this.ndays === 100){
-        var entriesIter = map.entrySet();
-        while (entriesIter.hasNext()){
-            entry = entriesIter.next();
+    if (this.ndays === 100) {
+        const entriesIter = map.entrySet();
+        while (entriesIter.hasNext()) {
+            const entry = entriesIter.next();
 
             if(entry.value instanceof WallCell){
                 //Yeah, this line was nasty so we deleted it. Probably fine.
@@ -205,16 +206,14 @@ Arena.prototype.doTurn = function doTurn(){
                     this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
                 } catch (err) {
                     this.changeCell(entry.value.getX(), entry.value.getY(), new FoodCell(this, entry.value.getX(), entry.value.getY()));
-                    console.log(err);
+                    console.error(err);
                 }
             }
-
         }
-
     }
 
     if (this.printout) {
-        console.log(countAnimals());
+        console.log(this.countAnimals());
     }
 
     if (this.checkStillGoing()) {
@@ -246,6 +245,10 @@ Arena.prototype.updateFinal = function updateFinal() {
             this.finalMap.set(key, value);
         }
     });
+};
+
+Arena.prototype.outputFinal = function outputFinal() {
+    throw new Error('Nope!');
 };
 
 Arena.prototype.countAnimals = function countAnimals() {
