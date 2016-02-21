@@ -8,12 +8,17 @@
 
 @charcoal: #1a1a1a;
 @csGreen: #6bce2c;
+@softwareBlue: #1D68C0;
+@criticalRed: #C0301D;
+@internetGold: #EBC226;
+@analyticalAqua: #26B6EB;
 
 /*--------------------------------------------*/
 /*---> FONTS <--------------------------------*/
 /*--------------------------------------------*/
 
-@textSize: 3vh;
+@vh: 6px;
+@textSize: 3 * @vh;
 
 .HeadFont(){
 	font-family: 'Oswald', sans-serif;
@@ -60,8 +65,8 @@ p{
 }
 
 ul{
-	width: 80%;
-	margin: auto 10%;
+	width: 90%;
+	margin: auto 5%;
 }
 
 li{
@@ -72,9 +77,17 @@ li{
 }
 
 a{
+
 	text-decoration: none;
 	font-weight: bold;
 	color: @charcoal;
+
+	&:hover{
+		color: white;
+	}
+
+	.AnimateAll();
+
 }
 
 /*--------------------------------------------*/
@@ -113,9 +126,18 @@ canvas{
 	margin: 0 auto;
 }
 
-.HexBackground(){
-	background: url('img/green-hex.png');
+.HexBackground(@darkHex) when (@darkHex){
+	background-image: url('img/charcoal-trans-hex.png');
 	background-size: 200px;
+}
+
+.HexBackground(@darkHex) when not (@darkHex){
+	background-image: url('img/white-trans-hex.png');
+	background-size: 200px;
+}
+
+.TextShadow(){
+	text-shadow: 0 0 20px rgba(0, 0, 0, 0.95);
 }
 
 .ProcessingConsole(){
@@ -137,7 +159,7 @@ canvas{
 
 }
 
-span.console-char{
+.console-char{
 	font-weight: normal;
 	opacity: 0.5;
 	.ProcessingConsole();
@@ -151,9 +173,13 @@ body#index{
 		width: 90%;
 		padding: 5%;
 		margin-top: -1%; //Dubious margin, there, Vinesh
-		
+
 		p, h1, h2, h3, ul, li{
 			text-align: left;
+		}
+
+		p{
+			line-height: 1.5 * @textSize;
 		}
 
 	}
@@ -186,12 +212,28 @@ body#index{
 				vertical-align: middle;
 
 				h1, p{
-					text-shadow: 0 0 20px rgba(0, 0, 0, 0.95);
+					.TextShadow();
 				}
 
 				h1{
 					color: @csGreen;
 					border-bottom: 3px solid @charcoal;
+				}
+
+				p#landing-icons{
+
+					i{
+						font-size: 1.5 * @textSize;
+						margin: 1%;
+					}
+
+					a{
+						color: @csGreen;
+						&:hover{
+							color: white;
+						}
+					}
+
 				}
 
 			}
@@ -215,6 +257,47 @@ body#index{
 
 	section:nth-child(2){
 		.HexBackground();
+	div.hex-row{
+		.HexBackground(false);
+		width: 100%;
+		padding: 2.5% 5%;
+		margin: -5%;
+		margin-top: -5.5%;
+		margin-bottom: 0%;
+	}
+
+	section:nth-child(2){
+		background-color: @csGreen;
+	}
+
+	section:nth-child(3){
+		background-color: @criticalRed;
+	}
+
+	section:nth-child(4){
+		background-color: @softwareBlue;
+	}
+
+	section:nth-child(5){
+		background-color: @charcoal;
+		div.hex-row{
+			.HexBackground(true);
+		}
+		a{
+			color: @softwareBlue;
+		}
+	}
+
+	section:nth-child(6){
+		background-color: @internetGold;
+		width: 100%;
+		margin-top: 5%;
+		padding: 0;
+		p{
+			text-align: center;
+			color: @charcoal;
+		}
+>>>>>>> master
 	}
 
 }
@@ -223,7 +306,31 @@ body#index{
 /*---> HEADER & FOOTER <----------------------*/
 /*--------------------------------------------*/
 
+@headerHeight: 7.5 * @vh;
 
+header{
+
+	background: @csGreen;
+	box-shadow: 0 0 20px rgba(26, 26, 26, 0.85);
+	position: fixed;
+	width: 100%;
+
+	img, h1{
+		display: inline-block;
+		height: 0.8 * @headerHeight;
+		line-height: 0.8 * @headerHeight;
+		margin: 0.1 * @headerHeight;
+	}
+
+	h1{
+		text-align: left;
+		position: absolute;
+	}
+}
+
+div.headerSpace{
+	height: 1.25 * @headerHeight;
+}
 
 /*--------------------------------------------*/
 /*---> FORM <----------------------------------*/

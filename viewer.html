@@ -7,12 +7,14 @@
 		<!--<link rel="icon" type="img/png" href="style/favicon.png" style="width:30px;">-->
 		<!-- IMPORTED SCRIPTS -->
 		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<!-- NEED FIREBASE LATER -->
 		<style>
 
 			html{
-				background: url('style/img/green-hex.png');
+				background-color: #1A1A1A;
+				background-image: url('style/img/charcoal-trans-hex.png');
 				background-size: 200px;
 				background-repeat: repeat;
 			}
@@ -22,8 +24,13 @@
 
 	<body>
 
-		<h1>EcoSystem32</h1>
-		<p>Hunger Games for Web. But don't tell Warner Bros. that.</p>
+		<header>
+			<img src="style/img/scsi-logo.png">
+			<h1>EcoSystem32</h1>
+		</header>
+
+		<div class="headerSpace"></div>
+
 
 		<canvas id="game-canvas" width="400px" height="400px"></canvas>
 
@@ -31,7 +38,7 @@
 
 		<script type="text/javascript">
 
-			//window.viewerMain();
+			viewerMain();
 
 			console.log("LOADED MAIN");
 
