@@ -46,7 +46,7 @@ function Coord(x, y) {
 }
 
 function Cell() {
-	var color = arguments.length <= 0 || arguments[0] === undefined ? 'white' : arguments[0];
+	var color = arguments.length <= 0 || arguments[0] === undefined ? 'ForestGreen' : arguments[0];
 
 	return {
 		color: color,
@@ -88,21 +88,21 @@ var map = new Map();
 
 for (var y = 0; y < canvasSize; y += cellSize) {
 	for (var x = 0; x < canvasSize; x += cellSize) {
-		var color = 'white';
+		var color = 'ForestGreen';
 		if (x == 20) {
-			color = 'red';
+			color = 'GoldenRod';
 		}
 		map.set(Coord(x, y), Cell(color));
 	}
 }
 
-map.set(getNthCell(0, 0), Cell('blue'));
-map.set(getNthCell(3, 4), Cell('blue'));
+map.set(getNthCell(0, 0), Cell('GreenYellow'));
+map.set(getNthCell(3, 4), Cell('GreenYellow'));
 
 exports.default = {
 	main: function main() {
 
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = 'ForestGreen';
 
 		var _iteratorNormalCompletion = true;
 		var _didIteratorError = false;

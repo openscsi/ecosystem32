@@ -18,7 +18,8 @@
 /*---> FONTS <--------------------------------*/
 /*--------------------------------------------*/
 
-@textSize: 3vh;
+@vh: 6px;
+@textSize: 3 * @vh;
 
 .HeadFont(){
 	font-family: 'Oswald', sans-serif;
@@ -303,7 +304,31 @@ body#index{
 /*---> HEADER & FOOTER <----------------------*/
 /*--------------------------------------------*/
 
+@headerHeight: 7.5 * @vh;
 
+header{
+
+	background: @csGreen;
+	box-shadow: 0 0 20px rgba(26, 26, 26, 0.85);
+	position: fixed;
+	width: 100%;
+
+	img, h1{
+		display: inline-block;
+		height: 0.8 * @headerHeight;
+		line-height: 0.8 * @headerHeight;
+		margin: 0.1 * @headerHeight;
+	}
+
+	h1{
+		text-align: left;
+		position: absolute;
+	}
+}
+
+div.headerSpace{
+	height: 1.25 * @headerHeight;
+}
 
 /*--------------------------------------------*/
 /*---> FORM <----------------------------------*/

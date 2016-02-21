@@ -9,7 +9,7 @@ function Coord(x, y){
 	}
 }
 
-function Cell(color = 'white'){
+function Cell(color = 'ForestGreen'){
 	return {
 		color: color,
 		list: [], //LinkedList of animals on the cell
@@ -50,22 +50,22 @@ var map = new Map();
 
 for(var y = 0; y < canvasSize; y += cellSize){
 	for(var x = 0; x < canvasSize; x += cellSize){
-		var color = 'white'
+		var color = 'ForestGreen'
 		if(x == 20){
-			color = 'red';
+			color = 'GoldenRod';
 		}
 		map.set(Coord(x, y), Cell(color));
 	}
 }
 
-map.set(getNthCell(0, 0), Cell('blue'));
-map.set(getNthCell(3, 4), Cell('blue'));
+map.set(getNthCell(0, 0), Cell('GreenYellow'));
+map.set(getNthCell(3, 4), Cell('GreenYellow'));
 
 
 export default {
 	main: function(){
 
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = 'ForestGreen';
 
 		for(var [coord, cell] of map){
 			cell.draw(ctx, coord);
