@@ -52,9 +52,9 @@
 			<div class="hex-row">
 				<h1><i class="fa fa-arrows"></i> Define Strategy</h1>
 			</div>
-			<p>Write the code for the logic your animals will follow. This will determine how they eat, mate, and survive.</p>
 			<h2>Move Logic</h2>
-			<textarea id="move" class="form-watch"></textarea>
+			<p>Write the code for the logic your animals will follow. This will determine how they eat, mate, and survive.</p>
+			<div id="editor" class="form-watch">console.log('Write your code here.');</div>
 		</section>
 		<section>
 			<div class="hex-row">
@@ -142,6 +142,7 @@
 
 		<script src="bundle.js"></script>
 		<script src="seedrandom.js"></script>
+		<script src="node_modules/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
 
@@ -158,6 +159,15 @@
 			});
 
 			$('.form-watch').change(function(){
+				var json = previewAnimal();
+				document.getElementById('preview-json').value = JSON.stringify(json);
+			});
+
+			var editor = ace.edit('editor');
+			editor.setTheme('ace/theme/monokai');
+			editor.getSession().setMode('ace/mode/javascript');
+
+			editor.on('change', function(e){
 				var json = previewAnimal();
 				document.getElementById('preview-json').value = JSON.stringify(json);
 			});

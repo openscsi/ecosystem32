@@ -11,7 +11,7 @@ exports.default = {
 		var color = document.getElementById('color').value;
 		var typeForm = document.querySelector('input[name="type"]:checked');
 		var type = typeForm ? typeForm.value : null;
-		var move = document.getElementById('move').value;
+		var move = document.getElementById('editor').innerText;
 		var genes = {};
 		var GENE_LIST = ['size1', 'size2', 'speed1', 'speed2', 'markings1', 'markings2', 'fertility'];
 		GENE_LIST.forEach(function (gene) {

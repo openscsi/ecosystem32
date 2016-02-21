@@ -398,6 +398,11 @@ body#form{
 		.BodyFont();
 	}
 
+	input[type="text"]{
+		padding: 1%;
+		width: 98%;
+	}
+
 	input[type="radio"]{
 		display: none;
 		&:checked + h3{
@@ -428,6 +433,14 @@ body#form{
 		line-height: 1.75 * @textSize;
 		height: 10 * 1.75 * @textSize;
 		color: white;
+	}
+
+	textarea.ace_text-input{
+		position: relative;
+	}
+
+	div#editor{
+		height: 10 * 1.75 * @textSize;
 	}
 
 	button{
