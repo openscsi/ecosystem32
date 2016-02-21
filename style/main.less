@@ -166,24 +166,39 @@ canvas{
 	.ProcessingConsole();
 }
 
+div.hex-row{
+	
+	.HexBackground(false);
+	width: 100%;
+	padding: 2.5% 5%;
+	margin: -5%;
+	margin-top: -5.5%;
+	margin-bottom: 0%;
+	
+	h1{
+		line-height: 2.0 * @textSize;
+	}
+
+}
+
+section{
+
+	width: 90%;
+	padding: 5%;
+	margin-top: -1%; //Dubious margin, there, Vinesh
+	
+	p, h1, h2, h3, ul, li{
+		text-align: left;
+	}
+
+	p{
+		line-height: 1.5 * @textSize;
+	}
+
+}
+
 
 body#index{
-
-	section{
-
-		width: 90%;
-		padding: 5%;
-		margin-top: -1%; //Dubious margin, there, Vinesh
-		
-		p, h1, h2, h3, ul, li{
-			text-align: left;
-		}
-
-		p{
-			line-height: 1.5 * @textSize;
-		}
-
-	}
 
 	section:nth-child(1){
 
@@ -284,21 +299,6 @@ body#index{
 
 	}
 
-	div.hex-row{
-		
-		.HexBackground(false);
-		width: 100%;
-		padding: 2.5% 5%;
-		margin: -5%;
-		margin-top: -5.5%;
-		margin-bottom: 0%;
-		
-		h1{
-			line-height: 2.0 * @textSize;
-		}
-
-	}
-
 	section:nth-child(2){
 		background-color: @csGreen;
 	}
@@ -330,6 +330,127 @@ body#index{
 			text-align: center;
 			color: @charcoal;
 		}
+	}
+
+}
+
+body#form{
+
+	section:nth-child(1){
+		background-color: @csGreen;
+	}
+
+	section:nth-child(2){
+		background-color: @criticalRed;
+	}
+
+	section:nth-child(3){
+		background-color: @softwareBlue;
+		h3{
+			color: @charcoal;
+		}
+	}
+
+	section:nth-child(4){
+		background-color: @charcoal;
+		div.hex-row{
+			.HexBackground(true);
+		}
+		a{
+			color: @softwareBlue;
+		}
+	}
+
+	section:nth-child(5){
+		background-color: @internetGold;
+		width: 100%;
+		margin-top: 5%;
+		padding: 0;
+		p{
+			text-align: center;
+			color: @charcoal;
+		}
+	}
+
+	label.slider-label{
+
+		width: 47.5%;
+		display: inline-block;
+		margin: 2.5% auto;
+
+		h3, input{
+			display: inline-block;
+		}
+
+		h3{
+			font-size: 0.9 * @textSize;
+			margin-right: 2.5 * @vh;
+		}
+
+	}
+
+	input[type="text"], input[type="color"]{
+		width: 100%;
+		font-size: 0.9 * @textSize;
+		height: 1.75 * @textSize;
+		line-height: 1.75 * @textSize;
+		margin-bottom: 2.5%;
+		.BodyFont();
+	}
+
+	input[type="radio"]{
+		display: none;
+		&:checked + h3{
+			color: @charcoal;
+		}
+	}
+
+	label.radio-label{
+
+		display: inline-block;
+		width: 47.5%;
+		height: 10 * @vh;
+		line-height: 5 * @vh;
+
+		h3{
+			text-align: center;
+			.AnimateAll();
+		}
+
+	}
+
+	textarea{
+		max-width: 95%;
+		width: 95%;
+		padding: 2.5%;
+		background: @charcoal;
+		font-size: 0.9 * @textSize;
+		line-height: 1.75 * @textSize;
+		height: 10 * 1.75 * @textSize;
+		color: white;
+	}
+
+	button{
+
+		.BodyFont();
+		width: 50%;
+		background: @charcoal;
+		color: white;
+		font-size: 1.5 * @textSize;
+		height: 2.5 * @textSize;
+		line-height: 2.0 * @textSize;
+		text-align: center;
+		display: block;
+		margin: 5% auto;
+		padding: 0.25 * @textSize;
+		border-radius: @vh;
+
+		&:hover{
+			background: @csGreen;
+		}
+
+		.AnimateAll();
+
 	}
 
 }
@@ -368,7 +489,7 @@ div.headerSpace{
 /*---> FORM <----------------------------------*/
 /*--------------------------------------------*/
 
-input, button, select{
+input, button, select, textarea{
 	outline: none;
 	border: none;
 }
@@ -410,8 +531,10 @@ input, button, select{
 	width: 10px;
 	height: 10px;
 	background: @scrollBarBack;
+	display: none;
 }
 
 ::-webkit-resizer{
 	background: @scrollBarBack;
+	display: none;
 }
