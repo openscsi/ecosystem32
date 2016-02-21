@@ -21,18 +21,15 @@ function Cell(color = 'white'){
 			ctx.fill();
 			ctx.closePath();
 			//Draw number of animals
-			var text = this.list.length;
+			var text = this.list.length + '';
 			var fontSize = 0.75 * cellSize;
 			var xOff = nameOffset(text, fontSize)
-			var yOff = Math.round(0.5 * fontSize);
-			
-			var font = fontSize + 'px Arial';
+			var yOff = 1.0 * fontSize;
+			var font = fontSize + 'px Consolas';
 			ctx.font = font;
-			ctx.lineWidth = 3;
-			ctx.strokeStyle = 'black';
-			//ctx.textAlign = 'center';
-			ctx.strokeText(text + "a", coord.x - xOff, coord.y + yOff);
-			console.log(text)
+			ctx.lineWidth = 1;
+			ctx.fillStyle = 'black';
+			ctx.fillText(text, coord.x + xOff, coord.y + yOff);
 		}
 	}
 }
@@ -54,8 +51,8 @@ var map = new Map();
 for(var y = 0; y < canvasSize; y += cellSize){
 	for(var x = 0; x < canvasSize; x += cellSize){
 		var color = 'white'
-		if(x === 10){
-			color = 'red'
+		if(x == 20){
+			color = 'red';
 		}
 		map.set(Coord(x, y), Cell(color));
 	}
