@@ -11,8 +11,6 @@ var _viewer2 = _interopRequireDefault(_viewer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-window.Wait = _Wait2.default;
-
 console.log('I am a', _module2.default);
 
 //Viewer.main();
