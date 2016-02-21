@@ -5,16 +5,108 @@ var _module = require('./module');
 
 var _module2 = _interopRequireDefault(_module);
 
+var _viewer = require('./viewer');
+
+var _viewer2 = _interopRequireDefault(_viewer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log('I am a', _module2.default);
 
-},{"./module":2}],2:[function(require,module,exports){
+_viewer2.default.main();
+
+},{"./module":2,"./viewer":3}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = 'meme';
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+function Coord(x, y) {
+	return {
+		x: x,
+		y: y
+	};
+}
+
+function Cell() {
+	var color = arguments.length <= 0 || arguments[0] === undefined ? 'white' : arguments[0];
+
+	return {
+		color: color
+	};
+}
+
+var mapSize = 50;
+
+var canvas = document.getElementById('game-canvas');
+var ctx = canvas.getContext('2d');
+var cellSize = canvas.width / mapSize;
+
+var map = new Map();
+
+for (var y = 0; y < mapSize; y++) {
+	for (var x = 0; x < mapSize; x++) {
+		map.set(Coord(x, y), Cell());
+	}
+}
+
+map.set(Coord(0, 0), Cell('blue'));
+map.set(Coord(9, 9), Cell('blue'));
+
+exports.default = {
+	scaleCoord: function scaleCoord(coord, scale) {
+		return Coord(coord.x * scale, coord.y * scale);
+	},
+	main: function main() {
+
+		ctx.fillStyle = 'white';
+
+		var _iteratorNormalCompletion = true;
+		var _didIteratorError = false;
+		var _iteratorError = undefined;
+
+		try {
+			for (var _iterator = map[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+				var _step$value = _slicedToArray(_step.value, 2);
+
+				var coord = _step$value[0];
+				var cell = _step$value[1];
+
+				ctx.fillStyle = cell.color;
+				ctx.beginPath();
+				var scaledCoord = this.scaleCoord(coord, cellSize);
+				ctx.rect(scaledCoord.x, scaledCoord.y, cellSize, cellSize);
+				ctx.fill();
+				ctx.closePath();
+			}
+		} catch (err) {
+			_didIteratorError = true;
+			_iteratorError = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion && _iterator.return) {
+					_iterator.return();
+				}
+			} finally {
+				if (_didIteratorError) {
+					throw _iteratorError;
+				}
+			}
+		}
+
+		console.log("Done!");
+	}
+};
 
 },{}]},{},[1]);
