@@ -3,4 +3,6 @@ import Viewer from './viewer';
 
 console.log('I am a', Module);
 
-//Viewer.main();
+window.viewerMain = function(){
+	Viewer.main();
+}

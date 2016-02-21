@@ -13,7 +13,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 console.log('I am a', _module2.default);
 
-//Viewer.main();
+window.viewerMain = function () {
+	_viewer2.default.main();
+};
 
 },{"./module":2,"./viewer":3}],2:[function(require,module,exports){
 'use strict';
