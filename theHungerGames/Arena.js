@@ -198,7 +198,7 @@ Arena.prototype.doTurn = function doTurn(){
     this.ndays++;
 
     if (this.ndays === 100) {
-        const entriesIter = map.entrySet();
+        const entriesIter = this.map.entrySet();
         while (entriesIter.hasNext()) {
             const entry = entriesIter.next();
 

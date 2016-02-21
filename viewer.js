@@ -55,12 +55,13 @@ export default {
 
 		console.log("We drew the arena without everything falling apart!");
 
-		for(var i = 0; i < 5; i++){
+		var loop = setInterval(function () {
 			if (arena.doTurn()) {
 				arena.draw(ctx, 0, 0);
+			} else {
+				clearInterval(loop);
 			}
-			console.log("We finished a step without horribly dying!");
-		}
+		}, 25);
 
 		console.log("Done!")
 
