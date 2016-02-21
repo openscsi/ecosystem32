@@ -6,6 +6,9 @@ function CarnivoreEat(prey) {
     this.prey = prey;
 }
 
+CarnivoreEat.prototype = Object.create(Eat.prototype);
+CarnivoreEat.prototype.constructor = CarnivoreEat;
+
 Object.defineProperty(CarnivoreEat, 'ENERGY_SCALE', {
     value: 10,
     writeable: false
