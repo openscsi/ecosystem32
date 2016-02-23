@@ -23,78 +23,78 @@ Herbivore1.prototype.getName = function getName(){
 
 Herbivore1.prototype.userDefinedChooseMove = function userDefinedChooseMove(){
     var others = this.getCell().getOtherAnimals(this);
-		for (var i = 0; i < others.length; i++) {
+        for (var i = 0; i < others.length; i++) {
             var ani = others[i]
-			if (this.checkMateability(ani)) {
-				return new Mate(ani);
-			}
-		}
-	if (Arena.getRandom().nextBoolean()) {
-		return new HerbivoreEat();
-	} else {
-		return new Move(Direction.randomDirection());
-	}
+            if (this.checkMateability(ani)) {
+                return new Mate(ani);
+            }
+        }
+    if (Arena.getRandom().nextBoolean()) {
+        return new HerbivoreEat();
+    } else {
+        return new Move(Direction.randomDirection());
+    }
 }
 
 Herbivore1.prototype.getInitialGene = function getInitialGene(type) {
 
-	let ranNum = Arena.getRandom().nextGaussian() * 0.1 + 0.5;
+    let ranNum = Arena.getRandom().nextGaussian() * 0.1 + 0.5;
 
-	switch(type) {
-	case GeneType.SIZE1:
-		return ranNum;
+    switch(type) {
+    case GeneType.SIZE1:
+        return ranNum;
 
-	case GeneType.SIZE2:
-		return ranNum;
+    case GeneType.SIZE2:
+        return ranNum;
 
-	case GeneType.SPEED1:
-		return ranNum;
+    case GeneType.SPEED1:
+        return ranNum;
 
-	case GeneType.SPEED2:
-		return ranNum;
+    case GeneType.SPEED2:
+        return ranNum;
 
-	case GeneType.MARKINGS1:
-		return ranNum;
+    case GeneType.MARKINGS1:
+        return ranNum;
 
-	case GeneType.MARKINGS2:
-		return ranNum;
+    case GeneType.MARKINGS2:
+        return ranNum;
 
-	case GeneType.FERTILITY:
-		return ranNum;
+    case GeneType.FERTILITY:
+        return ranNum;
 
-	default:
-		throw new Error("Never reach here");
+    default:
+        throw new Error("Never reach here");
 
-	}
+    }
 };
 
 Herbivore1.prototype.getInitialSD = function getInitialSD(type) {
-	switch(type) {
-	case GeneType.SIZE1:
-		return 0.1;
+    switch(type) {
+    case GeneType.SIZE1:
+        return 0.1;
 
-	case GeneType.SIZE2:
-		return 0.1;
+    case GeneType.SIZE2:
+        return 0.1;
 
-	case GeneType.SPEED1:
-		return 0.1;
+    case GeneType.SPEED1:
+        return 0.1;
 
-	case GeneType.SPEED2:
-		return 0.1;
+    case GeneType.SPEED2:
+        return 0.1;
 
-	case GeneType.MARKINGS1:
-		return 0.1;
+    case GeneType.MARKINGS1:
+        return 0.1;
 
-	case GeneType.MARKINGS2:
-		return 0.1;
+    case GeneType.MARKINGS2:
+        return 0.1;
 
-	case GeneType.FERTILITY:
-		return 0.1;
+    case GeneType.FERTILITY:
+        return 0.1;
 
-	default:
-		throw new Error("Never reach here");
+    default:
+        throw new Error("Never reach here");
 
-	}
+    }
 };
 
 export default Herbivore1;

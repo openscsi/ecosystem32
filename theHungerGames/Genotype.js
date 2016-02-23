@@ -29,20 +29,20 @@ Genotype.prototype.getGene = function getGene(trait) {
 };
 
 Genotype.prototype.meiosis = function meiosis() {
-	var father = this.getFatherGenes().allGenesInOrder();
-	var mother = this.getMotherGenes().allGenesInOrder();
+    var father = this.getFatherGenes().allGenesInOrder();
+    var mother = this.getMotherGenes().allGenesInOrder();
 
-	var finalList = [];
+    var finalList = [];
 
-	for (var i = 0; i < father.length; ++i) {
-		if (Arena.getRandom().nextBoolean()) {
-			finalList.push(father[i].mutatedVersion());
-		} else {
-			finalList.push(mother[i].mutatedVersion());
-		}
-	}
+    for (var i = 0; i < father.length; ++i) {
+        if (Arena.getRandom().nextBoolean()) {
+            finalList.push(father[i].mutatedVersion());
+        } else {
+            finalList.push(mother[i].mutatedVersion());
+        }
+    }
 
-	return new GeneSet(finalList);
+    return new GeneSet(finalList);
 };
 
 export default Genotype;
