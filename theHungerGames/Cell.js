@@ -43,10 +43,10 @@ Cell.prototype.draw = function draw(graphicObject, xCoord, yCoord){
     graphicObject.fill();
     graphicObject.closePath();
 
-	for (var i = 0; i < this.list.length; i++) {
+    for (var i = 0; i < this.list.length; i++) {
         var ian = this.list[i];
-		ian.draw(graphicObject, xCoord, yCoord);
-	}
+        ian.draw(graphicObject, xCoord, yCoord);
+    }
 
     graphicObject.fillStyle = "Gainsboro";
     graphicObject.beginPath();

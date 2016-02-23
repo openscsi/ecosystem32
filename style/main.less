@@ -180,17 +180,7 @@ div.hex-row{
 
 }
 
-<<<<<<< HEAD
 section{
-=======
-		width: 90%;
-		padding: 5%;
-		margin-top: -1%; //Dubious margin, there, Vinesh
-
-		p, h1, h2, h3, ul, li{
-			text-align: left;
-		}
->>>>>>> model-renderer-integration
 
 	width: 90%;
 	padding: 5%;
@@ -278,38 +268,39 @@ body#index{
 
 		}
 
-	@media(max-width: 700px) {
+		@media(max-width: 700px) {
 
-		img{
-			width: 30%;
-			margin: 2.5% 30%;
+			img{
+				width: 30%;
+				margin: 2.5% 30%;
 
-		}
-		
-		div.ghost-center{
-
-			margin: -5%;
-			margin-top: 32.5%;
-			position: absolute;
-			width: 100%;
-
-			div#entry-message{
-				margin: 5%;
-				width: 90%;
 			}
-		}
+			
+			div.ghost-center{
 
-		div.video-wrapper{
-			width: 200vh;
-			height: 92.5vh;
+				margin: -5%;
+				margin-top: 32.5%;
+				position: absolute;
+				width: 100%;
+
+				div#entry-message{
+					margin: 5%;
+					width: 90%;
+				}
+			}
+
+			div.video-wrapper{
+				width: 200vh;
+				height: 92.5vh;
+			}
+
 		}
 
 	}
 
-<<<<<<< HEAD
-=======
 	section:nth-child(2){
-		.HexBackground();
+		.HexBackground(true);
+	}
 	div.hex-row{
 		.HexBackground(false);
 		width: 100%;
@@ -317,7 +308,6 @@ body#index{
 		margin: -5%;
 		margin-top: -5.5%;
 		margin-bottom: 0%;
->>>>>>> model-renderer-integration
 	}
 
 	section:nth-child(2){
@@ -601,9 +591,5 @@ input, button, select, textarea{
 
 ::-webkit-resizer{
 	background: @scrollBarBack;
-<<<<<<< HEAD
 	display: none;
 }
-=======
-}
->>>>>>> model-renderer-integration

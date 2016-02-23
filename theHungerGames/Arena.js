@@ -50,11 +50,11 @@ Arena.prototype.draw = function draw(graphicObject, xCoord, yCoord) {
     icoord.done = false;
     while (!icoord.done) {
         icoord = coordIter.next();
-        if(!icoord.done){ // This is diiiiiirrrrrrty
-		this.map.get(icoord.value).draw(graphicObject, xCoord + JSON.parse(icoord.value).x * this.map.get(icoord.value).getXSize(),
-				yCoord + JSON.parse(icoord.value).y * this.map.get(icoord.value).getYSize());
+        if (!icoord.done) { // This is diiiiiirrrrrrty
+            this.map.get(icoord.value).draw(graphicObject, xCoord + JSON.parse(icoord.value).x * this.map.get(icoord.value).getXSize(),
+                yCoord + JSON.parse(icoord.value).y * this.map.get(icoord.value).getYSize());
         }
-	}
+    }
 };
 
 Arena.prototype.getXSize = function getXSize() {
