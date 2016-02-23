@@ -1,5 +1,5 @@
 import Viewer from './viewer';
-import AnimalForm from './lib/form';
+// import AnimalForm from './lib/form';
 
 window.viewerMain = function(){
 	Viewer.main();

@@ -54,4 +54,14 @@ FoodCell.prototype.getColor = function getColor() {
     return `hsl(110, 85%, ${brightness*100}%)`;
 };
 
+FoodCell.prototype.eatFood = function eatFood(amount) {
+    if (amount <= this.foodAmount) {
+        this.foodAmount -= amount;
+        return amount;
+    }
+    const temp = this.foodAmount;
+    this.foodAmount = 0;
+    return temp;
+};
+
 export default FoodCell;
