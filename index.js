@@ -1,8 +1,5 @@
-import Module from './module';
 import Viewer from './viewer';
 import AnimalForm from './lib/form';
-
-console.log('I am a', Module);
 
 window.viewerMain = function(){
 	Viewer.main();
