@@ -1,0 +1,291 @@
+/*--------------------------------------------*/
+/*---> COLORS <-------------------------------*/
+/*--------------------------------------------*/
+
+@MainColor: #2d0a58;
+@MainLight: @MainColor + #222222;
+@MainDark: @MainColor - #222222;
+
+@LightGray: #EDEEF1;
+@Yellow: #F1FFB9;
+@Lime: #B4D347;
+@Green: #70BF4C;
+@Aqua: #00AC8E;
+@Blue: #008AAC;
+
+@Charcoal: #1a1a1a;
+
+/*--------------------------------------------*/
+/*---> FONTS <--------------------------------*/
+/*--------------------------------------------*/
+
+@vh: 6.5px;
+@tx: 3.0 * @vh;
+
+.HeadFont(){
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.BodyFont(){
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+/*--------------------------------------------*/
+/*---> TEXT <---------------------------------*/
+/*--------------------------------------------*/
+
+p, h1, h2, h3, ul, li{
+	.BodyFont();
+	margin: (0.5 * @tx) auto;
+}
+
+h1, h2, h3{
+	.HeadFont();
+	text-align: center;
+	font-weight: 900;
+}
+
+h1{
+	font-size: 1.5 * @tx;
+	line-height: 1.75 * @tx;
+}
+
+h2{
+	font-size: 1.25 * @tx;
+	line-height: 1.5 * @tx;
+}
+
+h3{
+	font-size: 1.1 * @tx;
+	line-height: 1.35 * @tx;
+}
+
+p{
+	font-size: 1.0 * @tx;
+	line-height: 1.25 * @tx;
+	text-align: center;
+}
+
+li{
+	font-size: 1.0 * @tx;
+	line-height: 1.25 * @tx;
+	list-style: disc;
+	margin-left: 1.5 * @tx;
+}
+
+/*--------------------------------------------*/
+/*---> BODY <---------------------------------*/
+/*--------------------------------------------*/
+
+html{
+	background: white;
+	//Default Text Styles
+	.BodyFont();
+	font-size: @tx;
+	color: @Charcoal;
+	overflow-x: hidden;
+	background: @Blue;
+}
+
+body{
+	margin: 0;
+	width: 100vw;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.AnimateAll(@time: 0.5s){
+	transition: all @time ease;
+	-webkit-transition: all @time ease;
+}
+
+/*--------------------------------------------*/
+/*---> STRUCTURE <----------------------------*/
+/*--------------------------------------------*/
+
+div.module{
+	background: white;
+	width: 95%;
+	margin: 15px auto;
+	//border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 5px 5px 1px darken(@Blue, 10%);
+}
+
+div.container{
+	font-size: 0;
+}
+
+div.half{
+	vertical-align: top;
+	display: inline-block;
+	width: 50%;
+}
+
+/*--------------------------------------------*/
+/*---> HEADER & FOOTER <----------------------*/
+/*--------------------------------------------*/
+
+/*--------------------------------------------*/
+/*---> USERS <--------------------------------*/
+/*--------------------------------------------*/
+
+div.user-list-box{
+	display: block;
+	width: 280px;
+	height: 50px;
+	margin: 5px auto;
+	background: transparent;
+	font-size: 0;
+
+	img, div{
+		display: inline-block;
+		vertical-align: top;
+		height: 40px;
+		margin: 5px;
+	}
+
+	img{
+		width: 40px;
+		border-radius: 20px;
+	}
+
+	div{
+		line-height: 40px;
+		font-size: 15px;
+	}
+}
+
+/*--------------------------------------------*/
+/*---> ROOMS <--------------------------------*/
+/*--------------------------------------------*/
+
+li.room-list-box{
+	font-size: 15px;
+}
+
+/*--------------------------------------------*/
+/*---> FORM <---------------------------------*/
+/*--------------------------------------------*/
+
+input, button, select{
+	outline: none;
+	border: none;
+}
+
+button, input{
+	display: block;
+	margin: 10px auto;
+	width: 260px;
+	padding: 10px;
+	height: 40px;
+	border-radius: 5px;
+	font-size: 15px;
+	.BodyFont();
+	.AnimateAll();
+}
+
+button{
+	background: @Green;
+	color: white;
+	&:hover{
+		background: @Lime;
+	}
+}
+
+input{
+	text-align: center;
+	background: @LightGray;
+	color: @Charcoal;
+	/*&:hover, &:focus{
+		background: @Lime;
+		color: white;
+	}*/
+}
+
+/*--------------------------------------------*/
+/*---> RIPPLE EFFECT <------------------------*/
+/*--------------------------------------------*/
+
+.ripplelink{
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.ink {
+	display: block;
+	position: absolute;
+	background:rgba(255, 255, 255, 0.3);
+	border-radius: 100%;
+	-webkit-transform:scale(0);
+	-moz-transform:scale(0);
+	-o-transform:scale(0);
+	transform:scale(0);
+}
+
+.animate {
+	-webkit-animation:ripple 0.65s linear;
+	-moz-animation:ripple 0.65s linear;
+	-ms-animation:ripple 0.65s linear;
+	-o-animation:ripple 0.65s linear;
+	animation:ripple 0.65s linear;
+}
+
+@-webkit-keyframes ripple {
+	100% {opacity: 0; -webkit-transform: scale(2.5);}
+}
+@-moz-keyframes ripple {
+	100% {opacity: 0; -moz-transform: scale(2.5);}
+}
+@-o-keyframes ripple {
+	100% {opacity: 0; -o-transform: scale(2.5);}
+}
+@keyframes ripple {
+	100% {opacity: 0; transform: scale(2.5);}
+}
+
+/*--------------------------------------------*/
+/*---> SCROLLBAR <----------------------------*/
+/*--------------------------------------------*/
+
+@scrollBar: @Green;
+@scrollBarBack: @Blue;
+
+::-webkit-scrollbar{
+	width: 10px;
+	height: 10px;
+	background: @scrollBarBack;
+	z-index: 50;
+}
+
+::-webkit-scrollbar-button{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track-piece{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-thumb{
+	background: @scrollBar;
+	//border-radius: 5px;
+	position: absolute;
+	margin-left: -10px;
+}
+
+::-webkit-scrollbar-corner{
+	width: 10px;
+	height: 10px;
+	background: @scrollBarBack;
+}
+
+::-webkit-resizer{
+	background: @scrollBarBack;
+}

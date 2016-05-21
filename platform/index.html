@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ecosystem32</title>
+		<link rel="stylesheet" type="text/css" href="style/reset.css">
+		<link rel="stylesheet" type="text/css" href="style/main.css">
+		<link rel="icon" type="img/ico" href="style/favicon.ico" style="width:30px;">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- IMPORTED SCRIPTS -->
+		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+		<style>
+
+
+
+		</style>
+	</head>
+
+	<body>
+
+		<div id="login-module" class="module">
+			<h1>Ecosystem32</h1>
+			<h2>Login</h2>
+			<button onclick="googleLogin();">Google</button>
+		</div>
+
+		<div id="room-parent-module" class="module">
+			<h1>Ecosystem32</h1>
+			<h2>Room</h2>
+			<div id="room-finder-module">
+				<p>Search for a room by its key. When you visit, you will automatically join.</p>
+				<input type="text" id="room-key" placeholder="room key">
+				<button id="room-submit">Go</button>
+			</div>
+			<div id="room-module"></div>
+		</div>
+
+		<div id="logout-module" style="display: none;" class="module">
+			<h2>Logout</h2>
+			<button onclick="firebase.auth().signOut();">Logout</button>
+		</div>
+
+		<div id="database-module" class="module">
+			<h1>Database Information</h1>
+			<p>These are all the users and rooms in the database.</p>
+			<div class="container">
+				<div class="half">
+					<h2>All Users</h2>
+					<ul id="user-list"></ul>	
+				</div>
+				<div class="half">
+					<h2>All Rooms</h2>
+					<ul id="room-list"></ul>
+				</div>
+			</div>
+		</div>
+
+		<script src="lib/promise.min.js"></script>
+		<script src="lib/auth.js"></script>
+		<script src="lib/user.js"></script>
+		<script src="lib/room.js"></script>
+		<script src="lib/main.js"></script>
+		<!--<script src="lib/pretty.js"></script>-->
+
+		<script type="text/javascript">
+
+			
+
+		</script>
+		
+	</body>
+</html>
