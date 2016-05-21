@@ -84,7 +84,7 @@ html{
 	font-size: @tx;
 	color: @Charcoal;
 	overflow-x: hidden;
-	background: @Yellow;
+	background: @Blue;
 }
 
 body{
@@ -106,10 +106,11 @@ body{
 div.module{
 	background: white;
 	width: 95%;
-	margin: 10px auto;
-	border-radius: 5px;
+	margin: 15px auto;
+	//border-radius: 5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	box-shadow: 5px 5px 1px darken(@Blue, 10%);
 }
 
 div.container{
@@ -186,7 +187,7 @@ button, input{
 }
 
 button{
-	background: @Blue;
+	background: @Green;
 	color: white;
 	&:hover{
 		background: @Lime;
@@ -250,8 +251,8 @@ input{
 /*---> SCROLLBAR <----------------------------*/
 /*--------------------------------------------*/
 
-@scrollBar: @Blue;
-@scrollBarBack: @Yellow;
+@scrollBar: @Green;
+@scrollBarBack: @Blue;
 
 ::-webkit-scrollbar{
 	width: 10px;

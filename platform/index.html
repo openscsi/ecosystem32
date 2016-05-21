@@ -19,14 +19,14 @@
 
 	<body>
 
-		<h1>Ecosystem32</h1>
-
 		<div id="login-module" class="module">
+			<h1>Ecosystem32</h1>
 			<h2>Login</h2>
 			<button onclick="googleLogin();">Google</button>
 		</div>
 
 		<div id="room-parent-module" class="module">
+			<h1>Ecosystem32</h1>
 			<h2>Room</h2>
 			<div id="room-finder-module">
 				<p>Search for a room by its key. When you visit, you will automatically join.</p>
@@ -41,7 +41,7 @@
 			<button onclick="firebase.auth().signOut();">Logout</button>
 		</div>
 
-		<div class="module">
+		<div id="database-module" class="module">
 			<h1>Database Information</h1>
 			<p>These are all the users and rooms in the database.</p>
 			<div class="container">
@@ -57,10 +57,10 @@
 		</div>
 
 		<script src="lib/promise.min.js"></script>
-		<script src="lib/main.js"></script>
 		<script src="lib/auth.js"></script>
 		<script src="lib/user.js"></script>
 		<script src="lib/room.js"></script>
+		<script src="lib/main.js"></script>
 		<!--<script src="lib/pretty.js"></script>-->
 
 		<script type="text/javascript">

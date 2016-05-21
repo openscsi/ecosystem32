@@ -6,7 +6,8 @@ var config = {
 	storageBucket: "ecosystem32-37920.appspot.com"
 };
 firebase.initializeApp(config);
-
+listUsers();
+listRooms();
 console.log("Ecosystem32 is in Multiplayer Mode.");
 
 firebase.auth().onAuthStateChanged(function(user){
@@ -34,8 +35,6 @@ function toggleModules(setting, modules){
 		}
 	}
 }
-
-
 
 $('#room-submit').click(function(event){
 	var output = document.getElementById('room-module');
