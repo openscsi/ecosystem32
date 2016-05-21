@@ -1,0 +1,161 @@
+/*--------------------------------------------*/
+/*---> COLORS <-------------------------------*/
+/*--------------------------------------------*/
+
+@MainColor: #2d0a58;
+@MainLight: @MainColor + #222222;
+@MainDark: @MainColor - #222222;
+
+@Yellow: #EDEEF1;
+@Lime: #B4D347;
+@Green: #70BF4C;
+@Aqua: #00AC8E;
+@Blue: #008AAC;
+
+@Charcoal: #1a1a1a;
+
+/*--------------------------------------------*/
+/*---> FONTS <--------------------------------*/
+/*--------------------------------------------*/
+
+@vh: 6.5px;
+@tx: 3.0 * @vh;
+
+.HeadFont(){
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.BodyFont(){
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+/*--------------------------------------------*/
+/*---> TEXT <---------------------------------*/
+/*--------------------------------------------*/
+
+p, h1, h2, h3, ul, li{
+	.BodyFont();
+	margin: (0.5 * @tx) auto;
+}
+
+h1, h2, h3{
+	.HeadFont();
+	text-align: center;
+	font-weight: 900;
+}
+
+h1{
+	font-size: 1.5 * @tx;
+	line-height: 1.75 * @tx;
+}
+
+h2{
+	font-size: 1.25 * @tx;
+	line-height: 1.5 * @tx;
+}
+
+h3{
+	font-size: 1.1 * @tx;
+	line-height: 1.35 * @tx;
+}
+
+p{
+	font-size: 1.0 * @tx;
+	line-height: 1.25 * @tx;
+	text-align: center;
+}
+
+li{
+	font-size: 1.0 * @tx;
+	line-height: 1.25 * @tx;
+	list-style: disc;
+	margin-left: 1.5 * @tx;
+}
+
+/*--------------------------------------------*/
+/*---> BODY <---------------------------------*/
+/*--------------------------------------------*/
+
+html{
+	background: white;
+	//Default Text Styles
+	.BodyFont();
+	font-size: @tx;
+	color: @Charcoal;
+}
+
+body{
+	margin: 0;
+	width: 100vw;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.AnimateAll(@time: 0.5s){
+	transition: all @time ease;
+	-webkit-transition: all @time ease;
+}
+
+/*--------------------------------------------*/
+/*---> STRUCTURE <----------------------------*/
+/*--------------------------------------------*/
+
+
+
+/*--------------------------------------------*/
+/*---> HEADER & FOOTER <----------------------*/
+/*--------------------------------------------*/
+
+
+
+/*--------------------------------------------*/
+/*---> FORM <----------------------------------*/
+/*--------------------------------------------*/
+
+input, button, select{
+	outline: none;
+	border: none;
+}
+
+/*--------------------------------------------*/
+/*---> SCROLLBAR <----------------------------*/
+/*--------------------------------------------*/
+
+@scrollBar: white;
+@scrollBarBack: @Charcoal;
+
+::-webkit-scrollbar{
+	width: 10px;
+	height: 10px;
+	background: @scrollBarBack;
+	z-index: 50;
+}
+
+::-webkit-scrollbar-button{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-track-piece{
+	background: @scrollBarBack;
+}
+
+::-webkit-scrollbar-thumb{
+	background: @scrollBar;
+	//border-radius: 5px;
+	position: absolute;
+	margin-left: -10px;
+}
+
+::-webkit-scrollbar-corner{
+	width: 10px;
+	height: 10px;
+	background: @scrollBarBack;
+}
+
+::-webkit-resizer{
+	background: @scrollBarBack;
+}

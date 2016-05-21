@@ -1,0 +1,1 @@
+console.log("Ecosystem32 is in Multiplayer Mode.");
