@@ -14,12 +14,25 @@ firebase.auth().onAuthStateChanged(function(user){
 	if(user){
 		//User Signed In
 		listUsers();
+		toggleModules('none', ['login']);
+		toggleModules('block', ['logout', 'room-finder']);
 	}
 	else{
 		//User Signed Out
+		toggleModules('none', ['logout', 'room-finder', 'room']);
+		toggleModules('block', ['login']);
 	}
 });
 
+function toggleModules(setting, modules){
+	for(var i in modules){
+		var module = modules[i];
+		if(module){
+			var target = document.getElementById(module + '-module');
+			target.style.display = setting;
+		}
+	}
+}
 
 function listUsers(){
 	var output = document.getElementById('user-list');
@@ -34,3 +47,16 @@ function listUsers(){
 		}
 	});
 }
+
+$('#room-submit').click(function(event){
+	var output = document.getElementById('room-module');
+	var roomId = event.target.previousElementSibling.value;
+	toggleModules('none', ['room-finder']);
+	toggleModules('block', ['room']);
+	console.log(roomId);
+	var promise = RoomPromise(roomId);
+	promise.then(function(room){
+		console.log(room);
+		output.innerHTML = room.html();
+	});
+});

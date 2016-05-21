@@ -100,7 +100,40 @@ body{
 /*---> STRUCTURE <----------------------------*/
 /*--------------------------------------------*/
 
+.Containerify(@WideWidth: 50%; @ThinWidth: 100%){
+	display: inline-block;
+	vertical-align: top;
+	background: transparent;
 
+	@media screen{
+
+			width: @WideWidth;
+			padding: 1% 2%;
+
+		@media (max-width: 640px){
+
+			width: @ThinWidth;
+			padding: 4% 4%;
+
+		}
+	}
+
+	i{
+		display: block;
+		width: 8 * @vh;
+		font-size: 8 * @vh;
+		margin: (2 * @vh) auto;
+		text-align: center;
+	}
+
+	.BodyFont();
+	font-size: 1.0 * @tx;
+	line-height: 1.125 * @tx;
+	font-weight: 400;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+}
 
 /*--------------------------------------------*/
 /*---> HEADER & FOOTER <----------------------*/
@@ -117,7 +150,7 @@ input, button, select{
 	border: none;
 }
 
-button{
+button, input{
 	display: block;
 	margin: 10px auto;
 	width: 260px;
@@ -125,15 +158,30 @@ button{
 	height: 40px;
 	border-radius: 5px;
 	font-size: 15px;
-	background: @Blue;
-	color: white;
-
-	/*&:hover{
-		background: @Lime;
-	}*/
-
 	.BodyFont();
 	.AnimateAll();
+}
+
+button{
+	background: @Blue;
+	color: white;
+	&:hover{
+		background: @Lime;
+	}
+}
+
+input{
+	text-align: center;
+	background: @Yellow;
+	color: @Charcoal;
+	/*&:hover, &:focus{
+		background: @Lime;
+		color: white;
+	}*/
+}
+
+button.login{
+	.Containerify(50%, 100%);
 }
 
 /*--------------------------------------------*/

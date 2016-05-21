@@ -21,13 +21,31 @@
 
 		<h1>Ecosystem32</h1>
 
-		<button class="ripplelink" onclick="googleLogin();">Google</button>
+		<div id="login-module">
+			<h2>Login</h2>
+			<button onclick="googleLogin();">Google</button>
+		</div>
+		<div id="logout-module" style="display: none;">
+			<h2>Logout</h2>
+			<button onclick="firebase.auth().signOut();">Logout</button>
+		</div>
 
 		<h2>Users</h2>
 		<ul id="user-list"></ul>
 
+		<div id="room-parent-module">
+			<h2>Room</h2>
+			<div id="room-finder-module">
+				<input type="text" id="room-key" placeholder="room key">
+				<button id="room-submit">Go</button>
+			</div>
+			<div id="room-module"></div>
+		</div>
+
+		<script src="lib/promise.min.js"></script>
 		<script src="lib/main.js"></script>
 		<script src="lib/auth.js"></script>
+		<script src="lib/room.js"></script>
 		<!--<script src="lib/pretty.js"></script>-->
 
 		<script type="text/javascript">
