@@ -6,7 +6,8 @@
 @MainLight: @MainColor + #222222;
 @MainDark: @MainColor - #222222;
 
-@Yellow: #EDEEF1;
+@LightGray: #EDEEF1;
+@Yellow: #F1FFB9;
 @Lime: #B4D347;
 @Green: #70BF4C;
 @Aqua: #00AC8E;
@@ -82,6 +83,8 @@ html{
 	.BodyFont();
 	font-size: @tx;
 	color: @Charcoal;
+	overflow-x: hidden;
+	background: @Yellow;
 }
 
 body{
@@ -100,49 +103,69 @@ body{
 /*---> STRUCTURE <----------------------------*/
 /*--------------------------------------------*/
 
-.Containerify(@WideWidth: 50%; @ThinWidth: 100%){
-	display: inline-block;
+div.module{
+	background: white;
+	width: 95%;
+	margin: 10px auto;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+div.container{
+	font-size: 0;
+}
+
+div.half{
 	vertical-align: top;
-	background: transparent;
-
-	@media screen{
-
-			width: @WideWidth;
-			padding: 1% 2%;
-
-		@media (max-width: 640px){
-
-			width: @ThinWidth;
-			padding: 4% 4%;
-
-		}
-	}
-
-	i{
-		display: block;
-		width: 8 * @vh;
-		font-size: 8 * @vh;
-		margin: (2 * @vh) auto;
-		text-align: center;
-	}
-
-	.BodyFont();
-	font-size: 1.0 * @tx;
-	line-height: 1.125 * @tx;
-	font-weight: 400;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
+	display: inline-block;
+	width: 50%;
 }
 
 /*--------------------------------------------*/
 /*---> HEADER & FOOTER <----------------------*/
 /*--------------------------------------------*/
 
+/*--------------------------------------------*/
+/*---> USERS <--------------------------------*/
+/*--------------------------------------------*/
 
+div.user-list-box{
+	display: block;
+	width: 280px;
+	height: 50px;
+	margin: 5px auto;
+	background: transparent;
+	font-size: 0;
+
+	img, div{
+		display: inline-block;
+		vertical-align: top;
+		height: 40px;
+		margin: 5px;
+	}
+
+	img{
+		width: 40px;
+		border-radius: 20px;
+	}
+
+	div{
+		line-height: 40px;
+		font-size: 15px;
+	}
+}
 
 /*--------------------------------------------*/
-/*---> FORM <----------------------------------*/
+/*---> ROOMS <--------------------------------*/
+/*--------------------------------------------*/
+
+li.room-list-box{
+	font-size: 15px;
+}
+
+/*--------------------------------------------*/
+/*---> FORM <---------------------------------*/
 /*--------------------------------------------*/
 
 input, button, select{
@@ -172,16 +195,12 @@ button{
 
 input{
 	text-align: center;
-	background: @Yellow;
+	background: @LightGray;
 	color: @Charcoal;
 	/*&:hover, &:focus{
 		background: @Lime;
 		color: white;
 	}*/
-}
-
-button.login{
-	.Containerify(50%, 100%);
 }
 
 /*--------------------------------------------*/
@@ -231,8 +250,8 @@ button.login{
 /*---> SCROLLBAR <----------------------------*/
 /*--------------------------------------------*/
 
-@scrollBar: white;
-@scrollBarBack: @Charcoal;
+@scrollBar: @Blue;
+@scrollBarBack: @Yellow;
 
 ::-webkit-scrollbar{
 	width: 10px;

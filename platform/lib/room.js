@@ -23,41 +23,91 @@ function RoomPromise(roomId){
 				}
 			}
 			var userPromises = room.users.map(function(userId){
-				return new Promise(function(resolve, reject){
-					var userPath = 'users/' + userId;
-					var userRef = firebase.database().ref(userPath);
-					userRef.once('value', function(userSnap){
-						resolve(userSnap.val());
-					});
-				});
+				return UserPromise(userId);
 			});
-			room.html = function(){
-				return roomToHTML(room);
-			}
 			Promise.all(userPromises).then(function(users){
 				room.users = users;
-				resolve(room);
+				resolve(Room(room));
 			});
 		});
 	});
 	return promise;
 }
 
+function Room(data){
+	var room = data;
+	room.html = function(){
+		return roomToHTML(room);
+	}
+	room.listHTML = function(){
+		return roomToListHTML(room);
+	}
+	return room;
+}
+
+function listRooms(){
+	var output = document.getElementById('room-list');
+		output.innerHTML = '';
+	var userRef = firebase.database().ref('rooms');
+	userRef.once('value', function(snapshot){
+		var rooms = snapshot.val();
+		for(var i in rooms){
+			var room = Room(rooms[i]);
+			var html = room.listHTML();
+			output.innerHTML += html;
+		}
+	});
+}
+
+function leaveRoom(roomId){
+	var userId = firebase.auth().currentUser.uid;
+	var path = 'rooms/' + roomId + '/users';
+	var roomRef = firebase.database().ref(path);
+	roomRef.once('value', function(snapshot){
+		var users = snapshot.val();
+		var index = users.indexOf(userId);
+		if(index > -1){
+			users.splice(index, 1);
+			roomRef.set(users);
+			toggleModules('block', ['room-finder']);
+			toggleModules('none', ['room']);
+			listRooms();
+		}
+	});
+}
+
+function roomToListHTML(room){
+	var html = '';
+	var playerString = ', ';
+	if(room.users.length === 0){
+		playerString += 'no players.';
+	}
+	else if(room.users.length === 1){
+		playerString += '1 player.';
+	}
+	else{
+		playerString += room.users.length + ' players.';
+	}
+	html += '<li class="room-list-box">Room ID: ' + room.id + playerString + '</li>';
+	return html;
+}
+
 function roomToHTML(room){
 	var html = '';
 	html += '<h3>Room: ' + room.id + '</h3>';
-	html += '<ul>';
+	html += '<div id="room-users-module">';
 	for(var i in room.users){
-		var user = room.users[i].auth;
-		var userString = user.name;
-		if(user.uid === room.ownerId){
-			userString += ' (Owner)';
-		}
-		if(user.uid === firebase.auth().currentUser.uid){
-			userString += ' (You)';
-		}
-		html += '<li>' + userString + '</li>';
+		var user = room.users[i];
+		html += user.listHTML(function(user){
+			var userString = user.toString();
+			if(user.auth.uid === room.ownerId){
+				userString += ' (Owner)';
+			}
+			return userString;
+		});
 	}
-	html += '</ul>';
+	var roomId = "'" + room.id + "'";
+	html += '<button onclick="leaveRoom(' + roomId + ')">Leave Room</button>';
+	html += '</div>';
 	return html;
 }

@@ -14,6 +14,7 @@ firebase.auth().onAuthStateChanged(function(user){
 	if(user){
 		//User Signed In
 		listUsers();
+		listRooms();
 		toggleModules('none', ['login']);
 		toggleModules('block', ['logout', 'room-finder']);
 	}
@@ -34,19 +35,7 @@ function toggleModules(setting, modules){
 	}
 }
 
-function listUsers(){
-	var output = document.getElementById('user-list');
-		output.innerHTML = '';
-	var userRef = firebase.database().ref('users');
-	userRef.once('value', function(snapshot){
-		var users = snapshot.val();
-		for(var i in users){
-			var user = users[i].auth;
-			var html = '<li>' + user.name + '</li>';
-			output.innerHTML += html;
-		}
-	});
-}
+
 
 $('#room-submit').click(function(event){
 	var output = document.getElementById('room-module');
@@ -58,5 +47,6 @@ $('#room-submit').click(function(event){
 	promise.then(function(room){
 		console.log(room);
 		output.innerHTML = room.html();
+		listRooms();
 	});
 });
