@@ -1,4 +1,3 @@
-var BASE_URL = "https://prometheusjs.firebaseio.com/";
 var userID;
 var authObject;
 
@@ -10,18 +9,17 @@ function checkUserInDatabase(authData){
 		email: authData.user.email,
 		img: authData.user.photoURL
 	}
-	var path = "prometheus/users/" + userID;
+	var path = "users/" + userID;
 	var userRef = firebase.database().ref(path);
 	userRef.once('value', function(snapshot){
 		if(!snapshot.exists()){
+			//New User
 			var userDataRoute = firebase.database().ref(path + "/auth");
 			userDataRoute.set(userData);
 		}
 		else{
-			console.log('Successfully Logged In!');
+			//Returning User
 		}
-		prometheus.logon(userID, userData);
-		location.href = 'contact.html';
 	});
 }
 
