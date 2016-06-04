@@ -113,10 +113,8 @@ function Database(){
 function Snapshot(data, path){
 	return {
 
-		snapshot: _.clone(data),
-
 		exists: function(){
-			if(this.snapshot){
+			if(data){
 				return true;
 			}
 			else{
@@ -125,11 +123,11 @@ function Snapshot(data, path){
 		},
 
 		val: function(){
-			return _.clone(this.snapshot);
+			return _.clone(data);
 		},
 		
 		set: function(payload){
-			Database().traverse(path, payload);
+			Database().traverse(path, _.clone(payload));
 		},
 
 		once: function(callType, callback){
