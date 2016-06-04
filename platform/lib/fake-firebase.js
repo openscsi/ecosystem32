@@ -1,4 +1,4 @@
-var FIREBASE_DATA = null;
+window.FIREBASE_DATA = null;
 
 window.firebase = {
 
@@ -15,7 +15,7 @@ window.firebase = {
 	},
 
 	database: function(){
-		console.log('fake-database');
+		return Database();
 	},
 
 	auth: function(){
@@ -43,6 +43,37 @@ function Auth(){
 				var authData = 'fake-authData';
 				resolve(authData);
 			});
+		}
+
+	}
+}
+
+function Database(){
+	return {
+
+		ref: function(path){
+			var pathList = path.split('/');
+			var data = FIREBASE_DATA;
+			for(var p = 0; p < pathList.length; p++){
+				data = data[pathList[p]];
+			}
+			return Snapshot(data);
+		}
+
+	}
+}
+
+function Snapshot(data){
+	return {
+
+		val: function(){
+			return data;
+		},
+
+		once: function(callType, callback){
+			if(callback){
+				callback(this);
+			}
 		}
 
 	}
