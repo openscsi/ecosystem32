@@ -19,60 +19,108 @@ window.firebase = {
 	},
 
 	auth: function(){
-		return Auth();
+		return window.firebaseAuth;
 	}
 
 }
 
-function Auth(){
+firebase.auth.GoogleAuthProvider = function(){
 	return {
-
-		currentUser: {
-			uid: null
-		},
-
-		onAuthStateChanged: function(callback){
-			var userInfo = 'fake-userInfo';
-			if(callback){
-				callback(userInfo);
+		authData: {
+			uid: "2034164209746382",
+			user: {
+				"email" : "faraz@gmail.com",
+				"img" : "./style/img/faraz.png",
+				"name" : "Faraz Awad",
+				"uid" : "2034164209746382"
 			}
-		},
-
-		GoogleAuthProvider: function(){
-			console.log('fake-GoogleAuthProvider');
-		},
-
-		signInWithPopup: function(provider){
-			this.currentUser.uid = '10002034164209746382';
-			return new Promise(function(resolve, reject){
-				var authData = 'fake-authData';
-				resolve(authData);
-			});
 		}
-
 	}
+}
+
+window.firebaseAuth = {
+
+	currentUser: {
+		uid: null
+	},
+
+	authStateChangeCallback: function(){
+		// Fake Auth Status Change
+	},
+
+	onAuthStateChanged: function(callback){
+		this.authStateChangeCallback = callback;
+		this.authStateChanged();
+	},
+
+	authStateChanged: function(){
+		var user = this.currentUser.uid ? true : false;
+		this.authStateChangeCallback(user);
+	},
+
+	signInWithPopup: function(provider){
+		var authData = provider.authData;
+		this.currentUser = authData;
+		this.authStateChanged();
+		return new Promise(function(resolve, reject){
+			resolve(authData);
+		});
+	}
+
 }
 
 function Database(){
 	return {
 
-		ref: function(path){
+		traverse: function(path, payload){
 			var pathList = path.split('/');
-			var data = FIREBASE_DATA;
-			for(var p = 0; p < pathList.length; p++){
-				data = data[pathList[p]];
+			var dbData = FIREBASE_DATA;
+			var termination = payload ? pathList.length - 1 : pathList.length;
+			for(var p = 0; p < termination; p++){
+				if(dbData[pathList[p]]){
+					dbData = dbData[pathList[p]];
+				}
+				else if(payload){
+					dbData[pathList[p]] = {};
+					dbData = dbData[pathList[p]];
+				}
+				else{
+					return Snapshot(null, path);
+				}
 			}
-			return Snapshot(data);
+			if(payload){
+				dbData[pathList[pathList.length - 1]] = payload;
+			}
+			else{
+				return Snapshot(dbData, path);
+			}
+		},
+
+		ref: function(path){
+			return this.traverse(path);
 		}
 
 	}
 }
 
-function Snapshot(data){
+function Snapshot(data, path){
 	return {
+
+		exists: function(){
+			if(data){
+				return true;
+			}
+			else{
+				return false;
+			}
+		},
 
 		val: function(){
 			return data;
+		},
+		
+		set: function(payload){
+			Database().traverse(path, payload);
 		},
 
 		once: function(callType, callback){
