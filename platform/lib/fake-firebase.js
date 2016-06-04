@@ -27,6 +27,10 @@ window.firebase = {
 function Auth(){
 	return {
 
+		currentUser: {
+			uid: null
+		},
+
 		onAuthStateChanged: function(callback){
 			var userInfo = 'fake-userInfo';
 			if(callback){
@@ -39,6 +43,7 @@ function Auth(){
 		},
 
 		signInWithPopup: function(provider){
+			this.currentUser.uid = '110141332705088415682';
 			return new Promise(function(resolve, reject){
 				var authData = 'fake-authData';
 				resolve(authData);
