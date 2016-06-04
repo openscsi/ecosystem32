@@ -6,7 +6,7 @@ window.FIREBASE_DATA = {
 			"email" : "alice@hawk.iit.edu",
 			"img" : "./style/img/alice.png",
 			"name" : "Alice Kang",
-			"uid" : "2034164209746371"
+			"uid" : "10002034164209746371"
 		}
 	},
 	"10002034164209746318" : {
@@ -14,7 +14,7 @@ window.FIREBASE_DATA = {
 			"email" : "gerald@omnipointment.com",
 			"img" : "./style/img/gerald.png",
 			"name" : "Gerald Ross",
-			"uid" : "2034164209746318"
+			"uid" : "10002034164209746318"
 		}
 	},
 	"10002034164209746304" : {
@@ -22,7 +22,7 @@ window.FIREBASE_DATA = {
 			"email" : "kelly@gmail.com",
 			"img" : "./style/img/kelly.png",
 			"name" : "Kelly Davidson",
-			"1000uid" : "2034164209746304"
+			"1000uid" : "10002034164209746304"
 		}
 	},
 	"10002034164209746382" : {
@@ -30,7 +30,7 @@ window.FIREBASE_DATA = {
 			"email" : "faraz@gmail.com",
 			"img" : "./style/img/faraz.png",
 			"name" : "Faraz Awad",
-			"uid" : "2034164209746382"
+			"uid" : "10002034164209746382"
 		}
 	}
 }

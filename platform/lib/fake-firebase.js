@@ -27,12 +27,12 @@ window.firebase = {
 firebase.auth.GoogleAuthProvider = function(){
 	return {
 		authData: {
-			uid: "2034164209746382",
+			uid: "10002034164209746382",
 			user: {
 				"email" : "faraz@gmail.com",
 				"img" : "./style/img/faraz.png",
 				"name" : "Faraz Awad",
-				"uid" : "2034164209746382"
+				"uid" : "10002034164209746382"
 			}
 		}
 	}
@@ -113,8 +113,10 @@ function Database(){
 function Snapshot(data, path){
 	return {
 
+		snapshot: _.clone(data),
+
 		exists: function(){
-			if(data){
+			if(this.snapshot){
 				return true;
 			}
 			else{
@@ -123,7 +125,7 @@ function Snapshot(data, path){
 		},
 
 		val: function(){
-			return data;
+			return _.clone(this.snapshot);
 		},
 		
 		set: function(payload){
