@@ -65,6 +65,13 @@ window.firebaseAuth = {
 		return new Promise(function(resolve, reject){
 			resolve(authData);
 		});
+	},
+
+	signOut: function(){
+		this.currentUser = {
+			uid: null
+		};
+		this.authStateChanged();
 	}
 
 }
