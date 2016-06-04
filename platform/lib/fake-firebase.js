@@ -19,7 +19,31 @@ window.firebase = {
 	},
 
 	auth: function(){
-		console.log('fake-auth');
+		return Auth();
 	}
 
+}
+
+function Auth(){
+	return {
+
+		onAuthStateChanged: function(callback){
+			var userInfo = 'fake-userInfo';
+			if(callback){
+				callback(userInfo);
+			}
+		},
+
+		GoogleAuthProvider: function(){
+			console.log('fake-GoogleAuthProvider');
+		},
+
+		signInWithPopup: function(provider){
+			return new Promise(function(resolve, reject){
+				var authData = 'fake-authData';
+				resolve(authData);
+			});
+		}
+
+	}
 }
