@@ -36,7 +36,7 @@ function toggleModules(setting, modules){
 	}
 }
 
-$('#room-submit').click(function(event){
+document.getElementById('room-submit').addEventListener('click', function(event){
 	var output = document.getElementById('room-module');
 	var roomId = event.target.previousElementSibling.value;
 	toggleModules('none', ['room-finder']);

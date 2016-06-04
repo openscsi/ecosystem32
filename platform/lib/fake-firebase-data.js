@@ -1,36 +1,36 @@
 window.FIREBASE_DATA = {
 
 "users" : {
-	"103105083532765828171" : {
+	"10002034164209746371" : {
 		"auth" : {
-			"email" : "vkannan3@hawk.iit.edu",
-			"img" : "https://lh6.googleusercontent.com/-WGzKVkRdUDw/AAAAAAAAAAI/AAAAAAAAAAw/elbqQfjFAws/photo.jpg",
-			"name" : "Vinesh Kannan",
-			"uid" : "103105083532765828171"
+			"email" : "alice@hawk.iit.edu",
+			"img" : "./style/img/alice.png",
+			"name" : "Alice Kang",
+			"1000uid" : "2034164209746371"
 		}
 	},
-	"105407763531096788818" : {
+	"10002034164209746318" : {
 		"auth" : {
-			"email" : "vinesh@omnipointment.com",
-			"img" : "https://lh6.googleusercontent.com/-O25L9Dhw0QE/AAAAAAAAAAI/AAAAAAAAAAw/XiF7JNhT8o4/photo.jpg",
-			"name" : "Vinesh Kannan",
-			"uid" : "105407763531096788818"
+			"email" : "gerald@omnipointment.com",
+			"img" : "./style/img/gerald.png",
+			"name" : "Gerald Ross",
+			"1000uid" : "2034164209746318"
 		}
 	},
-	"108814107660407139204" : {
+	"10002034164209746304" : {
 		"auth" : {
-			"email" : "kannanvineshg@gmail.com",
-			"img" : "https://lh4.googleusercontent.com/-U_Oq2tvMMQ8/AAAAAAAAAAI/AAAAAAAAABo/G5BYbmkfSUw/photo.jpg",
-			"name" : "Vinesh Kannan",
-			"uid" : "108814107660407139204"
+			"email" : "kelly@gmail.com",
+			"img" : "./style/img/kelly.png",
+			"name" : "Kelly Davidson",
+			"1000uid" : "2034164209746304"
 		}
 	},
-	"110141332705088415682" : {
+	"10002034164209746382" : {
 		"auth" : {
-			"email" : "vingkan@gmail.com",
-			"img" : "https://lh3.googleusercontent.com/-liyyZBg4uZA/AAAAAAAAAAI/AAAAAAAAD7g/o4sSiSx_7ek/photo.jpg",
-			"name" : "Vinesh Kannan",
-			"uid" : "110141332705088415682"
+			"email" : "faraz@gmail.com",
+			"img" : "./style/img/faraz.png",
+			"name" : "Faraz Awad",
+			"1000uid" : "2034164209746382"
 		}
 	}
 }

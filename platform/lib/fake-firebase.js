@@ -43,7 +43,7 @@ function Auth(){
 		},
 
 		signInWithPopup: function(provider){
-			this.currentUser.uid = '110141332705088415682';
+			this.currentUser.uid = '10002034164209746382';
 			return new Promise(function(resolve, reject){
 				var authData = 'fake-authData';
 				resolve(authData);
