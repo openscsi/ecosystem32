@@ -20,6 +20,11 @@ window.firebase = {
 
 	auth: function(){
 		return window.firebaseAuth;
+	},
+
+	printState: function(){
+		console.warn('Firebase State:');
+		console.log(JSON.stringify(FIREBASE_DATA));
 	}
 
 }
