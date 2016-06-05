@@ -22,6 +22,21 @@ window.firebase = {
 		return window.firebaseAuth;
 	},
 
+	listeners: {
+
+	},
+
+	checkListeners: function(path){
+		var _this = this;
+		var listeners = _.allKeys(firebase.listeners);
+		for(var i = 0; i < listeners.length; i++){
+			var key = listeners[i];
+			if(path.indexOf(key) === 0){
+				firebase.listeners[key](_this);
+			}
+		}
+	},
+
 	printState: function(){
 		console.warn('Firebase State:');
 		console.log(JSON.stringify(FIREBASE_DATA));
@@ -118,8 +133,10 @@ function Database(){
 function Snapshot(data, path){
 	return {
 
+		snapshot: data,
+
 		exists: function(){
-			if(data){
+			if(this.snapshot){
 				return true;
 			}
 			else{
@@ -128,16 +145,25 @@ function Snapshot(data, path){
 		},
 
 		val: function(){
-			return _.clone(data);
+			return _.clone(this.snapshot);
 		},
 		
 		set: function(payload){
 			Database().traverse(path, _.clone(payload));
+			this.snapshot = payload;
+			firebase.checkListeners(path);
 		},
 
 		once: function(callType, callback){
 			if(callback){
 				callback(this);
+			}
+		},
+
+		on: function(callType, callback){
+			console.log('CALLED LIVE')
+			if(callback){
+				firebase.listeners[path] = callback;
 			}
 		}
 

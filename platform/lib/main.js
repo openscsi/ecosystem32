@@ -49,3 +49,8 @@ document.getElementById('room-submit').addEventListener('click', function(event)
 		listRooms();
 	});
 });
+
+var liveRoomRef = firebase.database().ref('rooms');
+liveRoomRef.on('value', function(snapshot){
+	console.log('ROOMS CHANGED')
+});
