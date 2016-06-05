@@ -16,6 +16,7 @@ function User(data){
 		var animalsList = [];
 		for(var i in user.animals){
 			if(user.animals[i]){
+				user.animals[i].id = i;
 				animalsList.push(user.animals[i]);
 			}
 		}
@@ -117,6 +118,10 @@ function addAnimal(data){
 	animalsRef.push(data);
 }
 
+function editAnimal(aid){
+
+}
+
 function animalToListHTML(animal, stringFn){
 	var html = '';
 	var img = '<div class="letter-img" style="background-color: ' + animal.color + ';">' + animal.type.substr(0, 1).toUpperCase() + '</div>'
@@ -127,6 +132,9 @@ function animalToListHTML(animal, stringFn){
 	else{
 		string = '<div>' + animal.toString() + '</div>';
 	}
-	html += '<div class="user-list-box">' + img + string + '</div>';
+	console.log(animal)
+	var aid = "'" + animal.id + "'";
+	var button = '<button onclick="editAnimal(' + aid + ');">Edit</button>';
+	html += '<div class="user-list-box">' + img + string + button + '</div>';
 	return html;
 }

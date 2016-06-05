@@ -139,7 +139,7 @@ div.user-list-box{
 	background: transparent;
 	font-size: 0;
 
-	img, div{
+	img, div, button{
 		display: inline-block;
 		vertical-align: top;
 		height: 40px;
@@ -159,6 +159,12 @@ div.user-list-box{
 	div{
 		line-height: 40px;
 		font-size: 15px;
+	}
+
+	button{
+		float: right;
+		height: 40px;
+		width: 50px;
 	}
 }
 
@@ -180,6 +186,7 @@ input, button, select{
 }
 
 button, input{
+	box-sizing: border-box;
 	display: block;
 	margin: 10px auto;
 	width: 260px;

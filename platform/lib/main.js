@@ -135,6 +135,10 @@ function formMain(){
 				var aid = sessionStorage.getItem('user_animal_key');
 				var uid = firebase.auth().currentUser.uid;
 				var animalRef = firebase.database().ref('users/' + uid + '/animals/' + aid);
+				animalRef.once('value', function(snapshot){
+					var animal = snapshot.val();
+					loadAnimal(animal);
+				});
 			}
 		}
 		else{

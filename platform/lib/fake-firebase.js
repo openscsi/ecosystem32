@@ -177,6 +177,12 @@ function Snapshot(data, path){
 		val: function(){
 			return _.clone(this.snapshot);
 		},
+
+		key: function(){
+			var pathList = path.split('/');
+			var key = pathList[pathList.length - 1];
+			return key;
+		},
 		
 		set: function(payload){
 			Database().traverse(path, _.clone(payload));
