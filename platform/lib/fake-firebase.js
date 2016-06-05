@@ -74,15 +74,40 @@ window.firebaseAuth = {
 	},
 
 	authStateChanged: function(){
-		var user = this.currentUser.uid ? true : false;
+		var user = false;
+		var storedId = sessionStorage.getItem('firebase_auth_uid');
+		if(this.currentUser.uid){
+			user = this.currentUser;
+		}
+		else if(storedId){
+			this.currentUser = {
+				uid: storedId,
+				user: {}
+			}
+			for(var i in sessionStorage){
+				if(i.indexOf('firebase_auth_') === 0){
+					this.currentUser.user[i] = sessionStorage.getItem(i);
+				}
+			}
+			user = this.currentUser;
+		}
 		this.authStateChangeCallback(user);
 	},
 
 	signInWithPopup: function(provider){
 		var authData = provider.authData;
 		this.currentUser = authData;
+		sessionStorage.setItem('firebase_auth_uid', authData.uid);
+		var userInfo = _.allKeys(authData.user);
+		for(var i in userInfo){
+			if(userInfo[i]){
+				var key = 'firebase_auth_' + i;
+				sessionStorage.setItem(key, userInfo[i]);
+			}
+		}
 		this.authStateChanged();
 		return new Promise(function(resolve, reject){
+			//sessionStorage
 			resolve(authData);
 		});
 	},
@@ -91,6 +116,11 @@ window.firebaseAuth = {
 		this.currentUser = {
 			uid: null
 		};
+		for(var i in sessionStorage){
+			if(i.indexOf('firebase_auth_') === 0){
+				sessionStorage.removeItem(i);
+			}
+		}
 		this.authStateChanged();
 	}
 
@@ -179,7 +209,6 @@ function Snapshot(data, path){
 		},
 
 		on: function(callType, callback){
-			console.log('CALLED LIVE')
 			if(callback){
 				firebase.listeners[path] = callback;
 			}
