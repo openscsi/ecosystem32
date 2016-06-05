@@ -108,7 +108,10 @@ function roomToHTML(room){
 		}, 'long-box');
 	}
 	var roomId = "'" + room.id + "'";
+	html += '<div class="button-wrapper">';
 	html += '<button onclick="leaveRoom(' + roomId + ')">Leave Room</button>';
+	html += '<button onclick="console.log(' + roomId + ')">Start Match</button>';
+	html += '</div>';
 	html += '</div>';
 	return html;
 }

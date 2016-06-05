@@ -228,7 +228,13 @@ button, input{
 	.AnimateAll();
 }
 
+.ButtonBorder(){
+	border: 2px solid @Green;
+	line-height: 10px;
+}
+
 button{
+	.ButtonBorder();
 	background: @Green;
 	color: white;
 	&:hover{
@@ -244,6 +250,35 @@ input{
 		background: @Lime;
 		color: white;
 	}*/
+}
+
+.GhostButton{
+	background: transparent;
+	color: @Green;
+	font-weight: bold;
+	.ButtonBorder();
+	&:hover{
+		background: @Green;
+		color: white;
+	}
+}
+
+
+div.button-wrapper{
+
+	display: block;
+	width: 530px;
+	margin: auto;
+
+	button{
+		display: inline-block;
+	}
+
+	button:nth-child(1){
+		.GhostButton();
+		margin-right: 10px;
+	}
+
 }
 
 /*--------------------------------------------*/
