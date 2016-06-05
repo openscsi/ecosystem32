@@ -50,6 +50,7 @@ function homeMain(){
 			//User Signed In
 			toggleModules('none', ['login']);
 			toggleModules('block', ['logout', 'room-finder', 'animal']);
+			listAnimals();
 		}
 		else{
 			//User Signed Out

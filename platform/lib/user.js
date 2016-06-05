@@ -58,9 +58,49 @@ function userToListHTML(user, stringFn){
 	return html;
 }
 
+function Animal(data){
+	var animal = data;
+	animal.toString = function(){
+		return animal.name;
+	}
+	animal.listHTML = function(stringFn){
+		return animalToListHTML(animal, stringFn);
+	}
+	return animal;
+}
+
+function listAnimals(){
+	var output = document.getElementById('animal-list');
+		output.innerHTML = '';
+	var uid = firebase.auth().currentUser.uid;
+	var animalsRef = firebase.database().ref('users/' + uid + '/animals');
+	animalsRef.once('value', function(snapshot){
+		var animals = snapshot.val();
+		for(var i in animals){
+			var animal = Animal(animals[i]);
+			var html = animal.listHTML();
+			output.innerHTML += html;
+		}
+	});
+}
+
 function addAnimal(data){
 	var userId = firebase.auth().currentUser.uid;
 	var path = 'users/' + userId + '/animals';
 	var animalsRef = firebase.database().ref(path);
 	animalsRef.push(data);
+}
+
+function animalToListHTML(animal, stringFn){
+	var html = '';
+	var img = '<div class="letter-img" style="background-color: ' + animal.color + ';">' + animal.type.substr(0, 1).toUpperCase() + '</div>'
+	var string;
+	if(stringFn){
+		string = '<div>' + stringFn(animal) + '</div>';
+	}
+	else{
+		string = '<div>' + animal.toString() + '</div>';
+	}
+	html += '<div class="user-list-box">' + img + string + '</div>';
+	return html;
 }
