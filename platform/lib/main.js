@@ -86,7 +86,8 @@ function previewAnimal(){
 	var genes = {};
 	var GENE_LIST = ['size1', 'size2', 'speed1', 'speed2', 'markings1', 'markings2', 'fertility'];
 	for(var g = 0; g < GENE_LIST.length; g++){
-		genes[GENE_LIST[g]] = {
+		var gene = GENE_LIST[g];
+		genes[gene] = {
 			init: document.getElementById(`${gene}-init`).value,
 			sdev: document.getElementById(`${gene}-sdev`).value
 		}
@@ -120,6 +121,7 @@ function formMain(){
 	document.getElementById('submit-animal').addEventListener('click', function(){
 		var json = previewAnimal();
 		document.getElementById('preview-json').value = JSON.stringify(json);
+		addAnimal(json);
 	});
 
 	var watchers = document.getElementsByClassName('form-watch');

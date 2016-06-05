@@ -57,3 +57,10 @@ function userToListHTML(user, stringFn){
 	html += '<div class="user-list-box">' + img + string + '</div>';
 	return html;
 }
+
+function addAnimal(data){
+	var userId = firebase.auth().currentUser.uid;
+	var path = 'users/' + userId + '/animals';
+	var animalsRef = firebase.database().ref(path);
+	animalsRef.push(data);
+}
