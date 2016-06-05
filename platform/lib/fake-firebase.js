@@ -47,12 +47,12 @@ window.firebase = {
 firebase.auth.GoogleAuthProvider = function(){
 	return {
 		authData: {
-			uid: "10002034164209746382",
+			uid: "10002034164209746304",
 			user: {
-				"email" : "faraz@gmail.com",
-				"img" : "./style/img/faraz.png",
-				"name" : "Faraz Awad",
-				"uid" : "10002034164209746382"
+				"email": "kelly@gmail.com",
+				"img": "./style/img/kelly.png",
+				"name": "Kelly Davidson",
+				"uid": "10002034164209746304"
 			}
 		}
 	}

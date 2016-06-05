@@ -95,7 +95,7 @@ function userToListHTML(user, stringFn, classes){
 
 function animalSelectorHTML(user){
 	var html = '';
-		html += '<select>'
+		html += '<select class="select-animal">'
 		html += '<option value="default" selected>Choose an Animal</option>';
 		if(user.animals.length > 0){
 			for(var i = 0; i < user.animals.length; i++){

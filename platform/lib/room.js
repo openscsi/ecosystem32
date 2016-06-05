@@ -76,6 +76,23 @@ function leaveRoom(roomId){
 	});
 }
 
+function getAnimalsMap(roomId){
+	var path = 'rooms/' + roomId;
+	var roomRef = firebase.database().ref(path);\
+	roomRef.once('value', function(roomSnap){
+		var room = roomSnap.val();
+		var selectors = document.getElementsByClassName('select-animal');
+		for(var i = 0; i< selectors.length; i++){
+			var index = selectors[i].value;
+
+		}
+	});
+}
+
+function startRoom(roomId){
+	var aniMap = getAnimalsMap();
+}
+
 function roomToListHTML(room){
 	var html = '';
 	var playerString = ', ';
@@ -110,7 +127,7 @@ function roomToHTML(room){
 	var roomId = "'" + room.id + "'";
 	html += '<div class="button-wrapper">';
 	html += '<button onclick="leaveRoom(' + roomId + ')">Leave Room</button>';
-	html += '<button onclick="console.log(' + roomId + ')">Start Match</button>';
+	html += '<button onclick="startRoom(' + roomId + ')">Start Match</button>';
 	html += '</div>';
 	html += '</div>';
 	return html;

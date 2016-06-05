@@ -29,10 +29,8 @@ function openRoom(roomKey){
 	var roomId = roomKey || document.getElementById('room-key').value;
 	toggleModules('none', ['room-finder']);
 	toggleModules('block', ['room']);
-	console.log(roomId);
 	var promise = RoomPromise(roomId);
 	promise.then(function(room){
-		console.log(room);
 		output.innerHTML = room.html();
 		listRooms();
 	});
