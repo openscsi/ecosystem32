@@ -12,6 +12,18 @@ function UserPromise(userId){
 
 function User(data){
 	var user = data;
+	if(user.animals){
+		var animalsList = [];
+		for(var i in user.animals){
+			if(user.animals[i]){
+				animalsList.push(user.animals[i]);
+			}
+		}
+		user.animals = animalsList;
+	}
+	else{
+		user.animals = [];
+	}
 	user.toString = function(){
 		return userToString(user);
 	}
@@ -29,7 +41,21 @@ function listUsers(){
 		var users = snapshot.val();
 		for(var i in users){
 			var user = User(users[i]);
-			var html = user.listHTML();
+			var html = user.listHTML(function(user){
+				var str = user.auth.name + ' ';
+				if(user.animals){
+					if(user.animals.length === 1){
+						str += '(1 animal)';
+					}
+					else{
+						str += '(' + user.animals.length + ' animals)';
+					}
+				}
+				else{
+					str += '(no animals)';
+				}
+				return str;
+			});
 			output.innerHTML += html;
 		}
 	});
