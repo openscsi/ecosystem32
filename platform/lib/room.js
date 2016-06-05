@@ -78,13 +78,14 @@ function leaveRoom(roomId){
 
 function getAnimalsMap(roomId){
 	var path = 'rooms/' + roomId;
-	var roomRef = firebase.database().ref(path);\
+	var roomRef = firebase.database().ref(path);
 	roomRef.once('value', function(roomSnap){
 		var room = roomSnap.val();
 		var selectors = document.getElementsByClassName('select-animal');
 		for(var i = 0; i< selectors.length; i++){
 			var index = selectors[i].value;
-
+			var c = room.users[i].animals[index]
+			console.log(c)
 		}
 	});
 }

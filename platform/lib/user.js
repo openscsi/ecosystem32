@@ -93,9 +93,9 @@ function userToListHTML(user, stringFn, classes){
 	return html;
 }
 
-function animalSelectorHTML(user){
+function animalSelectorHTML(user){	
 	var html = '';
-		html += '<select class="select-animal">'
+		html += '<select class="select-animal" id="select-' + user.auth.uid + '">'
 		html += '<option value="default" selected>Choose an Animal</option>';
 		if(user.animals.length > 0){
 			for(var i = 0; i < user.animals.length; i++){
