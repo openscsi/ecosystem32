@@ -95,6 +95,8 @@ function loadAnimal(data){
 		document.getElementById(`${gene}-sdev`).value = data.genes[gene].sdev;
 	}
 
+	document.getElementById('preview-json').value = JSON.stringify(data);
+
 }
 
 function previewAnimal(){
@@ -134,10 +136,12 @@ function formMain(){
 			if(sessionStorage.getItem('user_animal_key')){
 				var aid = sessionStorage.getItem('user_animal_key');
 				var uid = firebase.auth().currentUser.uid;
-				var animalRef = firebase.database().ref('users/' + uid + '/animals/' + aid);
+				var path = 'users/' + uid + '/animals/' + aid;
+				var animalRef = firebase.database().ref(path);
 				animalRef.once('value', function(snapshot){
 					var animal = snapshot.val();
 					loadAnimal(animal);
+					sessionStorage.removeItem('user_animal_key');
 				});
 			}
 		}
@@ -151,6 +155,7 @@ function formMain(){
 		var json = previewAnimal();
 		document.getElementById('preview-json').value = JSON.stringify(json);
 		addAnimal(json);
+		window.location.href = 'index.html';
 	});
 
 	var watchers = document.getElementsByClassName('form-watch');

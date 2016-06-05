@@ -193,7 +193,7 @@ function Snapshot(data, path){
 		push: function(payload){
 			var clone = this.val();
 			//Found the trade secret: How to generate Firebase's fancy random keys???
-			var keyBase = path.replace('/', '_');
+			var keyBase = path.replace(/\//g, '_');
 			var unique = false;
 			if(_.allKeys(clone).length === 0){
 				clone = {};

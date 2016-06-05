@@ -119,7 +119,7 @@ function addAnimal(data){
 }
 
 function editAnimal(aid){
-
+	sessionStorage.setItem('user_animal_key', aid);	
 }
 
 function animalToListHTML(animal, stringFn){
@@ -132,7 +132,6 @@ function animalToListHTML(animal, stringFn){
 	else{
 		string = '<div>' + animal.toString() + '</div>';
 	}
-	console.log(animal)
 	var aid = "'" + animal.id + "'";
 	var button = '<button onclick="editAnimal(' + aid + ');">Edit</button>';
 	html += '<div class="user-list-box">' + img + string + button + '</div>';
