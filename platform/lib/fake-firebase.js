@@ -154,6 +154,24 @@ function Snapshot(data, path){
 			firebase.checkListeners(path);
 		},
 
+		push: function(payload){
+			var clone = this.val();
+			//Found the trade secret: How to generate Firebase's fancy random keys???
+			var keyBase = path.replace('/', '_');
+			var unique = false;
+			if(_.allKeys(clone).length === 0){
+				clone = {};
+			}
+			while(!unique){
+				var pushId = _.uniqueId(keyBase);
+				if(!clone[pushId]){
+					unique = true;
+					clone[pushId] = payload;
+				}
+			}
+			this.set(clone);
+		},
+
 		once: function(callType, callback){
 			if(callback){
 				callback(this);
