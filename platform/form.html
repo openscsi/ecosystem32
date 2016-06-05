@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add Animals</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="../style/reset.css">
+		<link rel="stylesheet" type="text/css" href="../style/main.css">
+		<link rel="icon" type="img/png" href="../style/favicon.png" style="width:30px;">
+		<!-- IMPORTED SCRIPTS -->
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<!-- NEED FIREBASE LATER -->
+		<style>
+
+			html{
+				background-color: #1a1a1a;
+				background-image: url('../style/img/charcoal-trans-hex.png');
+				background-size: 200px;
+				background-repeat: repeat;
+			}
+
+		</style>
+	</head>
+
+	<body id="form">
+
+		<section>
+			<div class="hex-row">
+				<h1><i class="fa fa-cogs"></i> Create a New Animal</h1>
+			</div>
+			<p>Customize your animal!</p>
+			<h2>Name</h2>
+			<input id="name" class="form-watch" type="text">
+			<h2>Room ID</h2>
+			<input id="room" class="form-watch" type="text">
+			<h2>Color</h2>
+			<input id="color" class="form-watch" type="color">
+			<h2>Type</h2>
+			<form>
+				<label class="radio-label">
+					<input type="radio" name="type" class="form-watch" value="carnivore">
+					<h3><i class="fa fa-cutlery"></i> Carnivore</h3>
+				</label>
+				<label class="radio-label">
+					<input type="radio" name="type" class="form-watch" value="herbivore">
+					<h3><i class="fa fa-leaf"></i> Herbivore</h3>
+				</label>
+			</form>
+		</section>
+		<section>
+			<div class="hex-row">
+				<h1><i class="fa fa-arrows"></i> Define Strategy</h1>
+			</div>
+			<h2>Move Logic</h2>
+			<p>Write the code for the logic your animals will follow. This will determine how they eat, mate, and survive.</p>
+			<div id="editor" class="form-watch">console.log('Write your code here.');</div>
+		</section>
+		<section>
+			<div class="hex-row">
+				<h1><i class="fa fa-flask"></i> Genetics Lab</h1>
+			</div>
+			<p>Edit the distributions for these seven genes. This will impact the traits of your animal's population.</p>
+			<h2><i class="fa fa-balance-scale"></i> Size 1</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="size1-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="size1-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Size 2</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="size2-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="size2-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Speed 1</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="speed1-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="speed1-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Speed 2</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="speed2-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="speed2-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Markings 1</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="markings1-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="markings1-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Markings 2</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="markings2-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="markings2-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<h2><i class="fa fa-balance-scale"></i> Fertility</h2>
+			<label class="slider-label">
+				<h3>Initial Value</h3>
+				<input id="fertility-init" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+			<label class="slider-label">
+				<h3>Standard Deviation</h3>
+				<input id="fertility-sdev" class="form-watch" type="range" min="0" max="1" step="0.05">
+			</label>
+		</section>
+		<section>
+			<div class="hex-row">
+				<h1><i class="fa fa-search"></i> Preview</h1>
+			</div>
+			<p>If you are so brave, inspect the JSON you have generated. When you are satified, click submit!</p>
+			<h2>JSON Output</h2>
+			<textarea id="preview-json"></textarea>
+		</section>
+		<section>
+			<div class="hex-row">
+				<button id="submit-animal" class="page-button">Submit</button>
+			</div>
+		</section>
+
+		<script src="../ace/ace.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+
+			function previewAnimal(){
+
+				var name = document.getElementById('name').value;
+				var room = document.getElementById('room').value;
+				var color = document.getElementById('color').value;
+				var typeForm = document.querySelector('input[name="type"]:checked');
+				var type = typeForm ? typeForm.value : null;
+				var move = document.getElementById('editor').innerText;
+				
+				var genes = {};
+				var GENE_LIST = ['size1', 'size2', 'speed1', 'speed2', 'markings1', 'markings2', 'fertility'];
+				for(var g = 0; g < GENE_LIST.length; g++){
+					genes[GENE_LIST[g]] = {
+						init: document.getElementById(`${gene}-init`).value,
+						sdev: document.getElementById(`${gene}-sdev`).value
+					}
+				}
+				
+				return {
+					name: name,
+					room: room,
+					color: color,
+					type: type,
+					move: move,
+					genes: genes
+				}
+
+			}
+
+			function formMain(){
+
+				document.getElementById('submit-animal').addEventListener('click', function(){
+					var json = previewAnimal();
+					document.getElementById('preview-json').value = JSON.stringify(json);
+				});
+
+				var watchers = document.getElementsByClassName('form-watch');
+				for(var w = 0; w < watchers.length; w++){
+					watchers[w].addEventListener('change', function(){
+						var json = previewAnimal();
+						document.getElementById('preview-json').value = JSON.stringify(json);
+					});
+				}
+
+				var editor = ace.edit('editor');
+				editor.setTheme('ace/theme/monokai');
+				editor.getSession().setMode('ace/mode/javascript');
+
+				editor.on('change', function(e){
+					var json = previewAnimal();
+					document.getElementById('preview-json').value = JSON.stringify(json);
+				});
+
+			}
+
+			formMain();
+
+		</script>
+		
+	</body>
+</html>

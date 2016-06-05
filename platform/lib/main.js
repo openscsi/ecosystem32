@@ -15,13 +15,13 @@ firebase.auth().onAuthStateChanged(function(user){
 		listUsers();
 		listRooms();
 		toggleModules('none', ['login']);
-		toggleModules('block', ['logout', 'room-finder']);
+		toggleModules('block', ['logout', 'room-finder', 'animal']);
 	}
 	else{
 		//User Signed Out
 		listUsers();
 		listRooms();
-		toggleModules('none', ['logout', 'room-finder', 'room']);
+		toggleModules('none', ['logout', 'room-finder', 'animal', 'room']);
 		toggleModules('block', ['login']);
 	}
 });
@@ -36,9 +36,9 @@ function toggleModules(setting, modules){
 	}
 }
 
-document.getElementById('room-submit').addEventListener('click', function(event){
+function openRoom(roomKey){
 	var output = document.getElementById('room-module');
-	var roomId = event.target.previousElementSibling.value;
+	var roomId = roomKey || document.getElementById('room-key').value;
 	toggleModules('none', ['room-finder']);
 	toggleModules('block', ['room']);
 	console.log(roomId);
@@ -48,6 +48,11 @@ document.getElementById('room-submit').addEventListener('click', function(event)
 		output.innerHTML = room.html();
 		listRooms();
 	});
+}
+
+var roomSubmit = document.getElementById('room-submit');
+roomSubmit.addEventListener('click', function(){
+	openRoom();
 });
 
 var liveRoomRef = firebase.database().ref('rooms');
