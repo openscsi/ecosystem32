@@ -10,7 +10,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700|Lato:400,900' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<!-- NEED FIREBASE LATER -->
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 		<style>
 
 			html{
@@ -141,62 +141,16 @@
 
 		<script src="../ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
+		<script src="lib/promise.min.js"></script>
+		<script src="lib/underscore.js"></script>
+		<script src="lib/fake-firebase.js"></script>
+		<script src="lib/fake-firebase-data.js"></script>
+		<script src="lib/auth.js"></script>
+		<script src="lib/user.js"></script>
+		<script src="lib/room.js"></script>
+		<script src="lib/main.js"></script>
+
 		<script type="text/javascript">
-
-			function previewAnimal(){
-
-				var name = document.getElementById('name').value;
-				var room = document.getElementById('room').value;
-				var color = document.getElementById('color').value;
-				var typeForm = document.querySelector('input[name="type"]:checked');
-				var type = typeForm ? typeForm.value : null;
-				var move = document.getElementById('editor').innerText;
-				
-				var genes = {};
-				var GENE_LIST = ['size1', 'size2', 'speed1', 'speed2', 'markings1', 'markings2', 'fertility'];
-				for(var g = 0; g < GENE_LIST.length; g++){
-					genes[GENE_LIST[g]] = {
-						init: document.getElementById(`${gene}-init`).value,
-						sdev: document.getElementById(`${gene}-sdev`).value
-					}
-				}
-				
-				return {
-					name: name,
-					room: room,
-					color: color,
-					type: type,
-					move: move,
-					genes: genes
-				}
-
-			}
-
-			function formMain(){
-
-				document.getElementById('submit-animal').addEventListener('click', function(){
-					var json = previewAnimal();
-					document.getElementById('preview-json').value = JSON.stringify(json);
-				});
-
-				var watchers = document.getElementsByClassName('form-watch');
-				for(var w = 0; w < watchers.length; w++){
-					watchers[w].addEventListener('change', function(){
-						var json = previewAnimal();
-						document.getElementById('preview-json').value = JSON.stringify(json);
-					});
-				}
-
-				var editor = ace.edit('editor');
-				editor.setTheme('ace/theme/monokai');
-				editor.getSession().setMode('ace/mode/javascript');
-
-				editor.on('change', function(e){
-					var json = previewAnimal();
-					document.getElementById('preview-json').value = JSON.stringify(json);
-				});
-
-			}
 
 			formMain();
 
