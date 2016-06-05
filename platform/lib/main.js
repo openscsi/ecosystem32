@@ -155,7 +155,7 @@ function formMain(){
 		var json = previewAnimal();
 		document.getElementById('preview-json').value = JSON.stringify(json);
 		addAnimal(json);
-		window.location.href = 'index.html';
+		//window.location.href = 'index.html';
 	});
 
 	var watchers = document.getElementsByClassName('form-watch');

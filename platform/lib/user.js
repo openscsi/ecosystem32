@@ -28,8 +28,11 @@ function User(data){
 	user.toString = function(){
 		return userToString(user);
 	}
-	user.listHTML = function(stringFn){
-		return userToListHTML(user, stringFn);
+	user.listHTML = function(stringFn, classes){
+		return userToListHTML(user, stringFn, classes);
+	}
+	user.animalSelectorHTML = function(){
+		return animalSelectorHTML(user);
 	}
 	return user;
 }
@@ -70,7 +73,7 @@ function userToString(user){
 	return string;
 }
 
-function userToListHTML(user, stringFn){
+function userToListHTML(user, stringFn, classes){
 	var profile = user.auth;
 	var html = '';
 	var img = '<img src="' + profile.img + '">'
@@ -81,8 +84,31 @@ function userToListHTML(user, stringFn){
 	else{
 		string = '<div>' + user.toString() + '</div>';
 	}
-	html += '<div class="user-list-box">' + img + string + '</div>';
+	if(classes){
+		html += '<div class="user-list-box ' + classes + '">' + img + string + '</div>';
+	}
+	else{
+		html += '<div class="user-list-box">' + img + string + '</div>';
+	}
 	return html;
+}
+
+function animalSelectorHTML(user){
+	var html = '';
+		html += '<select>'
+		html += '<option value="default" selected>Choose an Animal</option>';
+		if(user.animals.length > 0){
+			for(var i = 0; i < user.animals.length; i++){
+				var animal = user.animals[i];
+				var aid = "'" + animal.id + "'";
+				html += '<option value="' + aid + '">' + animal.name + ' (' + animal.type + ')</option>';
+			}
+		}
+		else{
+			html += '<option value="no_animals_error">No Animals</option>';
+		}
+		html += '<select>'
+	return html
 }
 
 function Animal(data){

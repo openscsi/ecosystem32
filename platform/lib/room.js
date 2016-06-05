@@ -103,8 +103,9 @@ function roomToHTML(room){
 			if(user.auth.uid === room.ownerId){
 				userString += ' (Owner)';
 			}
+			userString += user.animalSelectorHTML();
 			return userString;
-		});
+		}, 'long-box');
 	}
 	var roomId = "'" + room.id + "'";
 	html += '<button onclick="leaveRoom(' + roomId + ')">Leave Room</button>';

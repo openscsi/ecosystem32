@@ -139,7 +139,7 @@ div.user-list-box{
 	background: transparent;
 	font-size: 0;
 
-	img, div, button{
+	img, div, button, select{
 		display: inline-block;
 		vertical-align: top;
 		height: 40px;
@@ -168,6 +168,32 @@ div.user-list-box{
 	}
 }
 
+div.long-box{
+	
+	width: 380px;
+
+	select{
+		margin: 0;
+		margin-left: 10px;
+		float: right;
+		height: 40px;
+		width: 150px;
+		border-bottom: 2px dashed @Green;
+	}
+
+	option{
+		
+		background: @Green;
+		color: white;
+
+		&:hover{
+			background: @Blue;
+		}
+
+	}
+
+}
+
 /*--------------------------------------------*/
 /*---> ROOMS <--------------------------------*/
 /*--------------------------------------------*/
@@ -180,9 +206,13 @@ li.room-list-box{
 /*---> FORM <---------------------------------*/
 /*--------------------------------------------*/
 
-input, button, select{
+input, button, select, option{
 	outline: none;
 	border: none;
+}
+
+select, option{
+	.BodyFont();
 }
 
 button, input{
