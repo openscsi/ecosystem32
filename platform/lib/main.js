@@ -75,10 +75,31 @@ function homeMain(){
 /*---> ANIMAL FORM <--------------------------*/
 /*--------------------------------------------*/
 
+function loadAnimal(data){
+
+	var name = document.getElementById('name').value = data.name;
+	var color = document.getElementById('color').value = data.color;
+	var typeForms = document.getElementsByName('type');
+	for(var t = 0; t < typeForms.length; t++){
+		if(typeForms[t].value === data.type){
+			typeForms[t].checked = true;
+		}
+	}
+	var move = document.getElementById('editor').innerText = data.move;
+	
+	var genes = {};
+	var GENE_LIST = ['size1', 'size2', 'speed1', 'speed2', 'markings1', 'markings2', 'fertility'];
+	for(var g = 0; g < GENE_LIST.length; g++){
+		var gene = GENE_LIST[g];
+		document.getElementById(`${gene}-init`).value = data.genes[gene].init;
+		document.getElementById(`${gene}-sdev`).value = data.genes[gene].sdev;
+	}
+
+}
+
 function previewAnimal(){
 
 	var name = document.getElementById('name').value;
-	var room = document.getElementById('room').value;
 	var color = document.getElementById('color').value;
 	var typeForm = document.querySelector('input[name="type"]:checked');
 	var type = typeForm ? typeForm.value : null;
@@ -96,7 +117,6 @@ function previewAnimal(){
 	
 	return {
 		name: name,
-		room: room,
 		color: color,
 		type: type,
 		move: move,
@@ -111,7 +131,11 @@ function formMain(){
 		console.log('Auth state changed.');
 		if(user){
 			//User Signed In
-			//Good to go!
+			if(sessionStorage.getItem('user_animal_key')){
+				var aid = sessionStorage.getItem('user_animal_key');
+				var uid = firebase.auth().currentUser.uid;
+				var animalRef = firebase.database().ref('users/' + uid + '/animals/' + aid);
+			}
 		}
 		else{
 			//User Signed Out
